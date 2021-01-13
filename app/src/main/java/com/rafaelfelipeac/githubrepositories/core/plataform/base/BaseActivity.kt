@@ -5,7 +5,7 @@ import com.rafaelfelipeac.githubrepositories.core.di.AppComponent
 import com.rafaelfelipeac.githubrepositories.core.di.AppComponentProvider
 import com.rafaelfelipeac.githubrepositories.core.di.provider.ViewModelProvider
 
-class BaseActivity : AppCompatActivity(){
+open class BaseActivity : AppCompatActivity(){
 
     private val appComponent: AppComponent
         get() = (application as AppComponentProvider).appComponent

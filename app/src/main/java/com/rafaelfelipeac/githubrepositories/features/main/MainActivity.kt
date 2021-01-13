@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.rafaelfelipeac.githubrepositories.R
 import com.rafaelfelipeac.githubrepositories.core.extension.viewBinding
+import com.rafaelfelipeac.githubrepositories.core.plataform.base.BaseActivity
 import com.rafaelfelipeac.githubrepositories.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
