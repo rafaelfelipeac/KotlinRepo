@@ -1,4 +1,6 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.domain.repository
 
-class RepositoriesRepository {
+interface RepositoriesRepository {
+
+    suspend fun get(welcome: Boolean)
 }

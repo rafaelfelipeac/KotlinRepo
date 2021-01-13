@@ -10,6 +10,8 @@ import com.rafaelfelipeac.githubrepositories.databinding.FragmentRepositoriesBin
 
 class RepositoriesFragment : BaseFragment() {
 
+    private val viewModel by lazy { viewModelProvider.repositoriesViewModel() }
+
     private var binding by viewBinding<FragmentRepositoriesBinding>()
 
     override fun onCreateView(
