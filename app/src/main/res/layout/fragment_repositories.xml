@@ -7,6 +7,7 @@
     tools:context="com.rafaelfelipeac.githubrepositories.features.repositories.presentation.RepositoriesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/repositoriesList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"

@@ -1,18 +1,25 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.rafaelfelipeac.githubrepositories.R
+import com.rafaelfelipeac.githubrepositories.core.extension.viewBinding
+import com.rafaelfelipeac.githubrepositories.core.plataform.base.BaseFragment
+import com.rafaelfelipeac.githubrepositories.databinding.FragmentRepositoriesBinding
 
-class RepositoriesFragment : Fragment() {
+class RepositoriesFragment : BaseFragment() {
+
+    private var binding by viewBinding<FragmentRepositoriesBinding>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_repositories, container, false)
+    ): View {
+
+        return FragmentRepositoriesBinding.inflate(inflater, container, false).run {
+            binding = this
+            binding.root
+        }
     }
 }
