@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.github_repositories
+package com.rafaelfelipeac.githubrepositories
 
 import org.junit.Test
 
