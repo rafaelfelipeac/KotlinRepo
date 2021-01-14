@@ -2,12 +2,13 @@ package com.rafaelfelipeac.githubrepositories.features.repositories.presentation
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import coil.load
+import coil.transform.CircleCropTransformation
 import com.rafaelfelipeac.githubrepositories.R
 import com.rafaelfelipeac.githubrepositories.core.plataform.base.BaseAdapter
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Repository
-import de.hdodenhof.circleimageview.CircleImageView
 
 class RepositoriesAdapter : BaseAdapter<Repository>() {
 
@@ -20,16 +21,21 @@ class RepositoriesAdapter : BaseAdapter<Repository>() {
         setOnClickListener { clickListener(item) }
 
         val repoTitle = viewHolder.itemView.findViewById<TextView>(R.id.repo_title)
-        val repoStarsQuantity = viewHolder.itemView.findViewById<TextView>(R.id.repo_stars_quantity)
-        val repoForksQuantity = viewHolder.itemView.findViewById<TextView>(R.id.repo_forks_quantity)
-        val repoAuthorImage = viewHolder.itemView.findViewById<CircleImageView>(R.id.repo_author_image)
+        val repoStarsMessage = viewHolder.itemView.findViewById<TextView>(R.id.repo_stars_message)
+        val repoForksMessage = viewHolder.itemView.findViewById<TextView>(R.id.repo_forks_message)
+        val repoAuthorImage = viewHolder.itemView.findViewById<ImageView>(R.id.repo_author_image)
         val repoAuthorName = viewHolder.itemView.findViewById<TextView>(R.id.repo_author_name)
 
         repoTitle.text = item.name
-        repoStarsQuantity.text = item.stars.toString() + " stars"
-        repoForksQuantity.text = item.forks.toString() + " forks"
-        repoAuthorImage.load(item.authorImage)
+        repoStarsMessage.text = String.format(
+            context.getString(R.string.repo_stars_message), item.stars.toString())
+        repoForksMessage.text = String.format(
+            context.getString(R.string.repo_forks_message), item.forks.toString())
         repoAuthorName.text = item.authorName
+        repoAuthorImage.load(item.authorImage) {
+            crossfade(true)
+            transformations(CircleCropTransformation())
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

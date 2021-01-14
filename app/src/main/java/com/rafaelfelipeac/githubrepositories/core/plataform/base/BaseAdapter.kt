@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>() {
 
@@ -34,12 +33,9 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>(
     }
 
     fun setItems(items: List<T>) {
-        this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
     }
-
-    fun getCurrentTime(): Date = Calendar.getInstance().time
 }
 
 @JvmOverloads

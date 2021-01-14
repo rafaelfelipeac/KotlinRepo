@@ -3,4 +3,10 @@
 
     <!-- repositories -->
     <string name="repositories_title">Top Kotlin Repositories</string>
+    <string name="repositories_placeholder_message">Something is wrong. \n\nCheck your internet connection.</string>
+
+    <!-- repositories adapter-->
+    <string name="repo_stars_message">%s stars</string>
+    <string name="repo_forks_message">%s forks</string>
+
 </resources>

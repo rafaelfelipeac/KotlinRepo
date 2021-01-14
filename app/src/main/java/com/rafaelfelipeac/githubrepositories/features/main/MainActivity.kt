@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.githubrepositories.features.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.rafaelfelipeac.githubrepositories.R
 import com.rafaelfelipeac.githubrepositories.core.extension.viewBinding
