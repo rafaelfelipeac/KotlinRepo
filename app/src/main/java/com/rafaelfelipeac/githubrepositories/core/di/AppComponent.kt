@@ -8,7 +8,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Component(modules = [
-    RepositoriesModule::class,
+    RepositoriesModule::class
 ])
 @Singleton
 interface AppComponent : ViewModelProvider {

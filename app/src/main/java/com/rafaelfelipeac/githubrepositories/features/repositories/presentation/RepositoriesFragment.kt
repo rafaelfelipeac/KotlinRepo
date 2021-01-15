@@ -73,11 +73,25 @@ class RepositoriesFragment : BaseFragment() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.repositories.collect {
-                if (it.isNotEmpty()) {
-                    setList(it)
-                } else {
-                    binding.repositoriesPlaceholder.visible()
-                }
+                setList(it)
+
+                binding.repositoriesListLoader.gone()
+                binding.repositoriesProgressBar.gone()
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.genericError.collect {
+                binding.repositoriesPlaceholder.visible()
+
+                binding.repositoriesListLoader.gone()
+                binding.repositoriesProgressBar.gone()
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.networkError.collect {
+                binding.repositoriesPlaceholder.visible()
 
                 binding.repositoriesListLoader.gone()
                 binding.repositoriesProgressBar.gone()

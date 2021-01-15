@@ -1,8 +1,6 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.domain.model
 
-data class Repository(
+data class Owner(
     val name: String,
-    val stars: Int,
-    val forks: Int,
-    val author: Owner
+    val authorImage: String
 )

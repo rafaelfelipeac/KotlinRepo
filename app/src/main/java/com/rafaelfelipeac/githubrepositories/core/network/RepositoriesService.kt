@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.githubrepositories.features.repositories
+package com.rafaelfelipeac.githubrepositories.core.network
 
 import com.rafaelfelipeac.githubrepositories.core.plataform.Constants
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.RepositoriesApi
