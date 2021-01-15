@@ -31,8 +31,8 @@ class RepositoriesAdapter : BaseAdapter<Repository>() {
             context.getString(R.string.repo_stars_message), item.stars.toString())
         repoForksMessage.text = String.format(
             context.getString(R.string.repo_forks_message), item.forks.toString())
-        repoAuthorName.text = item.authorName
-        repoAuthorImage.load(item.authorImage) {
+        repoAuthorName.text = item.author.name
+        repoAuthorImage.load(item.author.authorImage) {
             crossfade(true)
             transformations(CircleCropTransformation())
         }
