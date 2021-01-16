@@ -3,6 +3,7 @@ package com.rafaelfelipeac.githubrepositories.core.di.modules
 import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
+import com.rafaelfelipeac.githubrepositories.core.network.CacheInterceptor
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.RepositoriesApi
 import dagger.Binds
 import dagger.Module
@@ -20,6 +21,9 @@ abstract class CoreModule {
 
         @Provides
         fun Retrofit.repositoriesApi(): RepositoriesApi = create()
+
+        @Provides
+        fun cacheInterceptor(): CacheInterceptor = CacheInterceptor()
     }
 
     @Binds
