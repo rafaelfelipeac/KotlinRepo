@@ -1,7 +1,7 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.data.model
 
 import com.google.gson.annotations.SerializedName
-import com.rafaelfelipeac.githubrepositories.core.Mapper
+import com.rafaelfelipeac.githubrepositories.core.TwoWayMapper
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Owner
 import javax.inject.Inject
 
@@ -12,12 +12,19 @@ data class OwnerDto(
     val avatar_url: String,
 )
 
-class OwnerDtoMapper @Inject constructor() : Mapper<OwnerDto, Owner> {
+class OwnerDtoMapper @Inject constructor() : TwoWayMapper<OwnerDto, Owner> {
 
     override fun map(param: OwnerDto): Owner = with(param) {
         Owner(
             name = login,
             authorImage = avatar_url
+        )
+    }
+
+    override fun mapReverse(param: Owner): OwnerDto = with(param) {
+        OwnerDto(
+            login = name,
+            avatar_url = authorImage
         )
     }
 }
