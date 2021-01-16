@@ -3,7 +3,6 @@ package com.rafaelfelipeac.githubrepositories.features.repositories.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.githubrepositories.core.network.ResultWrapper
-import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Owner
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Repository
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.usecase.GetRepositoriesUseCase
 import kotlinx.coroutines.flow.Flow
@@ -18,39 +17,20 @@ class RepositoriesViewModel @Inject constructor(
 
     val repositories: Flow<List<Repository>> get() = _repositories.filterNotNull()
     private val _repositories = MutableStateFlow<List<Repository>?>(null)
-    val genericError: Flow<Unit> get() = _genericError.filterNotNull()
-    private val _genericError = MutableStateFlow<Unit?>(null)
-    val networkError: Flow<Unit> get() = _networkError.filterNotNull()
-    private val _networkError = MutableStateFlow<Unit?>(null)
+    val error: Flow<Throwable> get() = _error.filterNotNull()
+    private val _error = MutableStateFlow<Throwable?>(null)
 
-    fun loadData(language: String, sort: String, page: Int) {
-        getRepositories(language, sort, page)
-    }
-
-    private fun getRepositories(language: String, sort: String, page: Int) {
+    fun getRepositories(language: String, sort: String, page: Int) {
         viewModelScope.launch {
             when (val response = getRepositoriesUseCase(language, sort, page)) {
                 is ResultWrapper.Success -> {
-                    val list: MutableList<Repository> = mutableListOf()
-
-                    response.value.items.map {
-                        list.add(
-                                Repository(
-                                        it.name,
-                                        it.stars,
-                                        it.fork,
-                                        Owner(it.author.login, it.author.avatar_url)
-                                )
-                        )
-                    }
-
-                    _repositories.value = list
+                    _repositories.value = response.value
                 }
                 is ResultWrapper.GenericError -> {
-                    _genericError.value = Unit
+                    _error.value = response.throwable
                 }
                 is ResultWrapper.NetworkError -> {
-                    _networkError.value = Unit
+                    _error.value = response.throwable
                 }
             }
         }

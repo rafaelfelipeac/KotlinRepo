@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.presentation
 
-import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,7 +15,6 @@ class RepositoriesAdapter : BaseAdapter<Repository>() {
 
     override fun getLayoutRes(): Int = R.layout.list_item_repo
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun View.bindView(item: Repository, viewHolder: ViewHolder) {
         setOnClickListener { clickListener(item) }
 

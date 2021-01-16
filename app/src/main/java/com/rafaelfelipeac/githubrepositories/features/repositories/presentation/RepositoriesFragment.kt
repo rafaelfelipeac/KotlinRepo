@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rafaelfelipeac.githubrepositories.core.extension.gone
 import com.rafaelfelipeac.githubrepositories.core.extension.viewBinding
 import com.rafaelfelipeac.githubrepositories.core.extension.visible
+import com.rafaelfelipeac.githubrepositories.core.plataform.Constants.isNetworkConnected
 import com.rafaelfelipeac.githubrepositories.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.githubrepositories.databinding.FragmentRepositoriesBinding
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Repository
@@ -29,6 +31,7 @@ class RepositoriesFragment : BaseFragment() {
     private var repositoriesAdapter = RepositoriesAdapter()
 
     private var isFirstPage = true
+    private var isLoading = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +49,7 @@ class RepositoriesFragment : BaseFragment() {
 
         setLayout()
 
-        viewModel.loadData(LANGUAGE, SORT, CURRENT_PAGE)
+        viewModel.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
 
         observeViewModel()
     }
@@ -56,12 +59,11 @@ class RepositoriesFragment : BaseFragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-                if (!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(1) && !isLoading) {
+                    isLoading = true
+
                     // load the next page
-
-                    CURRENT_PAGE += 1
-
-                    viewModel.loadData(LANGUAGE, SORT, CURRENT_PAGE)
+                    viewModel.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
 
                     binding.repositoriesListLoader.visible()
                     binding.repositoriesList.scrollToPosition(repositoriesAdapter.itemCount - 1)
@@ -73,25 +75,26 @@ class RepositoriesFragment : BaseFragment() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.repositories.collect {
+                isLoading = false
+
                 setList(it)
 
+                CURRENT_PAGE += 1
+
+                binding.repositoriesPlaceholder.gone()
                 binding.repositoriesListLoader.gone()
                 binding.repositoriesProgressBar.gone()
             }
         }
 
         lifecycleScope.launch {
-            viewModel.genericError.collect {
-                binding.repositoriesPlaceholder.visible()
+            viewModel.error.collect {
+                isLoading = false
 
-                binding.repositoriesListLoader.gone()
-                binding.repositoriesProgressBar.gone()
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.networkError.collect {
-                binding.repositoriesPlaceholder.visible()
+                if ((!isNetworkConnected && !binding.repositoriesList.isVisible) ||
+                    (!isNetworkConnected && binding.repositoriesProgressBar.isVisible)) {
+                    binding.repositoriesPlaceholder.visible()
+                }
 
                 binding.repositoriesListLoader.gone()
                 binding.repositoriesProgressBar.gone()

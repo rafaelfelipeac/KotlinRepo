@@ -7,20 +7,20 @@ import java.io.IOException
 
 object Network {
 
-    suspend fun <T> request(apiCall: suspend () -> T): ResultWrapper<T> {
+    suspend fun <T> request(call: suspend () -> T): ResultWrapper<T> {
         return withContext(Dispatchers.IO) {
             try {
-                ResultWrapper.Success(apiCall.invoke())
+                ResultWrapper.Success(call.invoke())
             } catch (throwable: Throwable) {
                 when (throwable) {
-                    is IOException -> ResultWrapper.NetworkError
+                    is IOException -> ResultWrapper.NetworkError(throwable)
                     is HttpException -> {
                         val code = throwable.code()
                         val errorResponse =  throwable.localizedMessage
-                        ResultWrapper.GenericError(code, errorResponse)
+                        ResultWrapper.GenericError(code, errorResponse, throwable)
                     }
                     else -> {
-                        ResultWrapper.GenericError(null, null)
+                        ResultWrapper.GenericError(null, null, throwable)
                     }
                 }
             }
