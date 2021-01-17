@@ -13,9 +13,9 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.rafaelfelipeac.githubrepositories.R
-import com.rafaelfelipeac.githubrepositories.features.base.DataProviderTest
-import com.rafaelfelipeac.githubrepositories.features.base.FakeRepositoriesViewMode
-import com.rafaelfelipeac.githubrepositories.features.base.FragmentHelper
+import com.rafaelfelipeac.githubrepositories.base.DataProviderAndroidTest.mockRepositoryName
+import com.rafaelfelipeac.githubrepositories.base.FakeRepositoriesViewMode
+import com.rafaelfelipeac.githubrepositories.base.FragmentHelper
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.usecase.GetRepositoriesUseCase
 import com.rafaelfelipeac.githubrepositories.features.repositories.presentation.RepositoriesFragment
 import io.mockk.mockk
@@ -61,7 +61,7 @@ class RepositoriesFragmentTest {
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
         )
 
-        onView(withText(DataProviderTest.mockRepositoryName))
+        onView(withText(mockRepositoryName))
             .inRoot(withDecorView(not(`is`(FragmentHelper().getDecorView(scenario)))))
             .check(matches(isDisplayed()))
     }

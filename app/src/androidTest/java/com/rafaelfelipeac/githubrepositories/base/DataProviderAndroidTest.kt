@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.githubrepositories.features.base
+package com.rafaelfelipeac.githubrepositories.base
 
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.model.OwnerDto
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.model.RepositoryDto
@@ -7,7 +7,7 @@ import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Repository
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.RepositoryList
 
-object DataProviderTest {
+object DataProviderAndroidTest {
 
     const val mockLanguage = "language:kotlin"
     const val mockSort = "star"

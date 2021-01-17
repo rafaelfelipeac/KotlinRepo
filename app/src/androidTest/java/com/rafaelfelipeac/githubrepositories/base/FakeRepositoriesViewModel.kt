@@ -1,7 +1,8 @@
-package com.rafaelfelipeac.githubrepositories.features.base
+package com.rafaelfelipeac.githubrepositories.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.rafaelfelipeac.githubrepositories.base.DataProviderAndroidTest.createRepositories
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Repository
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.usecase.GetRepositoriesUseCase
 import com.rafaelfelipeac.githubrepositories.features.repositories.presentation.RepositoriesViewModel
@@ -19,7 +20,7 @@ class FakeRepositoriesViewMode(
     override fun getRepositories(language: String, sort: String, page: Int) {
         when(result) {
             Result.SUCCESS -> {
-                _repositories.value = DataProviderTest.createRepositories()
+                _repositories.value = createRepositories()
             }
             Result.NETWORK_ERROR -> {
                 _error.value = Exception()

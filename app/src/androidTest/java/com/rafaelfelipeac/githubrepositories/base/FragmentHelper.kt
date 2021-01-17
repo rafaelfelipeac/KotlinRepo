@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.githubrepositories.features.base
+package com.rafaelfelipeac.githubrepositories.base
 
 import android.view.View
 import androidx.fragment.app.testing.FragmentScenario
