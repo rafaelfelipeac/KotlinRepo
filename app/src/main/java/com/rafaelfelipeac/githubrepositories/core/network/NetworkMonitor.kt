@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
-import com.rafaelfelipeac.githubrepositories.core.plataform.Constants.isNetworkConnected
+import com.rafaelfelipeac.githubrepositories.core.plataform.Config.isNetworkConnected
 import javax.inject.Inject
 
 class NetworkMonitor @Inject constructor(

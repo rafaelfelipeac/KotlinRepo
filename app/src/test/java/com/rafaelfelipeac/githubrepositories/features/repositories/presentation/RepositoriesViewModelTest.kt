@@ -1,5 +1,6 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.presentation
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.rafaelfelipeac.githubrepositories.base.CoroutineRule
 import com.rafaelfelipeac.githubrepositories.base.DataProviderTest.createRepositories
 import com.rafaelfelipeac.githubrepositories.base.DataProviderTest.mockLanguage
@@ -9,7 +10,6 @@ import com.rafaelfelipeac.githubrepositories.base.equalTo
 import com.rafaelfelipeac.githubrepositories.core.network.ResultWrapper
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.usecase.GetRepositoriesUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -25,6 +25,9 @@ class RepositoriesViewModelTest {
     @ExperimentalCoroutinesApi
     @get:Rule
     var coroutinesTestRule = CoroutineRule()
+
+    @get:Rule
+    var rule = InstantTaskExecutorRule()
 
     private var mockGetRepositoriesUseCase = Mockito.mock(GetRepositoriesUseCase::class.java)
 
@@ -50,9 +53,7 @@ class RepositoriesViewModelTest {
         repositoriesViewModel.getRepositories(mockLanguage, mockSort, mockPage)
 
         // then
-        runBlocking {
-            repositoriesViewModel.repositories.first() equalTo repositories
-        }
+        repositoriesViewModel.repositories.value equalTo repositories
     }
 
     @Test
@@ -69,7 +70,7 @@ class RepositoriesViewModelTest {
 
         // then
         runBlocking {
-            repositoriesViewModel.error.first() equalTo throwable
+            repositoriesViewModel.error.value equalTo throwable
         }
     }
 
@@ -87,7 +88,7 @@ class RepositoriesViewModelTest {
 
         // then
         runBlocking {
-            repositoriesViewModel.error.first() equalTo throwable
+            repositoriesViewModel.error.value equalTo throwable
         }
     }
 }

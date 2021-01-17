@@ -1,30 +1,28 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rafaelfelipeac.githubrepositories.R
 import com.rafaelfelipeac.githubrepositories.core.extension.gone
 import com.rafaelfelipeac.githubrepositories.core.extension.viewBinding
 import com.rafaelfelipeac.githubrepositories.core.extension.visible
-import com.rafaelfelipeac.githubrepositories.core.plataform.Constants.isNetworkConnected
+import com.rafaelfelipeac.githubrepositories.core.plataform.Config.LANGUAGE
+import com.rafaelfelipeac.githubrepositories.core.plataform.Config.SORT
 import com.rafaelfelipeac.githubrepositories.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.githubrepositories.databinding.FragmentRepositoriesBinding
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Repository
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 var CURRENT_PAGE = 1
-var LANGUAGE = "language:kotlin"
-var SORT = "star"
 
 class RepositoriesFragment : BaseFragment() {
 
-    private val viewModel by lazy { viewModelProvider.repositoriesViewModel() }
+    var viewModel: RepositoriesViewModel? = null
 
     private var binding by viewBinding<FragmentRepositoriesBinding>()
 
@@ -38,6 +36,8 @@ class RepositoriesFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        setHasOptionsMenu(true)
+
         return FragmentRepositoriesBinding.inflate(inflater, container, false).run {
             binding = this
             binding.root
@@ -47,9 +47,13 @@ class RepositoriesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (viewModel == null) {
+            viewModel = viewModelProvider.repositoriesViewModel()
+        }
+
         setLayout()
 
-        viewModel.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
+        viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
 
         observeViewModel()
     }
@@ -63,7 +67,7 @@ class RepositoriesFragment : BaseFragment() {
                     isLoading = true
 
                     // load the next page
-                    viewModel.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
+                    viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
 
                     binding.repositoriesListLoader.visible()
                     binding.repositoriesList.scrollToPosition(repositoriesAdapter.itemCount - 1)
@@ -74,8 +78,10 @@ class RepositoriesFragment : BaseFragment() {
 
     private fun observeViewModel() {
         lifecycleScope.launch {
-            viewModel.repositories.collect {
+            viewModel?.repositories?.observe(viewLifecycleOwner) {
                 isLoading = false
+
+                binding.repositoriesList.visible()
 
                 setList(it)
 
@@ -88,11 +94,10 @@ class RepositoriesFragment : BaseFragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.error.collect {
+            viewModel?.error?.observe(viewLifecycleOwner) {
                 isLoading = false
 
-                if ((!isNetworkConnected && !binding.repositoriesList.isVisible) ||
-                    (!isNetworkConnected && binding.repositoriesProgressBar.isVisible)) {
+                if ((!binding.repositoriesList.isVisible || binding.repositoriesProgressBar.isVisible)) {
                     binding.repositoriesPlaceholder.visible()
                 }
 
@@ -102,8 +107,42 @@ class RepositoriesFragment : BaseFragment() {
         }
     }
 
-    private fun setList(repositories: List<Repository>) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_reload, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menuReload -> {
+                reload()
+
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private fun reload() {
+        repositoriesAdapter.clearItems()
+        CURRENT_PAGE = 1
+
+        binding.repositoriesList.gone()
+        binding.repositoriesPlaceholder.gone()
+        binding.repositoriesListLoader.gone()
+        binding.repositoriesProgressBar.visible()
+
+
+        viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
+    }
+
+    private fun setList(repositories: List<Repository>?) {
         repositoriesAdapter.setItems(repositories)
+        repositoriesAdapter.clickListener = { repository ->
+            Toast.makeText(context,  repository.name, Toast.LENGTH_SHORT).show()
+        }
 
         if (isFirstPage) {
             isFirstPage = false

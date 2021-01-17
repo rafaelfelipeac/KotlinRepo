@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.githubrepositories.base
+package com.rafaelfelipeac.githubrepositories.features.base
 
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.model.OwnerDto
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.model.RepositoryDto
@@ -9,7 +9,7 @@ import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.
 
 object DataProviderTest {
 
-    const val mockLanguage = "language:Kotlin"
+    const val mockLanguage = "language:kotlin"
     const val mockSort = "star"
     const val mockPage = 1
 

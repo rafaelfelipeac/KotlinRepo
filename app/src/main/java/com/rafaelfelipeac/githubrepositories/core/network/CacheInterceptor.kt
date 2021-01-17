@@ -1,6 +1,6 @@
 package com.rafaelfelipeac.githubrepositories.core.network
 
-import com.rafaelfelipeac.githubrepositories.core.plataform.Constants.isNetworkConnected
+import com.rafaelfelipeac.githubrepositories.core.plataform.Config.isNetworkConnected
 import okhttp3.Interceptor
 
 class CacheInterceptor() {

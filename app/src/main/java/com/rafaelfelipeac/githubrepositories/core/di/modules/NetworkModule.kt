@@ -5,7 +5,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.rafaelfelipeac.githubrepositories.core.network.CacheInterceptor
 import com.rafaelfelipeac.githubrepositories.core.network.NetworkMonitor
-import com.rafaelfelipeac.githubrepositories.core.plataform.Constants
+import com.rafaelfelipeac.githubrepositories.core.plataform.Config
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -22,7 +22,7 @@ object NetworkModule {
     @Singleton
     fun retrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder()
-            .baseUrl(Constants.URL_GITHUB)
+            .baseUrl(Config.URL_BASE_GITHUB)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()

@@ -4,14 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>() {
 
     private val items: MutableList<T> = mutableListOf()
-
-    var touchHelper: ItemTouchHelper? = null
 
     override fun getItemCount(): Int = items.size
 
@@ -32,8 +29,15 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>(
         fun bind(item: T) = itemView.bindView(item, this)
     }
 
-    fun setItems(items: List<T>) {
-        this.items.addAll(items)
+    fun setItems(items: List<T>?) {
+        if (items != null) {
+            this.items.addAll(items)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun clearItems() {
+        this.items.clear()
         notifyDataSetChanged()
     }
 }
