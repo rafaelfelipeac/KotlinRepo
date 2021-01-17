@@ -5,5 +5,4 @@ import com.rafaelfelipeac.githubrepositories.features.repositories.presentation.
 interface ViewModelProvider {
 
     fun repositoriesViewModel(): RepositoriesViewModel
-
 }

@@ -15,6 +15,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+const val CACHE_MAX_SIZE = (10 * 1024 * 1024).toLong()
+
 @Module
 object NetworkModule {
 
@@ -48,7 +50,7 @@ object NetworkModule {
     @Provides
     fun cache(
         context: Context
-    ): Cache = Cache(context.cacheDir, (10 * 1024 * 1024).toLong()) // 10MB
+    ): Cache = Cache(context.cacheDir, CACHE_MAX_SIZE) // 10MB
 
     @Provides
     fun networkMonitor(

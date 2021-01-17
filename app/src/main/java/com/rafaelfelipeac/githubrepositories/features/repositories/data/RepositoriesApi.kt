@@ -12,5 +12,4 @@ interface RepositoriesApi {
         @Query("sort") sort: String,
         @Query("page") page: Int
     ): RepositoryListDto
-
 }

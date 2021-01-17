@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class RepositoriesViewModel @Inject constructor(
-        private val getRepositoriesUseCase: GetRepositoriesUseCase
+    private val getRepositoriesUseCase: GetRepositoriesUseCase
 ) : ViewModel() {
 
     open val repositories: LiveData<List<Repository>?> get() = _repositories

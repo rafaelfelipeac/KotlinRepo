@@ -41,7 +41,7 @@ class RepositoryDtoMapperTest {
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                name = nameParameter,
+                name = nameParameter
             )
         )
 
@@ -57,7 +57,7 @@ class RepositoryDtoMapperTest {
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                stars = starsParameter,
+                stars = starsParameter
             )
         )
 
@@ -105,7 +105,7 @@ class RepositoryDtoMapperTest {
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                avatar_url = avatarUrlParameter,
+                avatar_url = avatarUrlParameter
             )
         )
 

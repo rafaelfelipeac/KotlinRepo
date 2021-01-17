@@ -9,7 +9,7 @@ data class OwnerDto(
     @SerializedName("login")
     val login: String?,
     @SerializedName("avatar_url")
-    val avatar_url: String?,
+    val avatarUrl: String?
 )
 
 class OwnerDtoMapper @Inject constructor() : TwoWayMapper<OwnerDto, Owner> {
@@ -17,14 +17,14 @@ class OwnerDtoMapper @Inject constructor() : TwoWayMapper<OwnerDto, Owner> {
     override fun map(param: OwnerDto): Owner = with(param) {
         Owner(
             name = login.orEmpty(),
-            avatarUrl = avatar_url.orEmpty()
+            avatarUrl = avatarUrl.orEmpty()
         )
     }
 
     override fun mapReverse(param: Owner): OwnerDto = with(param) {
         OwnerDto(
             login = name,
-            avatar_url = avatarUrl
+            avatarUrl = avatarUrl
         )
     }
 }

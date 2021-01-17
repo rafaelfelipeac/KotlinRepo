@@ -29,7 +29,7 @@ class RepositoriesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN Success result WHEN getRepositoriesUseCase is called THEN the repository return a list of repositories`() {
+    fun `GIVEN Success result WHEN getRepositoriesUseCase is called THEN repository return a list of repositories`() {
         runBlocking {
             // given
             val repositories = createRepositories()

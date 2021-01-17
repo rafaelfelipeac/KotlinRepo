@@ -5,7 +5,7 @@ import com.rafaelfelipeac.githubrepositories.core.TwoWayMapper
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.RepositoryList
 import javax.inject.Inject
 
-data class RepositoryListDto (
+data class RepositoryListDto(
     @SerializedName("items")
     val items: List<RepositoryDto>
 )

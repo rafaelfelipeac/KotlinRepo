@@ -37,11 +37,11 @@ class OwnerDtoMapperTest {
     fun `GIVEN a null login parameter WHEN map is called THEN mapped name is empty`() {
         // given 
         val loginParameter = null
-        
+
         // when
         val result = ownerDtoMapper.map(
             createOwnerDto(
-                login = loginParameter,
+                login = loginParameter
             )
         )
 

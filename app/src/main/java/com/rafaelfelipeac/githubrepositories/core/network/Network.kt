@@ -5,6 +5,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
+@Suppress("TooGenericExceptionCaught")
 object Network {
 
     suspend fun <T> request(call: suspend () -> T): ResultWrapper<T> {
@@ -16,7 +17,7 @@ object Network {
                     is IOException -> ResultWrapper.NetworkError(throwable)
                     is HttpException -> {
                         val code = throwable.code()
-                        val errorResponse =  throwable.localizedMessage
+                        val errorResponse = throwable.localizedMessage
                         ResultWrapper.GenericError(code, errorResponse, throwable)
                     }
                     else -> {

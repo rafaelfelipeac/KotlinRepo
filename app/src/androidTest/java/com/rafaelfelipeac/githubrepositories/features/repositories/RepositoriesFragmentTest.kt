@@ -9,12 +9,14 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.rafaelfelipeac.githubrepositories.R
 import com.rafaelfelipeac.githubrepositories.base.DataProviderAndroidTest.mockRepositoryName
-import com.rafaelfelipeac.githubrepositories.base.FakeRepositoriesViewMode
+import com.rafaelfelipeac.githubrepositories.base.FakeRepositoriesViewModel
 import com.rafaelfelipeac.githubrepositories.base.EspressoHelper
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.usecase.GetRepositoriesUseCase
 import com.rafaelfelipeac.githubrepositories.features.repositories.presentation.RepositoriesFragment
@@ -58,9 +60,9 @@ class RepositoriesFragmentTest {
     fun clickOnFirstRepositoryThenToastIsShownWithTheRepositoryName() {
         scenario = launchFragmentInContainer() {
             RepositoriesFragment().also { fragment ->
-                fragment.viewModel = FakeRepositoriesViewMode(
+                fragment.viewModel = FakeRepositoriesViewModel(
                     mockRepositoriesUseCase,
-                    FakeRepositoriesViewMode.Result.SUCCESS
+                    FakeRepositoriesViewModel.Result.SUCCESS
                 )
             }
         }
@@ -128,9 +130,9 @@ class RepositoriesFragmentTest {
     private fun scenarioSuccess() {
         scenario = launchFragmentInContainer() {
             RepositoriesFragment().also { fragment ->
-                fragment.viewModel = FakeRepositoriesViewMode(
+                fragment.viewModel = FakeRepositoriesViewModel(
                     mockRepositoriesUseCase,
-                    FakeRepositoriesViewMode.Result.SUCCESS
+                    FakeRepositoriesViewModel.Result.SUCCESS
                 )
             }
         }
@@ -148,9 +150,9 @@ class RepositoriesFragmentTest {
     private fun scenarioNetworkError() {
         scenario = launchFragmentInContainer() {
             RepositoriesFragment().also { fragment ->
-                fragment.viewModel = FakeRepositoriesViewMode(
+                fragment.viewModel = FakeRepositoriesViewModel(
                     mockRepositoriesUseCase,
-                    FakeRepositoriesViewMode.Result.NETWORK_ERROR
+                    FakeRepositoriesViewModel.Result.NETWORK_ERROR
                 )
             }
         }
@@ -168,9 +170,9 @@ class RepositoriesFragmentTest {
     private fun scenarioGenericError() {
         scenario = launchFragmentInContainer() {
             RepositoriesFragment().also { fragment ->
-                fragment.viewModel = FakeRepositoriesViewMode(
+                fragment.viewModel = FakeRepositoriesViewModel(
                     mockRepositoriesUseCase,
-                    FakeRepositoriesViewMode.Result.GENERIC_ERROR
+                    FakeRepositoriesViewModel.Result.GENERIC_ERROR
                 )
             }
         }

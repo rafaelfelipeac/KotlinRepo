@@ -7,10 +7,10 @@ import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.usecase.GetRepositoriesUseCase
 import com.rafaelfelipeac.githubrepositories.features.repositories.presentation.RepositoriesViewModel
 
-class FakeRepositoriesViewMode(
+class FakeRepositoriesViewModel(
     repositoriesUseCase: GetRepositoriesUseCase,
     private val result: Result
-): RepositoriesViewModel(repositoriesUseCase) {
+) : RepositoriesViewModel(repositoriesUseCase) {
 
     override val repositories: LiveData<List<Repository>?> get() = _repositories
     private val _repositories = MutableLiveData<List<Repository>?>()
@@ -18,7 +18,7 @@ class FakeRepositoriesViewMode(
     private val _error = MutableLiveData<Throwable>()
 
     override fun getRepositories(language: String, sort: String, page: Int) {
-        when(result) {
+        when (result) {
             Result.SUCCESS -> {
                 _repositories.value = createRepositories()
             }

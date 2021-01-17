@@ -1,10 +1,14 @@
 package com.rafaelfelipeac.githubrepositories.features.repositories.presentation
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rafaelfelipeac.githubrepositories.R
@@ -16,10 +20,10 @@ import com.rafaelfelipeac.githubrepositories.core.plataform.Config.SORT
 import com.rafaelfelipeac.githubrepositories.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.githubrepositories.databinding.FragmentRepositoriesBinding
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.model.Repository
-import kotlinx.coroutines.launch
 
 var CURRENT_PAGE = 1
 
+@Suppress("TooManyFunctions")
 class RepositoriesFragment : BaseFragment() {
 
     private var binding by viewBinding<FragmentRepositoriesBinding>()
@@ -32,7 +36,8 @@ class RepositoriesFragment : BaseFragment() {
     private var isLoading = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
@@ -98,26 +103,17 @@ class RepositoriesFragment : BaseFragment() {
         viewModel?.repositories?.observe(viewLifecycleOwner) {
             isLoading = false
 
-            binding.repositoriesList.visible()
+            showList()
 
             setList(it)
 
             CURRENT_PAGE += 1
-
-            binding.repositoriesPlaceholder.gone()
-            binding.repositoriesListLoader.gone()
-            binding.repositoriesProgressBar.gone()
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
             isLoading = false
 
-            if ((!binding.repositoriesList.isVisible || binding.repositoriesProgressBar.isVisible)) {
-                binding.repositoriesPlaceholder.visible()
-            }
-
-            binding.repositoriesListLoader.gone()
-            binding.repositoriesProgressBar.gone()
+            showPlaceholder()
         }
     }
 
@@ -143,12 +139,32 @@ class RepositoriesFragment : BaseFragment() {
         repositoryAdapter.clearItems()
         CURRENT_PAGE = 1
 
+        showProgressBar()
+
+        viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
+    }
+
+    private fun showList() {
+        binding.repositoriesList.visible()
+        binding.repositoriesPlaceholder.gone()
+        binding.repositoriesListLoader.gone()
+        binding.repositoriesProgressBar.gone()
+    }
+
+    private fun showPlaceholder() {
+        if ((!binding.repositoriesList.isVisible || binding.repositoriesProgressBar.isVisible)) {
+            binding.repositoriesPlaceholder.visible()
+        }
+
+        binding.repositoriesListLoader.gone()
+        binding.repositoriesProgressBar.gone()
+    }
+
+    private fun showProgressBar() {
         binding.repositoriesList.gone()
         binding.repositoriesPlaceholder.gone()
         binding.repositoriesListLoader.gone()
         binding.repositoriesProgressBar.visible()
-
-
-        viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
+        binding.repositoriesList.scrollToPosition(0)
     }
 }
