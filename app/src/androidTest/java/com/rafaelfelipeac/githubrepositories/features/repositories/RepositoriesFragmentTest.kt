@@ -15,7 +15,7 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.rafaelfelipeac.githubrepositories.R
 import com.rafaelfelipeac.githubrepositories.base.DataProviderAndroidTest.mockRepositoryName
 import com.rafaelfelipeac.githubrepositories.base.FakeRepositoriesViewMode
-import com.rafaelfelipeac.githubrepositories.base.FragmentHelper
+import com.rafaelfelipeac.githubrepositories.base.EspressoHelper
 import com.rafaelfelipeac.githubrepositories.features.repositories.domain.usecase.GetRepositoriesUseCase
 import com.rafaelfelipeac.githubrepositories.features.repositories.presentation.RepositoriesFragment
 import io.mockk.mockk
@@ -32,22 +32,30 @@ class RepositoriesFragmentTest {
     private val mockRepositoriesUseCase = mockk<GetRepositoriesUseCase>()
 
     @Test
-    fun whenTheResponseIsSuccessThenListIsVisibleAndOtherElementsAreNot() {
+    fun launchRepositoriesFragmentAndVerifyUI() {
+        launchFragmentInContainer<RepositoriesFragment>()
+
+        onView(withId(R.id.repositoriesTitle))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun responseIsSuccessThenJustListIsVisible() {
         scenarioSuccess()
     }
 
     @Test
-    fun whenTheResponseIsNetworkErrorThenJustPlaceholderIsVisible() {
+    fun responseIsNetworkErrorThenJustPlaceholderIsVisible() {
         scenarioNetworkError()
     }
 
     @Test
-    fun whenTheResponseIsGenericErrorThenJustPlaceholderIsVisible() {
+    fun responseIsGenericErrorThenJustPlaceholderIsVisible() {
         scenarioGenericError()
     }
 
     @Test
-    fun whenUserClickOnTheFirstRepositoryThenShowAToastWithTheRepositoryName() {
+    fun clickOnFirstRepositoryThenToastIsShownWithTheRepositoryName() {
         scenario = launchFragmentInContainer() {
             RepositoriesFragment().also { fragment ->
                 fragment.viewModel = FakeRepositoriesViewMode(
@@ -62,43 +70,61 @@ class RepositoriesFragmentTest {
         )
 
         onView(withText(mockRepositoryName))
-            .inRoot(withDecorView(not(`is`(FragmentHelper().getDecorView(scenario)))))
+            .inRoot(withDecorView(not(`is`(EspressoHelper().getDecorView(scenario)))))
             .check(matches(isDisplayed()))
     }
 
     @Test
-    fun whenUserClickOnReloadThenTheListAreReloadedWithSuccess() {
+    fun responseIsSuccessAndUserClickOnReloadButtonWithSuccessThenListAreReloaded() {
         scenarioSuccess()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-
-        onView(withText("Reload")).perform(click())
+        onView(withText(R.string.menu_reload)).perform(click())
 
         scenarioSuccess()
     }
 
     @Test
-    fun whenIsSuccessAndUserClickOnReloadThenTheListAreReloadedWithNetworkError() {
+    fun responseIsSuccessAndUserClickOnReloadButtonWithNetworkErrorThenPlaceholderIsShown() {
         scenarioSuccess()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-
-        onView(withText("Reload")).perform(click())
+        onView(withText(R.string.menu_reload)).perform(click())
 
         scenarioNetworkError()
     }
 
     @Test
-    fun whenIsSuccessAndUserClickOnReloadThenTheListAreReloadedWithGenericError() {
+    fun responseIsSuccessAndUserClickOnReloadButtonWithGenericErrorThenPlaceholderIsShown() {
         scenarioSuccess()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-
-        onView(withText("Reload")).perform(click())
+        onView(withText(R.string.menu_reload)).perform(click())
 
         scenarioGenericError()
     }
 
+    @Test
+    fun responseIsNetworkErrorAndUserClickOnReloadButtonWithSuccessThenListAreReloaded() {
+        scenarioNetworkError()
+
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
+        onView(withText(R.string.menu_reload)).perform(click())
+
+        scenarioSuccess()
+    }
+
+    @Test
+    fun responseIsNetworkErrorAndUserClickOnReloadButtonWithNetworkErrorAndPlaceholderIsShown() {
+        scenarioNetworkError()
+
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
+        onView(withText(R.string.menu_reload)).perform(click())
+
+        scenarioNetworkError()
+    }
+
+    // region Scenarios
     private fun scenarioSuccess() {
         scenario = launchFragmentInContainer() {
             RepositoriesFragment().also { fragment ->
@@ -158,4 +184,5 @@ class RepositoriesFragmentTest {
         onView(withId(R.id.repositoriesProgressBar))
             .check(matches(not(isDisplayed())))
     }
+    // endregion
 }

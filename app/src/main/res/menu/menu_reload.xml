@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menuReload"
         android:icon="@drawable/ic_fork"
-        android:title="Reload"
+        android:title="@string/menu_reload"
         app:showAsAction="always" />
 
 </menu>

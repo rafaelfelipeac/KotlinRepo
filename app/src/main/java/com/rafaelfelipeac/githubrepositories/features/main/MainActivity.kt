@@ -1,14 +1,10 @@
 package com.rafaelfelipeac.githubrepositories.features.main
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.rafaelfelipeac.githubrepositories.R
-import com.rafaelfelipeac.githubrepositories.core.extension.viewBinding
-import com.rafaelfelipeac.githubrepositories.core.plataform.base.BaseActivity
-import com.rafaelfelipeac.githubrepositories.databinding.ActivityMainBinding
 
-class MainActivity : BaseActivity() {
-
-    private val binding by viewBinding(ActivityMainBinding::inflate)
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
