@@ -33,7 +33,7 @@ class RepositoryDataSourceTest {
     }
 
     @Test
-    fun `GIVEN api returns successfully WHEN getAllRepositories is called THEN Success is returned`() {
+    fun `GIVEN Success return from api WHEN getAllRepositories is called THEN Success is returned`() {
         runBlocking {
             // given
             val repositoryListDto = createRepositoryListDto()
@@ -61,7 +61,7 @@ class RepositoryDataSourceTest {
     }
 
     @Test
-    fun `GIVEN api returns an NetworkError WHEN getAllRepositories is called THEN NetworkError is returned`() {
+    fun `GIVEN NetworkError return from api WHEN getAllRepositories is called THEN NetworkError is returned`() {
         runBlocking {
             // given
             val throwable = IOException()
@@ -90,7 +90,7 @@ class RepositoryDataSourceTest {
     }
 
     @Test
-    fun `GIVEN api returns an GenericError WHEN getAllRepositories is called THEN GenericError is returned`() {
+    fun `GIVEN GeneticError return from api WHEN getAllRepositories is called THEN GenericError is returned`() {
         runBlocking {
             // given
             val throwable = Exception()

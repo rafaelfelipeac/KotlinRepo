@@ -41,7 +41,7 @@ class RepositoriesViewModelTest {
     }
 
     @Test
-    fun `GIVEN a call to getRepositories WHEN it succeeds THEN a list with repositories should be returned`() {
+    fun `GIVEN a Success result WHEN getRepositories is called THEN a list with repositories should be returned`() {
         // given
         val repositories = createRepositories()
         val success = ResultWrapper.Success(repositories)
@@ -57,7 +57,7 @@ class RepositoriesViewModelTest {
     }
 
     @Test
-    fun `GIVEN a call to getRepositories WHEN it fails for genericError THEN a throwable should be returned`() {
+    fun `GIVEN a GenericError result WHEN getRepositories is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val genericError = ResultWrapper.GenericError(null, null, throwable)
@@ -75,7 +75,7 @@ class RepositoriesViewModelTest {
     }
 
     @Test
-    fun `GIVEN a call to getRepositories WHEN it fails for networkError THEN a throwable should be returned`() {
+    fun `GIVEN a NetworkError result WHEN getRepositories is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val networkError = ResultWrapper.NetworkError(throwable)

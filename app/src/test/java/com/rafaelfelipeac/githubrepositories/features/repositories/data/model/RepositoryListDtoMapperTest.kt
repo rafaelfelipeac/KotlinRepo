@@ -10,26 +10,26 @@ class RepositoryListDtoMapperTest {
     private val repositoryListDtoMapper = RepositoryListDtoMapper()
 
     @Test
-    fun `WHEN map is called THEN RepositoryList is returned`() {
+    fun `GIVEN RepositoryListDto WHEN map is called THEN RepositoryList is returned`() {
         // given
-        val other = createRepositoryList()
+        val repositoryListDto = createRepositoryListDto()
 
         // when
-        val result = repositoryListDtoMapper.map(createRepositoryListDto())
+        val result = repositoryListDtoMapper.map(repositoryListDto)
 
         // then
-        result equalTo other
+        result equalTo createRepositoryList()
     }
 
     @Test
-    fun `WHEN mapReverse is called THEN RepositoryListDto is returned`() {
+    fun `GIVEN RepositoryList WHEN mapReverse is called THEN RepositoryListDto is returned`() {
         // given
-        val other = createRepositoryListDto()
+        val repositoryList = createRepositoryList()
 
         // when
-        val result = repositoryListDtoMapper.mapReverse(createRepositoryList())
+        val result = repositoryListDtoMapper.mapReverse(repositoryList)
 
         // then
-        result equalTo other
+        result equalTo createRepositoryListDto()
     }
 }

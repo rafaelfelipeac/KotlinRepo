@@ -29,7 +29,7 @@ class RepositoriesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN a call to getRepositoriesUseCase WHEN it succeeds THEN the repository return a list of repositories`() {
+    fun `GIVEN Success result WHEN getRepositoriesUseCase is called THEN the repository return a list of repositories`() {
         runBlocking {
             // given
             val repositories = createRepositories()
@@ -47,7 +47,7 @@ class RepositoriesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN a call to getRepositoriesUseCase WHEN it fails for a genericError THEN the repository return a throwable`() {
+    fun `GIVEN GenericError result WHEN getRepositoriesUseCase is called THEN the repository return a throwable`() {
         runBlocking {
             // given
             val throwable = Exception()
@@ -65,7 +65,7 @@ class RepositoriesUseCaseTest {
     }
 
     @Test
-    fun `GIVEN a call to getRepositoriesUseCase WHEN it fails for a networkError THEN the repository return a throwable`() {
+    fun `GIVEN a NetworkError result WHEN getRepositoriesUseCase is called THEN the repository return a throwable`() {
         runBlocking {
             // given
             val throwable = Exception()

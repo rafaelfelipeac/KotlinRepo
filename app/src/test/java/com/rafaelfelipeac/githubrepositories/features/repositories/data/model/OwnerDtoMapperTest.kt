@@ -10,35 +10,38 @@ class OwnerDtoMapperTest {
     private val ownerDtoMapper = OwnerDtoMapper()
 
     @Test
-    fun `WHEN map is called THEN Owner is returned`() {
+    fun `GIVEN OwnerDto WHEN map is called THEN Owner is returned`() {
         // given
-        val other = createOwner()
+        val ownerDto = createOwnerDto()
 
         // when
-        val result = ownerDtoMapper.map(createOwnerDto())
+        val result = ownerDtoMapper.map(ownerDto)
 
         // then
-        result equalTo other
+        result equalTo createOwner()
     }
 
     @Test
-    fun `WHEN mapReverse is called THEN OwnerDto is returned`() {
+    fun `GIVEN Owner WHEN mapReverse is called THEN OwnerDto is returned`() {
         // given
-        val other = createOwnerDto()
+        val owner = createOwner()
 
         // when
-        val result = ownerDtoMapper.mapReverse(createOwner())
+        val result = ownerDtoMapper.mapReverse(owner)
 
         // then
-        result equalTo other
+        result equalTo createOwnerDto()
     }
 
     @Test
-    fun `WHEN login is null THEN mapped name is empty`() {
+    fun `GIVEN a null login parameter WHEN map is called THEN mapped name is empty`() {
+        // given 
+        val loginParameter = null
+        
         // when
         val result = ownerDtoMapper.map(
             createOwnerDto(
-                login = null,
+                login = loginParameter,
             )
         )
 
@@ -47,11 +50,14 @@ class OwnerDtoMapperTest {
     }
 
     @Test
-    fun `WHEN avatar_url is null THEN mapped avatarUrl is empty`() {
+    fun `GIVEN a null avatar_url parameter WHEN map is called THEN mapped avatarUrl is empty`() {
+        // given
+        val avatarUrlParameter = null
+
         // when
         val result = ownerDtoMapper.map(
             createOwnerDto(
-                avatar_url = null
+                avatar_url = avatarUrlParameter
             )
         )
 

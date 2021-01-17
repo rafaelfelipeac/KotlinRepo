@@ -10,35 +10,38 @@ class RepositoryDtoMapperTest {
     private val repositoryDtoMapper = RepositoryDtoMapper()
 
     @Test
-    fun `WHEN map is called THEN Repository is returned`() {
+    fun `GIVEN RepositoryDto WHEN map is called THEN Repository is returned`() {
         // given
-        val other = createRepository()
+        val repositoryDto = createRepositoryDto()
 
         // when
-        val result = repositoryDtoMapper.map(createRepositoryDto())
+        val result = repositoryDtoMapper.map(repositoryDto)
 
         // then
-        result equalTo other
+        result equalTo createRepository()
     }
 
     @Test
-    fun `WHEN mapReverse is called THEN RepositoryDto is returned`() {
+    fun `GIVEN Repository WHEN mapReverse is called THEN RepositoryDto is returned`() {
         // given
-        val other = createRepositoryDto()
+        val repository = createRepository()
 
         // when
-        val result = repositoryDtoMapper.mapReverse(createRepository())
+        val result = repositoryDtoMapper.mapReverse(repository)
 
         // then
-        result equalTo other
+        result equalTo createRepositoryDto()
     }
 
     @Test
-    fun `WHEN name is null THEN mapped name is empty`() {
+    fun `GIVEN a null name parameter WHEN map is called THEN mapped name is empty`() {
+        // given
+        val nameParameter = null
+
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                name = null,
+                name = nameParameter,
             )
         )
 
@@ -47,11 +50,14 @@ class RepositoryDtoMapperTest {
     }
 
     @Test
-    fun `WHEN stars is null THEN mapped stars is empty`() {
+    fun `GIVEN a null stars parameter WHEN map is called THEN mapped stars is empty`() {
+        // given
+        val starsParameter = null
+
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                stars = null,
+                stars = starsParameter,
             )
         )
 
@@ -60,11 +66,14 @@ class RepositoryDtoMapperTest {
     }
 
     @Test
-    fun `WHEN forks is null THEN mapped forks is empty`() {
+    fun `GIVEN a null forks parameter WHEN map is called THEN mapped forks is empty`() {
+        // given
+        val forksParameter = null
+
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                forks = null
+                forks = forksParameter
             )
         )
 
@@ -73,11 +82,14 @@ class RepositoryDtoMapperTest {
     }
 
     @Test
-    fun `WHEN login is null THEN mapped ownerName is empty`() {
+    fun `GIVEN a null login parameter WHEN map is called THEN mapped ownerName is empty`() {
+        // given
+        val loginParameter = null
+
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                login = null
+                login = loginParameter
             )
         )
 
@@ -86,11 +98,14 @@ class RepositoryDtoMapperTest {
     }
 
     @Test
-    fun `WHEN avatar_url is null THEN mapped ownerAvatarUrl is empty`() {
+    fun `GIVEN a null avatarUrl parameter WHEN map is called THEN mapped ownerAvatarUrl is empty`() {
+        // given
+        val avatarUrlParameter = null
+
         // when
         val result = repositoryDtoMapper.map(
             createRepositoryDto(
-                avatar_url = null,
+                avatar_url = avatarUrlParameter,
             )
         )
 
