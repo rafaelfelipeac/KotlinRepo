@@ -10,6 +10,6 @@
     <string name="repo_forks_message">%s forks</string>
 
     <!-- menu -->
-    <string name="menu_reload">Reload</string>
+    <string name="menu_refresh">Refresh</string>
 
 </resources>

@@ -13,7 +13,7 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/repo_title"
+            android:id="@+id/repositoryTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -29,31 +29,31 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/repo_owner"
+            android:id="@+id/repositoryOwner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="@+id/repo_title"
-            card_view:layout_constraintTop_toBottomOf="@+id/repo_title">
+            card_view:layout_constraintStart_toStartOf="@+id/repositoryTitle"
+            card_view:layout_constraintTop_toBottomOf="@+id/repositoryTitle">
 
             <ImageView
-                android:id="@+id/repo_owner_image"
+                android:id="@+id/repositoryOwnerImage"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/repo_owner_name"
+                android:id="@+id/repositoryOwnerName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textStyle="bold"
                 card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintStart_toStartOf="@+id/repo_owner_image"
-                card_view:layout_constraintTop_toBottomOf="@+id/repo_owner_image" />
+                card_view:layout_constraintStart_toStartOf="@+id/repositoryOwnerImage"
+                card_view:layout_constraintTop_toBottomOf="@+id/repositoryOwnerImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -64,18 +64,18 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/repo_title" />
+            card_view:layout_constraintTop_toBottomOf="@+id/repositoryTitle" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/repo_stars"
+            android:id="@+id/repositoryStars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             card_view:layout_constraintStart_toStartOf="@+id/view"
-            card_view:layout_constraintTop_toBottomOf="@+id/repo_title">
+            card_view:layout_constraintTop_toBottomOf="@+id/repositoryTitle">
 
             <ImageView
-                android:id="@+id/repo_stars_image"
+                android:id="@+id/repositoryStarsImage"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/ic_star"
@@ -85,33 +85,33 @@
                 card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/repo_stars_message"
+                android:id="@+id/repositoryStarsMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
-                card_view:layout_constraintBottom_toBottomOf="@+id/repo_stars_image"
+                card_view:layout_constraintBottom_toBottomOf="@+id/repositoryStarsImage"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.0"
-                card_view:layout_constraintStart_toEndOf="@+id/repo_stars_image"
-                card_view:layout_constraintTop_toTopOf="@+id/repo_stars_image" />
+                card_view:layout_constraintStart_toEndOf="@+id/repositoryStarsImage"
+                card_view:layout_constraintTop_toTopOf="@+id/repositoryStarsImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/repo_forks"
+            android:id="@+id/repositoryForks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            card_view:layout_constraintEnd_toEndOf="@+id/repo_stars"
+            card_view:layout_constraintEnd_toEndOf="@+id/repositoryStars"
             card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/repo_stars"
-            card_view:layout_constraintTop_toBottomOf="@+id/repo_stars">
+            card_view:layout_constraintStart_toStartOf="@+id/repositoryStars"
+            card_view:layout_constraintTop_toBottomOf="@+id/repositoryStars">
 
             <ImageView
-                android:id="@+id/repo_forks_image"
+                android:id="@+id/repositoryForksImage"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/ic_fork"
@@ -121,19 +121,18 @@
                 card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/repo_forks_message"
+                android:id="@+id/repositoryForksMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
-                card_view:layout_constraintBottom_toBottomOf="@+id/repo_forks_image"
+                card_view:layout_constraintBottom_toBottomOf="@+id/repositoryForksImage"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.0"
-                card_view:layout_constraintStart_toEndOf="@+id/repo_forks_image"
-                card_view:layout_constraintTop_toTopOf="@+id/repo_forks_image" />
-
+                card_view:layout_constraintStart_toEndOf="@+id/repositoryForksImage"
+                card_view:layout_constraintTop_toTopOf="@+id/repositoryForksImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

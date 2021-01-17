@@ -75,51 +75,51 @@ class RepositoriesFragmentTest {
     }
 
     @Test
-    fun responseIsSuccessAndUserClickOnReloadButtonWithSuccessThenListAreReloaded() {
+    fun responseIsSuccessAndUserClickOnRefreshButtonWithSuccessThenListAreRefreshed() {
         scenarioSuccess()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-        onView(withText(R.string.menu_reload)).perform(click())
+        onView(withText(R.string.menu_refresh)).perform(click())
 
         scenarioSuccess()
     }
 
     @Test
-    fun responseIsSuccessAndUserClickOnReloadButtonWithNetworkErrorThenPlaceholderIsShown() {
+    fun responseIsSuccessAndUserClickOnRefreshButtonWithNetworkErrorThenPlaceholderIsShown() {
         scenarioSuccess()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-        onView(withText(R.string.menu_reload)).perform(click())
+        onView(withText(R.string.menu_refresh)).perform(click())
 
         scenarioNetworkError()
     }
 
     @Test
-    fun responseIsSuccessAndUserClickOnReloadButtonWithGenericErrorThenPlaceholderIsShown() {
+    fun responseIsSuccessAndUserClickOnRefreshButtonWithGenericErrorThenPlaceholderIsShown() {
         scenarioSuccess()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-        onView(withText(R.string.menu_reload)).perform(click())
+        onView(withText(R.string.menu_refresh)).perform(click())
 
         scenarioGenericError()
     }
 
     @Test
-    fun responseIsNetworkErrorAndUserClickOnReloadButtonWithSuccessThenListAreReloaded() {
+    fun responseIsNetworkErrorAndUserClickOnRefreshButtonWithSuccessThenListAreRefreshed() {
         scenarioNetworkError()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-        onView(withText(R.string.menu_reload)).perform(click())
+        onView(withText(R.string.menu_refresh)).perform(click())
 
         scenarioSuccess()
     }
 
     @Test
-    fun responseIsNetworkErrorAndUserClickOnReloadButtonWithNetworkErrorAndPlaceholderIsShown() {
+    fun responseIsNetworkErrorAndUserClickOnRefreshButtonWithNetworkErrorAndPlaceholderIsShown() {
         scenarioNetworkError()
 
         openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-        onView(withText(R.string.menu_reload)).perform(click())
+        onView(withText(R.string.menu_refresh)).perform(click())
 
         scenarioNetworkError()
     }

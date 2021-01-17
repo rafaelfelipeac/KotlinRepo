@@ -22,11 +22,11 @@ var CURRENT_PAGE = 1
 
 class RepositoriesFragment : BaseFragment() {
 
-    var viewModel: RepositoriesViewModel? = null
-
     private var binding by viewBinding<FragmentRepositoriesBinding>()
 
-    private var repositoriesAdapter = RepositoriesAdapter()
+    var viewModel: RepositoriesViewModel? = null
+
+    private var repositoryAdapter = RepositoryAdapter()
 
     private var isFirstPage = true
     private var isLoading = false
@@ -58,6 +58,24 @@ class RepositoriesFragment : BaseFragment() {
         observeViewModel()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_refresh, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menuRefresh -> {
+                refreshRepositories()
+
+                return true
+            }
+        }
+
+        return false
+    }
+
     private fun setLayout() {
         binding.repositoriesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -70,7 +88,7 @@ class RepositoriesFragment : BaseFragment() {
                     viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
 
                     binding.repositoriesListLoader.visible()
-                    binding.repositoriesList.scrollToPosition(repositoriesAdapter.itemCount - 1)
+                    binding.repositoriesList.scrollToPosition(repositoryAdapter.itemCount - 1)
                 }
             }
         })
@@ -107,40 +125,9 @@ class RepositoriesFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_reload, menu)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menuReload -> {
-                reload()
-
-                return true
-            }
-        }
-
-        return false
-    }
-
-    private fun reload() {
-        repositoriesAdapter.clearItems()
-        CURRENT_PAGE = 1
-
-        binding.repositoriesList.gone()
-        binding.repositoriesPlaceholder.gone()
-        binding.repositoriesListLoader.gone()
-        binding.repositoriesProgressBar.visible()
-
-
-        viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
-    }
-
     private fun setList(repositories: List<Repository>?) {
-        repositoriesAdapter.setItems(repositories)
-        repositoriesAdapter.clickListener = { repository ->
+        repositoryAdapter.setItems(repositories)
+        repositoryAdapter.clickListener = { repository ->
             Toast.makeText(context,  repository.name, Toast.LENGTH_SHORT).show()
         }
 
@@ -151,8 +138,21 @@ class RepositoriesFragment : BaseFragment() {
                 setHasFixedSize(true)
 
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                adapter = repositoriesAdapter
+                adapter = repositoryAdapter
             }
         }
+    }
+
+    private fun refreshRepositories() {
+        repositoryAdapter.clearItems()
+        CURRENT_PAGE = 1
+
+        binding.repositoriesList.gone()
+        binding.repositoriesPlaceholder.gone()
+        binding.repositoriesListLoader.gone()
+        binding.repositoriesProgressBar.visible()
+
+
+        viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
     }
 }
