@@ -21,16 +21,16 @@ class RepositoriesAdapter : BaseAdapter<Repository>() {
         val repoTitle = viewHolder.itemView.findViewById<TextView>(R.id.repo_title)
         val repoStarsMessage = viewHolder.itemView.findViewById<TextView>(R.id.repo_stars_message)
         val repoForksMessage = viewHolder.itemView.findViewById<TextView>(R.id.repo_forks_message)
-        val repoAuthorImage = viewHolder.itemView.findViewById<ImageView>(R.id.repo_author_image)
-        val repoAuthorName = viewHolder.itemView.findViewById<TextView>(R.id.repo_author_name)
+        val repoOwnerImage = viewHolder.itemView.findViewById<ImageView>(R.id.repo_owner_image)
+        val repoOwnerName = viewHolder.itemView.findViewById<TextView>(R.id.repo_owner_name)
 
         repoTitle.text = item.name
         repoStarsMessage.text = String.format(
             context.getString(R.string.repo_stars_message), item.stars.toString())
         repoForksMessage.text = String.format(
             context.getString(R.string.repo_forks_message), item.forks.toString())
-        repoAuthorName.text = item.author.name
-        repoAuthorImage.load(item.author.authorImage) {
+        repoOwnerName.text = item.owner.name
+        repoOwnerImage.load(item.owner.avatarUrl) {
             crossfade(true)
             transformations(CircleCropTransformation())
         }
