@@ -95,40 +95,36 @@ class RepositoriesFragment : BaseFragment() {
     }
 
     private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewModel?.repositories?.observe(viewLifecycleOwner) {
-                isLoading = false
+        viewModel?.repositories?.observe(viewLifecycleOwner) {
+            isLoading = false
 
-                binding.repositoriesList.visible()
+            binding.repositoriesList.visible()
 
-                setList(it)
+            setList(it)
 
-                CURRENT_PAGE += 1
+            CURRENT_PAGE += 1
 
-                binding.repositoriesPlaceholder.gone()
-                binding.repositoriesListLoader.gone()
-                binding.repositoriesProgressBar.gone()
-            }
+            binding.repositoriesPlaceholder.gone()
+            binding.repositoriesListLoader.gone()
+            binding.repositoriesProgressBar.gone()
         }
 
-        lifecycleScope.launch {
-            viewModel?.error?.observe(viewLifecycleOwner) {
-                isLoading = false
+        viewModel?.error?.observe(viewLifecycleOwner) {
+            isLoading = false
 
-                if ((!binding.repositoriesList.isVisible || binding.repositoriesProgressBar.isVisible)) {
-                    binding.repositoriesPlaceholder.visible()
-                }
-
-                binding.repositoriesListLoader.gone()
-                binding.repositoriesProgressBar.gone()
+            if ((!binding.repositoriesList.isVisible || binding.repositoriesProgressBar.isVisible)) {
+                binding.repositoriesPlaceholder.visible()
             }
+
+            binding.repositoriesListLoader.gone()
+            binding.repositoriesProgressBar.gone()
         }
     }
 
     private fun setList(repositories: List<Repository>?) {
         repositoryAdapter.setItems(repositories)
         repositoryAdapter.clickListener = { repository ->
-            Toast.makeText(context,  repository.name, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, repository.name, Toast.LENGTH_SHORT).show()
         }
 
         if (isFirstPage) {

@@ -3,7 +3,7 @@ package com.rafaelfelipeac.githubrepositories.core.network
 import com.rafaelfelipeac.githubrepositories.core.plataform.Config.isNetworkConnected
 import okhttp3.Interceptor
 
-class CacheInterceptor() {
+class CacheInterceptor {
 
     var onlineInterceptor = Interceptor { chain ->
         val response = chain.proceed(chain.request())

@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubRepositories">
 
-        <activity android:name="com.rafaelfelipeac.githubrepositories.features.main.MainActivity">
+        <activity android:name="com.rafaelfelipeac.githubrepositories.features.main.MainActivity"
+            android:configChanges="screenSize|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

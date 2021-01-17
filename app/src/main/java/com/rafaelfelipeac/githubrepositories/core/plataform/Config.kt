@@ -11,6 +11,6 @@ object Config {
     const val SORT = "star"
 
     var isNetworkConnected: Boolean by Delegates.observable(false) { _, _, newValue ->
-        Log.i("Network connectivity", "$newValue")
+        Log.i("NetworkConnectivity", "Status = $newValue")
     }
 }
