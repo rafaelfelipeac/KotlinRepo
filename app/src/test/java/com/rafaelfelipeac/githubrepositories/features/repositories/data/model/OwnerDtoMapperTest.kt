@@ -32,4 +32,30 @@ class OwnerDtoMapperTest {
         // then
         result equalTo other
     }
+
+    @Test
+    fun `WHEN login is null THEN mapped name is empty`() {
+        // when
+        val result = ownerDtoMapper.map(
+            createOwnerDto(
+                login = null,
+            )
+        )
+
+        // then
+        result.name equalTo ""
+    }
+
+    @Test
+    fun `WHEN avatar_url is null THEN mapped avatarUrl is empty`() {
+        // when
+        val result = ownerDtoMapper.map(
+            createOwnerDto(
+                avatar_url = null
+            )
+        )
+
+        // then
+        result.avatarUrl equalTo ""
+    }
 }

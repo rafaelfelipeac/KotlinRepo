@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.githubrepositories.base
+package com.rafaelfelipeac.githubrepositories.features.base
 
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.model.OwnerDto
 import com.rafaelfelipeac.githubrepositories.features.repositories.data.model.RepositoryDto

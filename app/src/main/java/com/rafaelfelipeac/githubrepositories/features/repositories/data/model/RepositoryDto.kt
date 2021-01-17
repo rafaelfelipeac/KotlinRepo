@@ -7,23 +7,23 @@ import javax.inject.Inject
 
 data class RepositoryDto(
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("stargazers_count")
-    val stars: Int,
+    val stars: Int?,
     @SerializedName("forks_count")
-    val forks: Int,
+    val forks: Int?,
     @SerializedName("owner")
-    val author: OwnerDto
+    val owner: OwnerDto
 )
 
 class RepositoryDtoMapper @Inject constructor() : TwoWayMapper<RepositoryDto, Repository> {
 
     override fun map(param: RepositoryDto): Repository = with(param) {
         Repository(
-            name = name,
-            stars = stars,
-            forks = forks,
-            author = author.let(OwnerDtoMapper()::map)
+            name = name.orEmpty(),
+            stars = stars ?: 0,
+            forks = forks ?: 0,
+            owner = owner.let(OwnerDtoMapper()::map)
         )
     }
 
@@ -32,7 +32,7 @@ class RepositoryDtoMapper @Inject constructor() : TwoWayMapper<RepositoryDto, Re
             name = name,
             stars = stars,
             forks = forks,
-            author = author.let(OwnerDtoMapper()::mapReverse)
+            owner = owner.let(OwnerDtoMapper()::mapReverse)
         )
     }
 }
