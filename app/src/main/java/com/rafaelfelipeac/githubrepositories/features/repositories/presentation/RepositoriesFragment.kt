@@ -89,6 +89,8 @@ class RepositoriesFragment : BaseFragment() {
                 if (!recyclerView.canScrollVertically(1) && !isLoading) {
                     isLoading = true
 
+                    CURRENT_PAGE++
+
                     // load the next page
                     viewModel?.getRepositories(LANGUAGE, SORT, CURRENT_PAGE)
 
@@ -106,12 +108,13 @@ class RepositoriesFragment : BaseFragment() {
             showList()
 
             setList(it)
-
-            CURRENT_PAGE += 1
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
-            isLoading = false
+            if (isLoading) {
+                isLoading = false
+                CURRENT_PAGE--
+            }
 
             showPlaceholder()
         }
