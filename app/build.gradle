@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.rafaelfelipeac.github_repositories"
+        applicationId "com.rafaelfelipeac.kotlin_repositories"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
