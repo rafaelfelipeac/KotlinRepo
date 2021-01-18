@@ -2,16 +2,15 @@ KotlinRepo
 ---------
 KotlinRepo is a simple app that shows you a list with the repositories that use the Kotlin language. Ordered by the number of stars!
 
-Created with ❤️ to study topics related to Android such as Kotlin, MVVM, Coroutines, Jetpack (Room, ViewModel, LiveData) , Retrofit and Dagger2.
+Created with ❤️ to study topics related to Android such as Kotlin, MVVM, Coroutines, Jetpack (ViewModel, LiveData) , Retrofit and Dagger2.
 
 Developed with:
 -------
 - Kotlin;
 - MVVM;
 - Coroutines;
-- Room;
 - ViewModel and LiveData;
-- Retrofit;git
+- Retrofit;
 - Dagger 2;
 - Unit tests;
 - UI tests;
