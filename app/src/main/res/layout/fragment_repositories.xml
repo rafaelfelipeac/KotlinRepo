@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_light"
-    tools:context="com.rafaelfelipeac.kotlinrepo.features.repositories.presentation.RepositoriesFragment">
+    tools:context="com.rafaelfelipeac.marvelapp.features.repositories.presentation.RepositoriesFragment">
 
     <TextView
         android:id="@+id/repositoriesTitle"

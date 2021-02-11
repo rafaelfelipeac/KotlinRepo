@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/repositoriesFragment"
-        android:name="com.rafaelfelipeac.kotlinrepo.features.repositories.presentation.RepositoriesFragment"
+        android:name="com.rafaelfelipeac.marvelapp.features.repositories.presentation.RepositoriesFragment"
         android:label="fragment_repositories"
         tools:layout="@layout/fragment_repositories" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.rafaelfelipeac.kotlinrepo.features.main.MainFragment"
+        android:name="com.rafaelfelipeac.marvelapp.features.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -28,12 +28,12 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.rafaelfelipeac.kotlinrepo.features.favorite.presentation.FavoriteFragment"
+        android:name="com.rafaelfelipeac.marvelapp.features.favorite.presentation.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.rafaelfelipeac.kotlinrepo.features.details.presentation.DetailsFragment"
+        android:name="com.rafaelfelipeac.marvelapp.features.details.presentation.DetailsFragment"
         android:label="fragment_details"
         tools:layout="@layout/fragment_details" />
 

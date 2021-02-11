@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KotlinRepo</string>
+    <string name="app_name">MarvelApp</string>
 
     <!-- repositories -->
     <string name="repositories_title">Top Kotlin Repositories</string>
