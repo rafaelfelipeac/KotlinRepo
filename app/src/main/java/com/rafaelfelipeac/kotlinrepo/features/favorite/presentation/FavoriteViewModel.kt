@@ -1,4 +1,9 @@
 package com.rafaelfelipeac.kotlinrepo.features.favorite.presentation
 
-class FavoriteViewModel {
+import androidx.lifecycle.ViewModel
+import javax.inject.Inject
+
+open class FavoriteViewModel @Inject constructor(
+) : ViewModel() {
+
 }

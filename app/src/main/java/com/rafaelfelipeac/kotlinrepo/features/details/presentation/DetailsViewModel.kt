@@ -1,4 +1,9 @@
 package com.rafaelfelipeac.kotlinrepo.features.details.presentation
 
-class DetailsViewModel {
+import androidx.lifecycle.ViewModel
+import javax.inject.Inject
+
+open class DetailsViewModel @Inject constructor(
+) : ViewModel() {
+
 }
