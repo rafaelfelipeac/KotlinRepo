@@ -22,4 +22,26 @@ class DetailsDataSource @Inject constructor(
                 .map { detailsDtoMapper.map(it) }
         }
     }
+
+    override suspend fun getDetailsComics(
+        language: String,
+        sort: String,
+        page: Int
+    ): ResultWrapper<List<Character>> {
+        return Network.request() {
+            detailsApi.getDetailsComics(language, sort, page).items
+                .map { detailsDtoMapper.map(it) }
+        }
+    }
+
+    override suspend fun getDetailsSeries(
+        language: String,
+        sort: String,
+        page: Int
+    ): ResultWrapper<List<Character>> {
+        return Network.request() {
+            detailsApi.getDetailsSeries(language, sort, page).items
+                .map { detailsDtoMapper.map(it) }
+        }
+    }
 }

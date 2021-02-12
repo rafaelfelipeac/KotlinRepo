@@ -12,4 +12,18 @@ interface DetailsApi {
         @Query("sort") sort: String,
         @Query("page") page: Int
     ): CharacterListDto
+
+    @GET("search/characters")
+    suspend fun getDetailsComics(
+        @Query("q") language: String,
+        @Query("sort") sort: String,
+        @Query("page") page: Int
+    ): CharacterListDto
+
+    @GET("search/characters")
+    suspend fun getDetailsSeries(
+        @Query("q") language: String,
+        @Query("sort") sort: String,
+        @Query("page") page: Int
+    ): CharacterListDto
 }

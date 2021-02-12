@@ -36,6 +36,8 @@ class DetailsFragment : BaseFragment() {
         setLayout()
 
         viewModel?.getDetails(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
+        viewModel?.getDetailsComics(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
+        viewModel?.getDetailsSeries(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
 
         observeViewModel()
     }
@@ -49,7 +51,23 @@ class DetailsFragment : BaseFragment() {
 
         }
 
+        viewModel?.comics?.observe(viewLifecycleOwner) {
+
+        }
+
+        viewModel?.series?.observe(viewLifecycleOwner) {
+
+        }
+
         viewModel?.error?.observe(viewLifecycleOwner) {
+
+        }
+
+        viewModel?.errorComics?.observe(viewLifecycleOwner) {
+
+        }
+
+        viewModel?.errorSeries?.observe(viewLifecycleOwner) {
 
         }
     }
