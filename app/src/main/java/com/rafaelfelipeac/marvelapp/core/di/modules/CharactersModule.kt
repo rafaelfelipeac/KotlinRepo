@@ -21,10 +21,10 @@ abstract class CharactersModule {
     @Binds
     @IntoMap
     @FragmentKey(CharactersFragment::class)
-    abstract fun bindBackupFragment(charactersFragment: CharactersFragment): Fragment
+    abstract fun bindCharactersFragment(charactersFragment: CharactersFragment): Fragment
 
     @Binds
     @IntoMap
     @ViewModelKey(CharactersViewModel::class)
-    abstract fun bindBackupViewModel(charactersViewModel: CharactersViewModel): ViewModel
+    abstract fun bindCharactersViewModel(charactersViewModel: CharactersViewModel): ViewModel
 }

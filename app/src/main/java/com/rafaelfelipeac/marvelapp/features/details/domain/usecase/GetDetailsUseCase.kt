@@ -1,4 +1,14 @@
 package com.rafaelfelipeac.marvelapp.features.details.domain.usecase
 
-class GetDetailsUseCase {
+import com.rafaelfelipeac.marvelapp.core.network.ResultWrapper
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
+import com.rafaelfelipeac.marvelapp.features.details.domain.repository.DetailsRepository
+import javax.inject.Inject
+
+class GetDetailsUseCase @Inject constructor(
+    private val detailsRepository: DetailsRepository
+) {
+    suspend operator fun invoke(language: String, sort: String, page: Int): ResultWrapper<List<Character>> {
+        return detailsRepository.getDetails(language, sort, page)
+    }
 }
