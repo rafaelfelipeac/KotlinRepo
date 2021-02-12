@@ -1,11 +1,11 @@
 package com.rafaelfelipeac.marvelapp.base
 
-import com.rafaelfelipeac.marvelapp.features.repositories.data.model.OwnerDto
-import com.rafaelfelipeac.marvelapp.features.repositories.data.model.RepositoryDto
-import com.rafaelfelipeac.marvelapp.features.repositories.data.model.RepositoryListDto
-import com.rafaelfelipeac.marvelapp.features.repositories.domain.model.Owner
-import com.rafaelfelipeac.marvelapp.features.repositories.domain.model.Repository
-import com.rafaelfelipeac.marvelapp.features.repositories.domain.model.RepositoryList
+import com.rafaelfelipeac.marvelapp.features.characters.data.model.OwnerDto
+import com.rafaelfelipeac.marvelapp.features.characters.data.model.CharacterDto
+import com.rafaelfelipeac.marvelapp.features.characters.data.model.CharacterListDto
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Owner
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.CharacterList
 
 object DataProviderTest {
 
@@ -17,31 +17,31 @@ object DataProviderTest {
     const val mockOwnerAvatarUrl =
         "https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png"
 
-    const val mockRepositoryName = "Repository Name"
-    const val mockRepositoryStars = 200
-    const val mockRepositoryForks = 100
+    const val mockCharacterName = "Character Name"
+    const val mockCharacterStars = 200
+    const val mockCharacterForks = 100
 
     // region Data
-    fun createRepositoryListDto(): RepositoryListDto {
-        return RepositoryListDto(createRepositoriesDto())
+    fun createCharacterListDto(): CharacterListDto {
+        return CharacterListDto(createCharactersDto())
     }
 
-    fun createRepositoriesDto(): List<RepositoryDto> {
+    fun createCharactersDto(): List<CharacterDto> {
         return listOf(
-            createRepositoryDto(),
-            createRepositoryDto(),
-            createRepositoryDto()
+            createCharacterDto(),
+            createCharacterDto(),
+            createCharacterDto()
         )
     }
 
-    fun createRepositoryDto(
-        name: String? = mockRepositoryName,
-        stars: Int? = mockRepositoryStars,
-        forks: Int? = mockRepositoryForks,
+    fun createCharacterDto(
+        name: String? = mockCharacterName,
+        stars: Int? = mockCharacterStars,
+        forks: Int? = mockCharacterForks,
         login: String? = mockOwnerName,
         avatar_url: String? = mockOwnerAvatarUrl
-    ): RepositoryDto {
-        return RepositoryDto(
+    ): CharacterDto {
+        return CharacterDto(
             name,
             stars,
             forks,
@@ -58,26 +58,26 @@ object DataProviderTest {
     // endregion
 
     // region Domain
-    fun createRepositoryList(): RepositoryList {
-        return RepositoryList(createRepositories())
+    fun createCharacterList(): CharacterList {
+        return CharacterList(createCharacters())
     }
 
-    fun createRepositories(): List<Repository> {
+    fun createCharacters(): List<Character> {
         return listOf(
-            createRepository(),
-            createRepository(),
-            createRepository()
+            createCharacter(),
+            createCharacter(),
+            createCharacter()
         )
     }
 
-    fun createRepository(
-        name: String = mockRepositoryName,
-        stars: Int = mockRepositoryStars,
-        forks: Int = mockRepositoryForks,
+    fun createCharacter(
+        name: String = mockCharacterName,
+        stars: Int = mockCharacterStars,
+        forks: Int = mockCharacterForks,
         ownerName: String = mockOwnerName,
         ownerAvatarUrl: String = mockOwnerAvatarUrl
-    ): Repository {
-        return Repository(
+    ): Character {
+        return Character(
             name,
             stars,
             forks,

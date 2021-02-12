@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.rafaelfelipeac.kotlin_repositories"
+        applicationId "com.rafaelfelipeac.marvelapp"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

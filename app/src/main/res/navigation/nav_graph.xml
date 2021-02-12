@@ -6,12 +6,12 @@
     app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/repositoriesFragment"
-        android:name="com.rafaelfelipeac.marvelapp.features.repositories.presentation.RepositoriesFragment"
-        android:label="fragment_repositories"
-        tools:layout="@layout/fragment_repositories" >
+        android:id="@+id/charactersFragment"
+        android:name="com.rafaelfelipeac.marvelapp.features.characters.presentation.CharactersFragment"
+        android:label="fragment_characters"
+        tools:layout="@layout/fragment_characters" >
         <action
-            android:id="@+id/action_repositoriesFragment_to_detailsFragment"
+            android:id="@+id/action_charactersFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
@@ -20,15 +20,15 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_repositoriesFragment"
-            app:destination="@id/repositoriesFragment" />
+            android:id="@+id/action_mainFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment" />
         <action
             android:id="@+id/action_mainFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.rafaelfelipeac.marvelapp.features.favorite.presentation.FavoriteFragment"
+        android:name="com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment

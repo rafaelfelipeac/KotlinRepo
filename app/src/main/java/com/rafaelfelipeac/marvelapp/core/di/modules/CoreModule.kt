@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
 import com.rafaelfelipeac.marvelapp.core.network.CacheInterceptor
-import com.rafaelfelipeac.marvelapp.features.repositories.data.RepositoriesApi
+import com.rafaelfelipeac.marvelapp.features.characters.data.CharactersApi
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,7 +20,7 @@ abstract class CoreModule {
         fun gson(): Gson = Gson()
 
         @Provides
-        fun Retrofit.repositoriesApi(): RepositoriesApi = create()
+        fun Retrofit.charactersApi(): CharactersApi = create()
 
         @Provides
         fun cacheInterceptor(): CacheInterceptor = CacheInterceptor()

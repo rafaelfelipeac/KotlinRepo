@@ -9,8 +9,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.databinding.FragmentMainBinding
-import com.rafaelfelipeac.marvelapp.features.favorite.presentation.FavoriteFragment
-import com.rafaelfelipeac.marvelapp.features.repositories.presentation.RepositoriesFragment
+import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteFragment
+import com.rafaelfelipeac.marvelapp.features.characters.presentation.CharactersFragment
 
 class MainFragment : Fragment() {
 
@@ -41,9 +41,9 @@ class MainAdapter(fm: FragmentManager) :
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> RepositoriesFragment()
+            0 -> CharactersFragment()
             1 -> FavoriteFragment()
-            else -> RepositoriesFragment()
+            else -> CharactersFragment()
         }
     }
 
