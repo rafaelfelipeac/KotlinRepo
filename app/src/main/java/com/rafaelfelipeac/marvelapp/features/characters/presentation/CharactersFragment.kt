@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rafaelfelipeac.marvelapp.R
@@ -20,6 +20,8 @@ import com.rafaelfelipeac.marvelapp.core.plataform.Config.SORT
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentCharactersBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Owner
+import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 var CURRENT_PAGE = 1
 
@@ -35,18 +37,25 @@ class CharactersFragment : BaseFragment() {
     private var isFirstPage = true
     private var isLoading = false
 
+    private var listAsGrid = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        setHasOptionsMenu(true)
+        setScreen()
 
         return FragmentCharactersBinding.inflate(inflater, container, false).run {
             binding = this
             binding.root
         }
+    }
+
+    private fun setScreen() {
+        hideBackArrow()
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,6 +66,16 @@ class CharactersFragment : BaseFragment() {
         }
 
         setLayout()
+
+        showList()
+
+        setList(
+            listOf(
+                Character(1, "", 1, 2, Owner("", "")),
+                Character(1, "", 1, 2, Owner("", "")),
+                Character(1, "", 1, 2, Owner("", ""))
+            )
+        )
 
         viewModel?.getCharacters(LANGUAGE, SORT, CURRENT_PAGE)
 
@@ -72,7 +91,9 @@ class CharactersFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuRefresh -> {
-                refreshCharacters()
+                listAsGrid = !listAsGrid
+
+                refreshList()
 
                 return true
             }
@@ -123,28 +144,36 @@ class CharactersFragment : BaseFragment() {
     private fun setList(characters: List<Character>?) {
         characterAdapter.setItems(characters)
         characterAdapter.clickListener = { character ->
-            Toast.makeText(context, character.name, Toast.LENGTH_SHORT).show()
+            val action = MainFragmentDirections.mainToDetail()
+            action.characterId = character.id
+            navController?.navigate(action)
         }
 
-        if (isFirstPage) {
+        if (true) {
             isFirstPage = false
 
             binding.charactersList.apply {
                 setHasFixedSize(true)
 
-                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                layoutManager = if (listAsGrid) {
+                    GridLayoutManager(context, 2)
+                } else {
+                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                }
+
                 adapter = characterAdapter
             }
         }
     }
 
-    private fun refreshCharacters() {
-        characterAdapter.clearItems()
-        CURRENT_PAGE = 1
-
-        showProgressBar()
-
-        viewModel?.getCharacters(LANGUAGE, SORT, CURRENT_PAGE)
+    private fun refreshList() {
+        setList(
+            listOf(
+                Character(1, "", 1, 2, Owner("", "")),
+                Character(1, "", 1, 2, Owner("", "")),
+                Character(1, "", 1, 2, Owner("", ""))
+            )
+        )
     }
 
     private fun showList() {

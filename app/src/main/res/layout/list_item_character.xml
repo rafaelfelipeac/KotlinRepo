@@ -4,138 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="@dimen/character_item_card_radius"
-    android:layout_marginBottom="@dimen/margin_small">
+    android:background="@color/white"
+    android:layout_margin="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small"
-        android:background="@color/white">
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/characterTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
+       <ImageView
+           android:id="@+id/detailInfoImage"
+           android:layout_width="match_parent"
+           android:layout_height="100dp"
+           android:background="@color/red"
+           card_view:layout_constraintEnd_toEndOf="parent"
+           card_view:layout_constraintStart_toStartOf="parent"
+           card_view:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/characterOwner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_regular"
-            android:layout_marginBottom="@dimen/margin_small"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="@+id/characterTitle"
-            card_view:layout_constraintTop_toBottomOf="@+id/characterTitle">
+       <TextView
+           android:id="@+id/detailInfoName"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="8dp"
+           android:layout_marginTop="8dp"
+           android:layout_marginEnd="16dp"
+           android:layout_marginBottom="8dp"
+           android:text="Nome do personagem"
+           android:maxLines="2"
+           android:ellipsize="end"
+           android:textSize="16sp"
+           android:textStyle="bold"
+           card_view:layout_constraintBottom_toBottomOf="parent"
+           card_view:layout_constraintEnd_toStartOf="@+id/detailInfoFavorite"
+           card_view:layout_constraintStart_toStartOf="parent"
+           card_view:layout_constraintTop_toBottomOf="@+id/detailInfoImage" />
 
-            <ImageView
-                android:id="@+id/characterOwnerImage"
-                android:layout_width="@dimen/character_item_owner_image_size"
-                android:layout_height="@dimen/character_item_owner_image_size"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
+       <ImageView
+           android:id="@+id/detailInfoFavorite"
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:layout_marginEnd="8dp"
+           android:background="@color/green"
+           card_view:layout_constraintBottom_toBottomOf="@+id/detailInfoName"
+           card_view:layout_constraintEnd_toEndOf="parent"
+           card_view:layout_constraintTop_toTopOf="@+id/detailInfoName" />
 
-            <TextView
-                android:id="@+id/characterOwnerName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_smaller"
-                android:textStyle="bold"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintStart_toStartOf="@+id/characterOwnerImage"
-                card_view:layout_constraintTop_toBottomOf="@+id/characterOwnerImage" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="@dimen/view_size"
-            android:layout_height="@dimen/view_size"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/characterTitle" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/characterStars"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_regular"
-            card_view:layout_constraintStart_toStartOf="@+id/view"
-            card_view:layout_constraintTop_toBottomOf="@+id/characterTitle">
-
-            <ImageView
-                android:id="@+id/characterStarsImage"
-                android:layout_width="@dimen/character_item_image_size"
-                android:layout_height="@dimen/character_item_image_size"
-                android:background="@drawable/ic_star"
-                android:backgroundTint="@color/gray"
-                android:scaleType="fitXY"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/characterStarsMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginTop="@dimen/margin_smaller"
-                android:layout_marginEnd="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_smaller"
-                card_view:layout_constraintBottom_toBottomOf="@+id/characterStarsImage"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.0"
-                card_view:layout_constraintStart_toEndOf="@+id/characterStarsImage"
-                card_view:layout_constraintTop_toTopOf="@+id/characterStarsImage" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/characterForks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            card_view:layout_constraintEnd_toEndOf="@+id/characterStars"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/characterStars"
-            card_view:layout_constraintTop_toBottomOf="@+id/characterStars">
-
-            <ImageView
-                android:id="@+id/characterForksImage"
-                android:layout_width="@dimen/character_item_image_size"
-                android:layout_height="@dimen/character_item_image_size"
-                android:background="@drawable/ic_fork"
-                android:backgroundTint="@color/gray"
-                android:scaleType="fitXY"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/characterForksMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginTop="@dimen/margin_smaller"
-                android:layout_marginEnd="@dimen/margin_small"
-                android:layout_marginBottom="@dimen/margin_smaller"
-                card_view:layout_constraintBottom_toBottomOf="@+id/characterForksImage"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.0"
-                card_view:layout_constraintStart_toEndOf="@+id/characterForksImage"
-                card_view:layout_constraintTop_toTopOf="@+id/characterForksImage" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

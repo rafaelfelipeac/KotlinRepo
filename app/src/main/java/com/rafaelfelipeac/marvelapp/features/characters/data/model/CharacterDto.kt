@@ -20,6 +20,7 @@ class CharacterDtoMapper @Inject constructor() : TwoWayMapper<CharacterDto, Char
 
     override fun map(param: CharacterDto): Character = with(param) {
         Character(
+            id = 1,
             name = name.orEmpty(),
             stars = stars ?: 0,
             forks = forks ?: 0,

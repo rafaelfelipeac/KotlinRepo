@@ -1,21 +1,19 @@
-package com.rafaelfelipeac.marvelapp.features.characters.presentation
+package com.rafaelfelipeac.marvelapp.features.details.presentation
 
 import android.view.View
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseAdapter
-import com.rafaelfelipeac.marvelapp.databinding.ListItemCharacterBinding
+import com.rafaelfelipeac.marvelapp.databinding.ListItemDetailsInfoBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 
-class CharacterAdapter : BaseAdapter<Character>() {
+class DetailsInfoAdapter : BaseAdapter<Character>() {
 
     var clickListener: (repo: Character) -> Unit = { }
 
-    override fun getLayoutRes(): Int = R.layout.list_item_character
+    override fun getLayoutRes(): Int = R.layout.list_item_details_info
 
     override fun View.bindView(item: Character, viewHolder: ViewHolder) {
-        val binding = ListItemCharacterBinding.bind(this)
+        val binding = ListItemDetailsInfoBinding.bind(this)
 
         setOnClickListener { clickListener(item) }
 

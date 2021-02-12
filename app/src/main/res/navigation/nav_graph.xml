@@ -17,34 +17,34 @@
         <action
             android:id="@+id/mainToFavorite"
             app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/mainToDetail"
+            app:destination="@id/detailsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/charactersFragment"
         android:name="com.rafaelfelipeac.marvelapp.features.characters.presentation.CharactersFragment"
         android:label="fragment_characters"
-        tools:layout="@layout/fragment_characters" >
-
-        <action
-            android:id="@+id/charactersToDetails"
-            app:destination="@id/detailsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_characters" />
 
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" >
-
-        <action
-            android:id="@+id/favoriteToDetails"
-            app:destination="@id/detailsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.rafaelfelipeac.marvelapp.features.details.presentation.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+
+        <argument
+            android:name="characterId"
+            android:defaultValue="0L"
+            app:argType="long" />
+
+    </fragment>
 
 </navigation>

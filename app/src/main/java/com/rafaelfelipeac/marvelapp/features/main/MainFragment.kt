@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
+import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentMainBinding
 import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteFragment
 import com.rafaelfelipeac.marvelapp.features.characters.presentation.CharactersFragment
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
 
     private var binding by viewBinding<FragmentMainBinding>()
 
@@ -20,6 +21,8 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setScreen()
+
         return FragmentMainBinding.inflate(inflater, container, false).run {
             binding = this
             binding.root
@@ -29,8 +32,12 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.pager.adapter = MainAdapter(parentFragmentManager)
+        binding.pager.adapter = MainAdapter(childFragmentManager)
         binding.tabLayout.setupWithViewPager(binding.pager)
+    }
+
+    private fun setScreen() {
+        hideBackArrow()
     }
 }
 
