@@ -5,5 +5,5 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 
 interface CharactersRepository {
 
-    suspend fun getCharacters(language: String, sort: String, page: Int): ResultWrapper<List<Character>>
+    suspend fun getCharacters(apiKey: String, hash: String, ts: Long): ResultWrapper<List<Character>>
 }

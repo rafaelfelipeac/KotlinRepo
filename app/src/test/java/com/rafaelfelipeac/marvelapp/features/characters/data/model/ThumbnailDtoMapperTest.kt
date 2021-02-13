@@ -5,9 +5,9 @@ import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createOwnerDto
 import com.rafaelfelipeac.marvelapp.base.equalTo
 import org.junit.Test
 
-class OwnerDtoMapperTest {
+class ThumbnailDtoMapperTest {
 
-    private val ownerDtoMapper = OwnerDtoMapper()
+    private val ownerDtoMapper = ThumbnailDtoMapper()
 
     @Test
     fun `GIVEN OwnerDto WHEN map is called THEN Owner is returned`() {
@@ -46,7 +46,7 @@ class OwnerDtoMapperTest {
         )
 
         // then
-        result.name equalTo ""
+        result.path equalTo ""
     }
 
     @Test
@@ -62,6 +62,6 @@ class OwnerDtoMapperTest {
         )
 
         // then
-        result.avatarUrl equalTo ""
+        result.extension equalTo ""
     }
 }

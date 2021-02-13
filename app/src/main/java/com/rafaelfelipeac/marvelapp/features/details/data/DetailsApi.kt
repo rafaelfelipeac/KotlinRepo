@@ -8,22 +8,22 @@ interface DetailsApi {
 
     @GET("search/characters")
     suspend fun getDetails(
-        @Query("q") language: String,
-        @Query("sort") sort: String,
-        @Query("page") page: Int
+        @Query("apikey") apiKey: String,
+        @Query("hash") hash: String,
+        @Query("ts") ts: Long
     ): CharacterListDto
 
     @GET("search/characters")
     suspend fun getDetailsComics(
-        @Query("q") language: String,
-        @Query("sort") sort: String,
-        @Query("page") page: Int
+        @Query("apikey") apiKey: String,
+        @Query("hash") hash: String,
+        @Query("ts") ts: Long
     ): CharacterListDto
 
     @GET("search/characters")
     suspend fun getDetailsSeries(
-        @Query("q") language: String,
-        @Query("sort") sort: String,
-        @Query("page") page: Int
+        @Query("apikey") apiKey: String,
+        @Query("hash") hash: String,
+        @Query("ts") ts: Long
     ): CharacterListDto
 }

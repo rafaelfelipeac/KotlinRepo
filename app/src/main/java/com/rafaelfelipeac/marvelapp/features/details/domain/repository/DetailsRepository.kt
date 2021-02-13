@@ -5,9 +5,9 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 
 interface DetailsRepository {
 
-    suspend fun getDetails(language: String, sort: String, page: Int): ResultWrapper<List<Character>>
+    suspend fun getDetails(apikey: String, hash: String, ts: Long): ResultWrapper<List<Character>>
 
-    suspend fun getDetailsComics(language: String, sort: String, page: Int): ResultWrapper<List<Character>>
+    suspend fun getDetailsComics(apikey: String, hash: String, ts: Long): ResultWrapper<List<Character>>
 
-    suspend fun getDetailsSeries(language: String, sort: String, page: Int): ResultWrapper<List<Character>>
+    suspend fun getDetailsSeries(apikey: String, hash: String, ts: Long): ResultWrapper<List<Character>>
 }

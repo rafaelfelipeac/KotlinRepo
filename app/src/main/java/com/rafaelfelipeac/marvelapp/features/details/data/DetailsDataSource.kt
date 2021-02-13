@@ -13,34 +13,34 @@ class DetailsDataSource @Inject constructor(
 ) : DetailsRepository {
 
     override suspend fun getDetails(
-        language: String,
-        sort: String,
-        page: Int
+        apikey: String,
+        hash: String,
+        ts: Long
     ): ResultWrapper<List<Character>> {
         return Network.request() {
-            detailsApi.getDetails(language, sort, page).items
+            detailsApi.getDetails(apikey, hash, ts).items
                 .map { detailsDtoMapper.map(it) }
         }
     }
 
     override suspend fun getDetailsComics(
-        language: String,
-        sort: String,
-        page: Int
+        apikey: String,
+        hash: String,
+        ts: Long
     ): ResultWrapper<List<Character>> {
         return Network.request() {
-            detailsApi.getDetailsComics(language, sort, page).items
+            detailsApi.getDetailsComics(apikey, hash, ts).items
                 .map { detailsDtoMapper.map(it) }
         }
     }
 
     override suspend fun getDetailsSeries(
-        language: String,
-        sort: String,
-        page: Int
+        apikey: String,
+        hash: String,
+        ts: Long
     ): ResultWrapper<List<Character>> {
         return Network.request() {
-            detailsApi.getDetailsSeries(language, sort, page).items
+            detailsApi.getDetailsSeries(apikey, hash, ts).items
                 .map { detailsDtoMapper.map(it) }
         }
     }

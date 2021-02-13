@@ -6,12 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
-import com.rafaelfelipeac.marvelapp.core.plataform.Config
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentDetailsBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Owner
-import com.rafaelfelipeac.marvelapp.features.characters.presentation.CURRENT_PAGE
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Thumbnail
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 class DetailsFragment : BaseFragment() {
@@ -58,27 +57,27 @@ class DetailsFragment : BaseFragment() {
 
         setComics(
             listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", ""))
             )
         )
 
         setSeries(
             listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", ""))
             )
         )
 
-        viewModel?.getDetails(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
-        viewModel?.getDetailsComics(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
-        viewModel?.getDetailsSeries(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
+        viewModel?.getDetails(API_KEY, "", 1L)
+        viewModel?.getDetailsComics(API_KEY, "", 1L)
+        viewModel?.getDetailsSeries(API_KEY, "", 1L)
 
         observeViewModel()
     }
@@ -148,17 +147,17 @@ class DetailsFragment : BaseFragment() {
     private fun refreshList() {
         setComics(
             listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", ""))
             )
         )
 
         setSeries(
             listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", "")),
+                Character(1, "", Thumbnail("", ""))
             )
         )
     }

@@ -6,34 +6,29 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import javax.inject.Inject
 
 data class CharacterDto(
+    @SerializedName("id")
+    val id: Long?,
     @SerializedName("name")
     val name: String?,
-    @SerializedName("stargazers_count")
-    val stars: Int?,
-    @SerializedName("forks_count")
-    val forks: Int?,
-    @SerializedName("owner")
-    val owner: OwnerDto
+    @SerializedName("thumbnail")
+    val thumbnail: ThumbnailDto
 )
 
 class CharacterDtoMapper @Inject constructor() : TwoWayMapper<CharacterDto, Character> {
 
     override fun map(param: CharacterDto): Character = with(param) {
         Character(
-            id = 1,
+            id = id!!, // CORINTHIANS
             name = name.orEmpty(),
-            stars = stars ?: 0,
-            forks = forks ?: 0,
-            owner = owner.let(OwnerDtoMapper()::map)
+            thumbnail = thumbnail.let(ThumbnailDtoMapper()::map)
         )
     }
 
     override fun mapReverse(param: Character): CharacterDto = with(param) {
         CharacterDto(
+            id = id,
             name = name,
-            stars = stars,
-            forks = forks,
-            owner = owner.let(OwnerDtoMapper()::mapReverse)
+            thumbnail = thumbnail.let(ThumbnailDtoMapper()::mapReverse)
         )
     }
 }

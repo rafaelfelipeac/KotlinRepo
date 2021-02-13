@@ -17,7 +17,7 @@ class FakeCharactersViewModel(
     override val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
 
-    override fun getCharacters(language: String, sort: String, page: Int) {
+    override fun getCharacters(apiKey: String, hash: String, ts: Int) {
         when (result) {
             Result.SUCCESS -> {
                 _characters.value = createCharacters()

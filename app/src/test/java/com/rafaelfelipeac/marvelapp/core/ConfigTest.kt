@@ -8,7 +8,7 @@ class ConfigTest {
 
     @Test
     fun `URL_BASE_GITHUB configuration must be correct`() {
-        Config.URL_BASE_GITHUB equalTo "https://api.github.com/"
+        Config.URL_BASE_MARVEL equalTo "https://api.github.com/"
     }
 
     @Test

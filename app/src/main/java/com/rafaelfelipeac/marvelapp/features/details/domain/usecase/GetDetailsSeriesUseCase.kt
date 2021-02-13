@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetDetailsSeriesUseCase @Inject constructor(
     private val detailsRepository: DetailsRepository
 ) {
-    suspend operator fun invoke(language: String, sort: String, page: Int): ResultWrapper<List<Character>> {
-        return detailsRepository.getDetailsSeries(language, sort, page)
+    suspend operator fun invoke(apikey: String, hash: String, ts: Long): ResultWrapper<List<Character>> {
+        return detailsRepository.getDetailsSeries(apikey, hash, ts)
     }
 }

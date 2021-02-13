@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetCharactersUseCase @Inject constructor(
     private val charactersRepository: CharactersRepository
 ) {
-    suspend operator fun invoke(language: String, sort: String, page: Int): ResultWrapper<List<Character>> {
-        return charactersRepository.getCharacters(language, sort, page)
+    suspend operator fun invoke(apiKey: String, hash: String, ts: Long): ResultWrapper<List<Character>> {
+        return charactersRepository.getCharacters(apiKey, hash, ts)
     }
 }

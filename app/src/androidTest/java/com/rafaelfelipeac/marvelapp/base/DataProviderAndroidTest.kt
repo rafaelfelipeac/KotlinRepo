@@ -1,9 +1,9 @@
 package com.rafaelfelipeac.marvelapp.base
 
-import com.rafaelfelipeac.marvelapp.features.characters.data.model.OwnerDto
+import com.rafaelfelipeac.marvelapp.features.characters.data.model.ThumbnailDto
 import com.rafaelfelipeac.marvelapp.features.characters.data.model.CharacterDto
 import com.rafaelfelipeac.marvelapp.features.characters.data.model.CharacterListDto
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Owner
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Thumbnail
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.CharacterList
 
@@ -52,8 +52,8 @@ object DataProviderAndroidTest {
     fun createOwnerDto(
         login: String? = mockOwnerName,
         avatar_url: String? = mockOwnerAvatarUrl
-    ): OwnerDto {
-        return OwnerDto(login, avatar_url)
+    ): ThumbnailDto {
+        return ThumbnailDto(login, avatar_url)
     }
     // endregion
 
@@ -88,8 +88,8 @@ object DataProviderAndroidTest {
     fun createOwner(
         name: String = mockOwnerName,
         avatarUrl: String = mockOwnerAvatarUrl
-    ): Owner {
-        return Owner(name, avatarUrl)
+    ): Thumbnail {
+        return Thumbnail(name, avatarUrl)
     }
     // endregion
 }

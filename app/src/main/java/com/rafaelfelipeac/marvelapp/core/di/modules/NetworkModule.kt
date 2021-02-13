@@ -24,7 +24,7 @@ object NetworkModule {
     @Singleton
     fun retrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder()
-            .baseUrl(Config.URL_BASE_GITHUB)
+            .baseUrl(Config.URL_BASE_MARVEL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()

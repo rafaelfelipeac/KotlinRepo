@@ -31,9 +31,9 @@ open class DetailsViewModel @Inject constructor(
     open val errorSeries: LiveData<Throwable> get() = _errorSeries
     private val _errorSeries = MutableLiveData<Throwable>()
 
-    open fun getDetails(language: String, sort: String, page: Int) {
+    open fun getDetails(apikey: String, hash: String, ts: Long) {
         viewModelScope.launch {
-            when (val response = getDetailsUseCase(language, sort, page)) {
+            when (val response = getDetailsUseCase(apikey, hash, ts)) {
                 is ResultWrapper.Success -> {
                     _details.value = response.value
                 }
@@ -47,9 +47,9 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsComics(language: String, sort: String, page: Int) {
+    open fun getDetailsComics(apikey: String, hash: String, ts: Long) {
         viewModelScope.launch {
-            when (val response = getDetailsComicsUseCase(language, sort, page)) {
+            when (val response = getDetailsComicsUseCase(apikey, hash, ts)) {
                 is ResultWrapper.Success -> {
                     _comics.value = response.value
                 }
@@ -63,9 +63,9 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsSeries(language: String, sort: String, page: Int) {
+    open fun getDetailsSeries(apikey: String, hash: String, ts: Long) {
         viewModelScope.launch {
-            when (val response = getDetailsSeriesUseCase(language, sort, page)) {
+            when (val response = getDetailsSeriesUseCase(apikey, hash, ts)) {
                 is ResultWrapper.Success -> {
                     _series.value = response.value
                 }

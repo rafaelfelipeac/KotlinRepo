@@ -10,12 +10,9 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
-import com.rafaelfelipeac.marvelapp.core.plataform.Config
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentFavoriteBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Owner
-import com.rafaelfelipeac.marvelapp.features.characters.presentation.CURRENT_PAGE
 import com.rafaelfelipeac.marvelapp.features.characters.presentation.CharacterAdapter
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
@@ -67,13 +64,7 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun refreshList() {
-        setList(
-            listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
-            )
-        )
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,15 +78,7 @@ class FavoriteFragment : BaseFragment() {
 
         showList()
 
-        setList(
-            listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
-            )
-        )
-
-        viewModel?.getFavorites(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
+//        viewModel?.getFavorites(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
 
         observeViewModel()
     }
@@ -134,9 +117,9 @@ class FavoriteFragment : BaseFragment() {
 
     private fun setList(characters: List<Character>?) {
         characterAdapter.setItems(characters)
-        characterAdapter.clickListener = { character ->
+        characterAdapter.clickListener = { characterId ->
             val action = MainFragmentDirections.mainToDetail()
-            action.characterId = character.id
+            action.characterId = characterId
             navController?.navigate(action)
         }
 

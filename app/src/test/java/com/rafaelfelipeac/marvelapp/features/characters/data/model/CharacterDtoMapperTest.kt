@@ -94,7 +94,7 @@ class CharacterDtoMapperTest {
         )
 
         // then
-        result.owner.name equalTo ""
+        result.thumbnail.path equalTo ""
     }
 
     @Test
@@ -110,6 +110,6 @@ class CharacterDtoMapperTest {
         )
 
         // then
-        result.owner.avatarUrl equalTo ""
+        result.thumbnail.extension equalTo ""
     }
 }

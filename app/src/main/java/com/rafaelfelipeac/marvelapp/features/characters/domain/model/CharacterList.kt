@@ -1,5 +1,9 @@
 package com.rafaelfelipeac.marvelapp.features.characters.domain.model
 
 data class CharacterList(
-    val items: List<Character>
+    val offset: Int,
+    val limit: Int,
+    val total: Int,
+    val count: Int,
+    val results: List<Character>
 )

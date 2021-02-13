@@ -6,7 +6,15 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.CharacterLi
 import javax.inject.Inject
 
 data class CharacterListDto(
-    @SerializedName("items")
+    @SerializedName("offset")
+    val offset: Int?,
+    @SerializedName("limit")
+    val limit: Int?,
+    @SerializedName("total")
+    val total: Int?,
+    @SerializedName("count")
+    val count: Int?,
+    @SerializedName("results")
     val items: List<CharacterDto>
 )
 
@@ -14,13 +22,21 @@ class CharacterListDtoMapper @Inject constructor() : TwoWayMapper<CharacterListD
 
     override fun map(param: CharacterListDto): CharacterList = with(param) {
         CharacterList(
-            items = CharacterDtoMapper().mapList(items)
+            offset = offset ?: 0,
+            limit = limit ?: 0,
+            total = total ?: 0,
+            count = count ?: 0,
+            results = CharacterDtoMapper().mapList(items)
         )
     }
 
     override fun mapReverse(param: CharacterList): CharacterListDto = with(param) {
         CharacterListDto(
-            items = CharacterDtoMapper().mapListReverse(items)
+            offset = offset,
+            limit = limit,
+            total = total,
+            count = count,
+            items = CharacterDtoMapper().mapListReverse(results)
         )
     }
 }

@@ -19,9 +19,9 @@ open class CharactersViewModel @Inject constructor(
     open val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
 
-    open fun getCharacters(language: String, sort: String, page: Int) {
+    open fun getCharacters(apiKey: String, hash: String, ts: Long) {
         viewModelScope.launch {
-            when (val response = getCharactersUseCase(language, sort, page)) {
+            when (val response = getCharactersUseCase(apiKey, hash, ts)) {
                 is ResultWrapper.Success -> {
                     _characters.value = response.value
                 }

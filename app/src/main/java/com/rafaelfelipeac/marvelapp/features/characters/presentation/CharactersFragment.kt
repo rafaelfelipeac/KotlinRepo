@@ -15,13 +15,15 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.LANGUAGE
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.SORT
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentCharactersBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Owner
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
+import java.nio.charset.StandardCharsets.UTF_8
+import java.security.MessageDigest
+import java.util.*
 
 var CURRENT_PAGE = 1
 
@@ -69,15 +71,10 @@ class CharactersFragment : BaseFragment() {
 
         showList()
 
-        setList(
-            listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
-            )
-        )
+        val ts = Date().time
+        val hash = md5(ts.toString() + PRIVATE_KEY + API_KEY).toHex()
 
-        viewModel?.getCharacters(LANGUAGE, SORT, CURRENT_PAGE)
+        viewModel?.getCharacters(API_KEY, hash, ts)
 
         observeViewModel()
     }
@@ -113,7 +110,7 @@ class CharactersFragment : BaseFragment() {
                     CURRENT_PAGE++
 
                     // load the next page
-                    viewModel?.getCharacters(LANGUAGE, SORT, CURRENT_PAGE)
+                    // viewModel?.getCharacters(LANGUAGE, SORT, CURRENT_PAGE)
 
                     binding.charactersListLoader.visible()
                     binding.charactersList.scrollToPosition(characterAdapter.itemCount - 1)
@@ -143,9 +140,9 @@ class CharactersFragment : BaseFragment() {
 
     private fun setList(characters: List<Character>?) {
         characterAdapter.setItems(characters)
-        characterAdapter.clickListener = { character ->
+        characterAdapter.clickListener = { characterId ->
             val action = MainFragmentDirections.mainToDetail()
-            action.characterId = character.id
+            action.characterId = characterId
             navController?.navigate(action)
         }
 
@@ -167,13 +164,17 @@ class CharactersFragment : BaseFragment() {
     }
 
     private fun refreshList() {
-        setList(
-            listOf(
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", "")),
-                Character(1, "", 1, 2, Owner("", ""))
-            )
-        )
+        binding.charactersList.apply {
+            setHasFixedSize(true)
+
+            layoutManager = if (listAsGrid) {
+                GridLayoutManager(context, 2)
+            } else {
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            }
+
+            adapter = characterAdapter
+        }
     }
 
     private fun showList() {
@@ -199,4 +200,7 @@ class CharactersFragment : BaseFragment() {
         binding.charactersProgressBar.visible()
         binding.charactersList.scrollToPosition(0)
     }
+
+    private fun md5(str: String): ByteArray = MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
+    private fun ByteArray.toHex() = joinToString("") { "%02x".format(it) }
 }
