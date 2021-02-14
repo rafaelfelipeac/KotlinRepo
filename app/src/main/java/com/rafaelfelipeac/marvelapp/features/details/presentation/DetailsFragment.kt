@@ -157,7 +157,11 @@ class DetailsFragment : BaseFragment() {
     private fun observeViewModel() {
         viewModel?.details?.observe(viewLifecycleOwner) {
             setTitle(it?.name!!)
-            binding.detailsCharacterDescription.text = it.description
+            binding.detailsCharacterDescription.text = if (it.description.isNotEmpty()) {
+                it.description
+            } else {
+                "Sem descrição."
+            }
             binding.detailsCharacterImage.load(it.thumbnail.getUrl())
         }
 
