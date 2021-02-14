@@ -6,17 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.rafaelfelipeac.marvelapp.R
-import com.rafaelfelipeac.marvelapp.core.extension.md5
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
-import com.rafaelfelipeac.marvelapp.core.plataform.Config
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
+import com.rafaelfelipeac.marvelapp.core.extension.visible
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentDetailsBinding
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
-import java.util.*
 
 class DetailsFragment : BaseFragment() {
 
@@ -165,11 +162,17 @@ class DetailsFragment : BaseFragment() {
         }
 
         viewModel?.comics?.observe(viewLifecycleOwner) {
-            setComics(it)
+            if (it?.size!! > 0) {
+                binding.detailsCharacterComics.visible()
+                setComics(it)
+            }
         }
 
         viewModel?.series?.observe(viewLifecycleOwner) {
-            setSeries(it)
+            if (it?.size!! > 0) {
+                binding.detailsCharacterSeries.visible()
+                setSeries(it)
+            }
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
