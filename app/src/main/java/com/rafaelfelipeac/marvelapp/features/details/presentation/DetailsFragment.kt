@@ -164,7 +164,7 @@ class DetailsFragment : BaseFragment() {
         viewModel?.details?.observe(viewLifecycleOwner) {
             setTitle(it?.name!!)
             binding.detailsCharacterDescription.text = it.description
-            binding.detailsCharacterImage.load(getUrl(it))
+            binding.detailsCharacterImage.load(it.thumbnail.getUrl())
         }
 
         viewModel?.comics?.observe(viewLifecycleOwner) {
@@ -193,7 +193,4 @@ class DetailsFragment : BaseFragment() {
     ))
 
     private fun ByteArray.toHex() = joinToString("") { "%02x".format(it) }
-
-    private fun getUrl(item: CharacterDetail?) =
-        item?.thumbnail?.path + "/" + "landscape_xlarge" + "." + item?.thumbnail?.extension
 }

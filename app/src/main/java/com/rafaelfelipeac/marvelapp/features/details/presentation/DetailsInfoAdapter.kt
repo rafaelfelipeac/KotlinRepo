@@ -19,11 +19,8 @@ class DetailsInfoAdapter : BaseAdapter<DetailInfo>() {
         setOnClickListener { clickListener(item) }
 
         binding.detailInfoName.text = item.title
-        binding.detailInfoImage.load(getUrl(item))
+        binding.detailInfoImage.load(item.thumbnail.getUrl())
     }
-
-    private fun getUrl(item: DetailInfo) =
-        item.thumbnail.path + "/" + "landscape_xlarge" + "." + item.thumbnail.extension
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
