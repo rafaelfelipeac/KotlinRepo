@@ -13,12 +13,13 @@ class CharactersDataSource @Inject constructor(
 ) : CharactersRepository {
 
     override suspend fun getCharacters(
-        apiKey: String,
-        hash: String,
-        ts: Long
+            apiKey: String,
+            hash: String,
+            ts: Long,
+            offset: Int
     ): ResultWrapper<List<Character>> {
         return Network.request() {
-            charactersApi.getAllCharacters(apiKey, hash, ts).data.items
+            charactersApi.getAllCharacters(apiKey, hash, ts, offset).data.items
                 .map { characterDtoMapper.map(it) }
         }
     }

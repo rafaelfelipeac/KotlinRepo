@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
+import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
@@ -16,6 +17,15 @@ import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 class DetailsFragment : BaseFragment() {
+
+    private var isFirstPageComics = true
+    private var isFirstPageSeries = true
+
+    private var offsetComics = 0
+    private var offsetSeries = 0
+
+    private var isLoadingComics = false
+    private var isLoadingSeries = false
 
     private var binding by viewBinding<FragmentDetailsBinding>()
 
@@ -68,8 +78,8 @@ class DetailsFragment : BaseFragment() {
         showList()
 
         viewModel?.getDetails(characterId)
-        viewModel?.getDetailsComics(characterId)
-        viewModel?.getDetailsSeries(characterId)
+        viewModel?.getDetailsComics(characterId, offsetComics)
+        viewModel?.getDetailsSeries(characterId, offsetSeries)
 
         observeViewModel()
     }
@@ -82,8 +92,8 @@ class DetailsFragment : BaseFragment() {
             navController?.navigate(action)
         }
 
-        if (true) {
-//            isFirstPage = false
+        if (isFirstPageComics) {
+            isFirstPageComics = false
 
             binding.detailsCharacterComicsList.apply {
                 setHasFixedSize(true)
@@ -103,8 +113,8 @@ class DetailsFragment : BaseFragment() {
             navController?.navigate(action)
         }
 
-        if (true) {
-//            isFirstPage = false
+        if (isFirstPageSeries) {
+            isFirstPageSeries = false
 
             binding.detailsCharacterSeriesList.apply {
                 setHasFixedSize(true)
@@ -160,6 +170,38 @@ class DetailsFragment : BaseFragment() {
                 characterDetail?.thumbnail?.getUrl()!!
             )
         }
+
+        binding.detailsCharacterComicsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollHorizontally(1) && !isLoadingComics) {
+                    isLoadingComics = true
+
+                    // load the next page
+                    viewModel?.getDetailsComics(characterId, offsetComics)
+
+                    binding.detailsCharacterComicsListLoader.visible()
+                    binding.detailsCharacterComicsList.scrollToPosition(comicsAdapter.itemCount - 1)
+                }
+            }
+        })
+
+        binding.detailsCharacterSeriesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollHorizontally(1) && !isLoadingSeries) {
+                    isLoadingSeries = true
+
+                    // load the next page
+                    viewModel?.getDetailsSeries(characterId, offsetSeries)
+
+                    binding.detailsCharacterSeriesListLoader.visible()
+                    binding.detailsCharacterSeriesList.scrollToPosition(seriesAdapter.itemCount - 1)
+                }
+            }
+        })
     }
 
     private fun observeViewModel() {
@@ -178,6 +220,11 @@ class DetailsFragment : BaseFragment() {
 
         viewModel?.comics?.observe(viewLifecycleOwner) {
             if (it?.size!! > 0) {
+                binding.detailsCharacterComicsListLoader.gone()
+                isLoadingComics = false
+
+                offsetComics += 20
+
                 binding.detailsCharacterComics.visible()
                 setComics(it)
             }
@@ -185,6 +232,11 @@ class DetailsFragment : BaseFragment() {
 
         viewModel?.series?.observe(viewLifecycleOwner) {
             if (it?.size!! > 0) {
+                binding.detailsCharacterSeriesListLoader.gone()
+                isLoadingSeries = false
+
+                offsetSeries += 20
+
                 binding.detailsCharacterSeries.visible()
                 setSeries(it)
             }

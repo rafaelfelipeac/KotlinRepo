@@ -6,14 +6,15 @@ import com.rafaelfelipeac.marvelapp.features.details.domain.repository.DetailsRe
 import javax.inject.Inject
 
 class GetDetailsSeriesUseCase @Inject constructor(
-    private val detailsRepository: DetailsRepository
+        private val detailsRepository: DetailsRepository
 ) {
     suspend operator fun invoke(
-        characterId: Long,
-        apikey: String,
-        hash: String,
-        ts: Long
+            characterId: Long,
+            apikey: String,
+            hash: String,
+            ts: Long,
+            offset: Int
     ): ResultWrapper<List<DetailInfo>> {
-        return detailsRepository.getDetailsSeries(characterId, apikey, hash, ts)
+        return detailsRepository.getDetailsSeries(characterId, apikey, hash, ts, offset)
     }
 }

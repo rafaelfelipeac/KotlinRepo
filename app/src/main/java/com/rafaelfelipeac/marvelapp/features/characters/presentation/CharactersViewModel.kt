@@ -27,12 +27,12 @@ open class CharactersViewModel @Inject constructor(
     val savedFavorite: LiveData<Long?> get() = _savedFavorite
     private val _savedFavorite = MutableLiveData<Long?>()
 
-    open fun getCharacters() {
+    open fun getCharacters(offset: Int) {
         val timestamp = Date().time
         val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
 
         viewModelScope.launch {
-            when (val response = getCharactersUseCase(API_KEY, hash, timestamp)) {
+            when (val response = getCharactersUseCase.invoke(API_KEY, hash, timestamp, offset)) {
                 is ResultWrapper.Success -> {
                     _characters.value = response.value
                 }

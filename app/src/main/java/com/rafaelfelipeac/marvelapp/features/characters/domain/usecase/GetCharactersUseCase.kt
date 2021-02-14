@@ -11,8 +11,9 @@ class GetCharactersUseCase @Inject constructor(
     suspend operator fun invoke(
         apiKey: String,
         hash: String,
-        ts: Long
+        ts: Long,
+        offset: Int
     ): ResultWrapper<List<Character>> {
-        return charactersRepository.getCharacters(apiKey, hash, ts)
+        return charactersRepository.getCharacters(apiKey, hash, ts, offset)
     }
 }

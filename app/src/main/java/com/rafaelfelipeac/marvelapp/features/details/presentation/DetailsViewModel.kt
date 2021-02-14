@@ -59,12 +59,12 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsComics(characterId: Long) {
+    open fun getDetailsComics(characterId: Long, offset: Int) {
         val timestamp = Date().time
         val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
 
         viewModelScope.launch {
-            when (val response = getDetailsComicsUseCase(characterId, API_KEY, hash, timestamp)) {
+            when (val response = getDetailsComicsUseCase.invoke(characterId, API_KEY, hash, timestamp, offset)) {
                 is ResultWrapper.Success -> {
                     _comics.value = response.value
                 }
@@ -78,12 +78,12 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsSeries(characterId: Long) {
+    open fun getDetailsSeries(characterId: Long, offset: Int) {
         val timestamp = Date().time
         val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
 
         viewModelScope.launch {
-            when (val response = getDetailsSeriesUseCase(characterId, API_KEY, hash, timestamp)) {
+            when (val response = getDetailsSeriesUseCase.invoke(characterId, API_KEY, hash, timestamp, offset)) {
                 is ResultWrapper.Success -> {
                     _series.value = response.value
                 }

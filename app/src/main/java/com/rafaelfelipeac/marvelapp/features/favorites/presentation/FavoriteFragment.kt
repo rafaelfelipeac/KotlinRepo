@@ -151,7 +151,6 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun setList(favorites: List<Favorite>?) {
-        favoriteAdapter.clearItems()
         favoriteAdapter.setItems(favorites)
         favoriteAdapter.clickListener = { characterId ->
             val action = MainFragmentDirections.mainToDetail()

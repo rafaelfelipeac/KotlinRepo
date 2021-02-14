@@ -26,6 +26,8 @@ var CURRENT_PAGE = 1
 @Suppress("TooManyFunctions")
 class CharactersFragment : BaseFragment() {
 
+    private var offset = 0
+
     private var binding by viewBinding<FragmentCharactersBinding>()
 
     var viewModel: CharactersViewModel? = null
@@ -73,7 +75,7 @@ class CharactersFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel?.getCharacters()
+        viewModel?.getCharacters(offset)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -119,10 +121,8 @@ class CharactersFragment : BaseFragment() {
                 if (!recyclerView.canScrollVertically(1) && !isLoading) {
                     isLoading = true
 
-                    CURRENT_PAGE++
-
                     // load the next page
-                    // viewModel?.getCharacters(LANGUAGE, SORT, CURRENT_PAGE)
+                     viewModel?.getCharacters(offset)
 
                     binding.charactersListLoader.visible()
                     binding.charactersList.scrollToPosition(characterAdapter.itemCount - 1)
@@ -133,6 +133,8 @@ class CharactersFragment : BaseFragment() {
 
     private fun observeViewModel() {
         viewModel?.characters?.observe(viewLifecycleOwner) {
+            offset += 20
+
             isLoading = false
 
             showList()
@@ -155,7 +157,6 @@ class CharactersFragment : BaseFragment() {
     }
 
     private fun setList(characters: List<Character>?) {
-        characterAdapter.clearItems()
         characterAdapter.setItems(characters)
         characterAdapter.clickListener = { characterId ->
             val action = MainFragmentDirections.mainToDetail()
@@ -166,7 +167,7 @@ class CharactersFragment : BaseFragment() {
             viewModel?.favoriteCharacter(it.id, it.name, it.thumbnail.getUrl())
         }
 
-        if (true) {
+        if (isFirstPage) {
             isFirstPage = false
 
             binding.charactersList.apply {

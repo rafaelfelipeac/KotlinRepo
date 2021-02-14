@@ -12,8 +12,9 @@ class GetDetailsComicsUseCase @Inject constructor(
         characterId: Long,
         apikey: String,
         hash: String,
-        ts: Long
+        ts: Long,
+        offset: Int
     ): ResultWrapper<List<DetailInfo>> {
-        return detailsRepository.getDetailsComics(characterId, apikey, hash, ts)
+        return detailsRepository.getDetailsComics(characterId, apikey, hash, ts, offset)
     }
 }
