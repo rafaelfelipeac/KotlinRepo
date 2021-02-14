@@ -13,7 +13,9 @@ import javax.inject.Singleton
         DetailsModule::class,
         FavoriteModule::class,
         NetworkModule::class,
-        CoreModule::class
+        CommonsModule::class,
+        CoreModule::class,
+        PersistenceModule::class
     ]
 )
 @Singleton

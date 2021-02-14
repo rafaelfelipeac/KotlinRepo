@@ -12,8 +12,7 @@ import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentFavoriteBinding
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
-import com.rafaelfelipeac.marvelapp.features.characters.presentation.CharacterAdapter
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 class FavoriteFragment : BaseFragment() {
@@ -22,7 +21,7 @@ class FavoriteFragment : BaseFragment() {
 
     var viewModel: FavoriteViewModel? = null
 
-    private var characterAdapter = CharacterAdapter()
+    private var favoriteAdapter = FavoriteAdapter()
 
     private var listAsGrid = false
 
@@ -36,6 +35,12 @@ class FavoriteFragment : BaseFragment() {
             binding = this
             binding.root
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel?.getFavorites()
     }
 
     private fun setScreen() {
@@ -78,8 +83,6 @@ class FavoriteFragment : BaseFragment() {
 
         showList()
 
-//        viewModel?.getFavorites(Config.LANGUAGE, Config.SORT, CURRENT_PAGE)
-
         observeViewModel()
     }
 
@@ -115,26 +118,25 @@ class FavoriteFragment : BaseFragment() {
         binding.favoriteProgressBar.gone()
     }
 
-    private fun setList(characters: List<Character>?) {
-        characterAdapter.setItems(characters)
-        characterAdapter.clickListener = { characterId ->
+    private fun setList(favorites: List<Favorite>?) {
+        favoriteAdapter.clearItems()
+        favoriteAdapter.setItems(favorites)
+        favoriteAdapter.clickListener = { characterId ->
             val action = MainFragmentDirections.mainToDetail()
             action.characterId = characterId
             navController?.navigate(action)
         }
 
-        if (true) {
-            binding.favoriteList.apply {
-                setHasFixedSize(true)
+        binding.favoriteList.apply {
+            setHasFixedSize(true)
 
-                layoutManager = if (listAsGrid) {
-                    GridLayoutManager(context, 2)
-                } else {
-                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                }
-
-                adapter = characterAdapter
+            layoutManager = if (listAsGrid) {
+                GridLayoutManager(context, 2)
+            } else {
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             }
+
+            adapter = favoriteAdapter
         }
     }
 

@@ -9,7 +9,8 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 
 class CharacterAdapter : BaseAdapter<Character>() {
 
-    var clickListener: (repo: Long) -> Unit = { }
+    var clickListener: (characterId: Long) -> Unit = { }
+    var favoriteListener: (character: Character) -> Unit = { }
 
     override fun getLayoutRes(): Int = R.layout.list_item_character
 
@@ -20,6 +21,9 @@ class CharacterAdapter : BaseAdapter<Character>() {
 
         binding.characterName.text = item.name
         binding.characterImage.load(item.thumbnail.getUrl())
+        binding.characterFavorite.setOnClickListener {
+            favoriteListener(item)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

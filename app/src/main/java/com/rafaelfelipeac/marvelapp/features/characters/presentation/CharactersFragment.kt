@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
@@ -66,9 +67,13 @@ class CharactersFragment : BaseFragment() {
 
         showList()
 
-        viewModel?.getCharacters()
-
         observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel?.getCharacters()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -128,14 +133,22 @@ class CharactersFragment : BaseFragment() {
 
             showPlaceholder()
         }
+
+        viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), "Favorited!", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun setList(characters: List<Character>?) {
+        characterAdapter.clearItems()
         characterAdapter.setItems(characters)
         characterAdapter.clickListener = { characterId ->
             val action = MainFragmentDirections.mainToDetail()
             action.characterId = characterId
             navController?.navigate(action)
+        }
+        characterAdapter.favoriteListener = {
+            viewModel?.saveFavorite(it.id, it.name, it.thumbnail.getUrl())
         }
 
         if (true) {

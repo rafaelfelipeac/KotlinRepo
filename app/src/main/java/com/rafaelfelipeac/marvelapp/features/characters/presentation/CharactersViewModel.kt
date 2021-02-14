@@ -10,18 +10,22 @@ import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.GetCharactersUseCase
+import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.SaveFavoriteUseCase
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 open class CharactersViewModel @Inject constructor(
-    private val getCharactersUseCase: GetCharactersUseCase
+    private val getCharactersUseCase: GetCharactersUseCase,
+    private val saveFavoriteUseCase: SaveFavoriteUseCase
 ) : ViewModel() {
 
     open val characters: LiveData<List<Character>?> get() = _characters
     private val _characters = MutableLiveData<List<Character>?>()
     open val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
+    val savedFavorite: LiveData<Long?> get() = _savedFavorite
+    private val _savedFavorite = MutableLiveData<Long?>()
 
     open fun getCharacters() {
         val timestamp = Date().time
@@ -39,6 +43,12 @@ open class CharactersViewModel @Inject constructor(
                     _error.value = response.throwable
                 }
             }
+        }
+    }
+
+    open fun saveFavorite(characterId: Long, characterName: String, characterUrl: String) {
+        viewModelScope.launch {
+            _savedFavorite.value = saveFavoriteUseCase(characterId, characterName, characterUrl)
         }
     }
 }

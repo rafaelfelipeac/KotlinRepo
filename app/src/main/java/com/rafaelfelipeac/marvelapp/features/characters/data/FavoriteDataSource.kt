@@ -1,4 +1,4 @@
-package com.rafaelfelipeac.marvelapp.features.favorites.data
+package com.rafaelfelipeac.marvelapp.features.characters.data
 
 import com.rafaelfelipeac.marvelapp.features.commons.data.FavoriteDao
 import com.rafaelfelipeac.marvelapp.features.commons.data.model.FavoriteDtoMapper

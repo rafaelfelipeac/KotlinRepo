@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.rafaelfelipeac.marvelapp.core.network.CacheInterceptor
 import com.rafaelfelipeac.marvelapp.features.characters.data.CharactersApi
 import com.rafaelfelipeac.marvelapp.features.details.data.DetailsApi
-import com.rafaelfelipeac.marvelapp.features.favorites.data.FavoriteDao
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -26,9 +25,6 @@ abstract class CoreModule {
 
         @Provides
         fun Retrofit.detailsApi(): DetailsApi = create()
-
-        @Provides
-        fun Retrofit.favoriteDao(): FavoriteDao = create()
 
         @Provides
         fun cacheInterceptor(): CacheInterceptor = CacheInterceptor()
