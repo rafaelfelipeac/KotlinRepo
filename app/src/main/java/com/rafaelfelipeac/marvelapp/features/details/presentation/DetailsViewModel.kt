@@ -4,13 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rafaelfelipeac.marvelapp.core.extension.md5
 import com.rafaelfelipeac.marvelapp.core.network.ResultWrapper
+import com.rafaelfelipeac.marvelapp.core.plataform.Config
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsComicsUseCase
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsSeriesUseCase
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsUseCase
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 open class DetailsViewModel @Inject constructor(
@@ -32,9 +37,12 @@ open class DetailsViewModel @Inject constructor(
     open val errorSeries: LiveData<Throwable> get() = _errorSeries
     private val _errorSeries = MutableLiveData<Throwable>()
 
-    open fun getDetails(characterId: Long, apikey: String, hash: String, ts: Long) {
+    open fun getDetails(characterId: Long) {
+        val timestamp = Date().time
+        val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
+
         viewModelScope.launch {
-            when (val response = getDetailsUseCase(characterId, apikey, hash, ts)) {
+            when (val response = getDetailsUseCase(characterId, API_KEY, hash, timestamp)) {
                 is ResultWrapper.Success -> {
                     _details.value = response.value
                 }
@@ -48,9 +56,12 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsComics(characterId: Long, apikey: String, hash: String, ts: Long) {
+    open fun getDetailsComics(characterId: Long) {
+        val timestamp = Date().time
+        val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
+
         viewModelScope.launch {
-            when (val response = getDetailsComicsUseCase(characterId, apikey, hash, ts)) {
+            when (val response = getDetailsComicsUseCase(characterId, API_KEY, hash, timestamp)) {
                 is ResultWrapper.Success -> {
                     _comics.value = response.value
                 }
@@ -64,9 +75,12 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsSeries(characterId: Long, apikey: String, hash: String, ts: Long) {
+    open fun getDetailsSeries(characterId: Long) {
+        val timestamp = Date().time
+        val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
+
         viewModelScope.launch {
-            when (val response = getDetailsSeriesUseCase(characterId, apikey, hash, ts)) {
+            when (val response = getDetailsSeriesUseCase(characterId, API_KEY, hash, timestamp)) {
                 is ResultWrapper.Success -> {
                     _series.value = response.value
                 }

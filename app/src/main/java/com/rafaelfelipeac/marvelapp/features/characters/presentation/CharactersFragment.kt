@@ -15,15 +15,10 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentCharactersBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
-import java.nio.charset.StandardCharsets.UTF_8
-import java.security.MessageDigest
-import java.util.*
 
 var CURRENT_PAGE = 1
 
@@ -71,10 +66,7 @@ class CharactersFragment : BaseFragment() {
 
         showList()
 
-        val ts = Date().time
-        val hash = md5(ts.toString() + PRIVATE_KEY + API_KEY).toHex()
-
-        viewModel?.getCharacters(API_KEY, hash, ts)
+        viewModel?.getCharacters()
 
         observeViewModel()
     }
@@ -200,7 +192,4 @@ class CharactersFragment : BaseFragment() {
         binding.charactersProgressBar.visible()
         binding.charactersList.scrollToPosition(0)
     }
-
-    private fun md5(str: String): ByteArray = MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
-    private fun ByteArray.toHex() = joinToString("") { "%02x".format(it) }
 }

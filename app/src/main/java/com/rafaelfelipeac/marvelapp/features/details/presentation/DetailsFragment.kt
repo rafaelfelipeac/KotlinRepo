@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.rafaelfelipeac.marvelapp.R
+import com.rafaelfelipeac.marvelapp.core.extension.md5
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.plataform.Config
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentDetailsBinding
-import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 import java.nio.charset.StandardCharsets
@@ -69,11 +69,11 @@ class DetailsFragment : BaseFragment() {
         showList()
 
         val ts = Date().time
-        val hash = md5(ts.toString() + Config.PRIVATE_KEY + API_KEY).toHex()
+        val hash = (ts.toString() + Config.PRIVATE_KEY + API_KEY).md5()
 
-        viewModel?.getDetails(characterId, API_KEY, hash, ts)
-        viewModel?.getDetailsComics(characterId, API_KEY, hash, ts)
-        viewModel?.getDetailsSeries(characterId, API_KEY, hash, ts)
+        viewModel?.getDetails(characterId)
+        viewModel?.getDetailsComics(characterId)
+        viewModel?.getDetailsSeries(characterId)
 
         observeViewModel()
     }
