@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentMainBinding
@@ -37,6 +38,7 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setScreen() {
+        setTitle(getString(R.string.app_name))
         hideBackArrow()
     }
 }
