@@ -24,7 +24,7 @@ class FavoriteFragment : BaseFragment() {
 
     private var favoriteAdapter = FavoriteAdapter()
 
-    private var listAsGrid = false
+    private var contentAsList = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,17 +50,32 @@ class FavoriteFragment : BaseFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_refresh, menu)
+        if (!contentAsList) {
+            inflater.inflate(R.menu.menu_grid, menu)
+        } else {
+            inflater.inflate(R.menu.menu_list, menu)
+        }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuRefresh -> {
-                listAsGrid = !listAsGrid
+            R.id.menuGrid -> {
+                contentAsList = !contentAsList
 
                 refreshList()
+
+                activity?.invalidateOptionsMenu()
+
+                return true
+            }
+            R.id.menuList -> {
+                contentAsList = !contentAsList
+
+                refreshList()
+
+                activity?.invalidateOptionsMenu()
 
                 return true
             }
@@ -70,7 +85,17 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun refreshList() {
+        binding.favoriteList.apply {
+            setHasFixedSize(true)
 
+            layoutManager = if (contentAsList) {
+                GridLayoutManager(context, 2)
+            } else {
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            }
+
+            adapter = favoriteAdapter
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -140,7 +165,7 @@ class FavoriteFragment : BaseFragment() {
         binding.favoriteList.apply {
             setHasFixedSize(true)
 
-            layoutManager = if (listAsGrid) {
+            layoutManager = if (contentAsList) {
                 GridLayoutManager(context, 2)
             } else {
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)

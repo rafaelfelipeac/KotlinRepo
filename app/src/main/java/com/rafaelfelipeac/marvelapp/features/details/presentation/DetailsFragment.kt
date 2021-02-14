@@ -117,14 +117,14 @@ class DetailsFragment : BaseFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_refresh, menu)
+        inflater.inflate(R.menu.menu_grid, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuRefresh -> {
+            R.id.menuGrid -> {
                 listAsGrid = !listAsGrid
 
 //                refreshList()
@@ -167,6 +167,7 @@ class DetailsFragment : BaseFragment() {
             characterDetail = it
 
             setTitle(it?.name!!)
+            binding.detailsFavorite.visible()
             binding.detailsCharacterDescription.text = if (it.description.isNotEmpty()) {
                 it.description
             } else {

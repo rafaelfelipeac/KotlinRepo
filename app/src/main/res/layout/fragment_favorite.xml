@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_regular"
-        android:text="favorite screen title"
+        android:text="Favorite Characters"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"

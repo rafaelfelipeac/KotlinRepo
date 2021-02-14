@@ -24,13 +24,15 @@
 
         <ImageView
             android:id="@+id/detailsFavorite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/green"
+            android:background="@drawable/ic_favorite"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/detailsCharacterImage"
             app:layout_constraintEnd_toEndOf="@+id/detailsCharacterImage"
-            app:layout_constraintTop_toBottomOf="@+id/detailsCharacterImage" />
+            app:layout_constraintTop_toBottomOf="@+id/detailsCharacterImage"
+            tools:visibility="visible"/>
 
         <TextView
             android:id="@+id/detailsCharacterDescription"
