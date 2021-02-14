@@ -13,29 +13,28 @@
         tools:context=".features.details.presentation.DetailsFragment">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/detailsCharacterImage"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/green"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/detailsCharacterDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque fringilla quis metus in ultricies. Mauris erat ligula, lobortis nec tellus eget, lacinia euismod leo. Pellentesque at metus quis tortor tristique mattis ut sit amet metus. Nullam vehicula massa accumsan mi porttitor, id aliquam odio posuere. Morbi posuere suscipit pellentesque. Nam rhoncus nunc non malesuada feugiat. Nullam eu rutrum ex. Sed ullamcorper, dolor eget dictum finibus, metus tellus vehicula metus, nec ultricies diam diam molestie tortor. Vestibulum vel nisi a ligula gravida aliquam. Nunc malesuada venenatis massa, eget blandit urna interdum in. Sed venenatis varius ligula ac ultrices."
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/detailsCharacterImage" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/detailsCharacterComics"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -43,10 +42,10 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/detailsCharacterDescription">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/detailsCharacterComicsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Comics"
@@ -56,7 +55,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/comics_list"
+                android:id="@+id/detailsCharacterComicsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -64,11 +63,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/detailsCharacterComicsTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailsCharacterSeries"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -76,10 +76,10 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+            app:layout_constraintTop_toBottomOf="@+id/detailsCharacterComics">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/detailsCharacterSeriesTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Series"
@@ -89,7 +89,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/series_list"
+                android:id="@+id/detailsCharacterSeriesList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -97,7 +97,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@+id/detailsCharacterSeriesTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

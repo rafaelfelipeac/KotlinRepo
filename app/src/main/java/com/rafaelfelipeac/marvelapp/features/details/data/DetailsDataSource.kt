@@ -2,46 +2,58 @@ package com.rafaelfelipeac.marvelapp.features.details.data
 
 import com.rafaelfelipeac.marvelapp.core.network.Network
 import com.rafaelfelipeac.marvelapp.core.network.ResultWrapper
-import com.rafaelfelipeac.marvelapp.features.characters.data.model.CharacterDtoMapper
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
+import com.rafaelfelipeac.marvelapp.features.details.data.model.CharacterDetailDtoMapper
+import com.rafaelfelipeac.marvelapp.features.details.data.model.DetailInfoDtoMapper
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.details.domain.repository.DetailsRepository
 import javax.inject.Inject
 
 class DetailsDataSource @Inject constructor(
     private val detailsApi: DetailsApi,
-    private val detailsDtoMapper: CharacterDtoMapper
+    private val characterDetailDtoMapper: CharacterDetailDtoMapper,
+    private val detailInfoDtoMapper: DetailInfoDtoMapper
 ) : DetailsRepository {
 
     override suspend fun getDetails(
+        characterId: Long,
         apikey: String,
         hash: String,
         ts: Long
-    ): ResultWrapper<List<Character>> {
+    ): ResultWrapper<CharacterDetail> {
         return Network.request() {
-            detailsApi.getDetails(apikey, hash, ts).items
-                .map { detailsDtoMapper.map(it) }
+            characterDetailDtoMapper.map(
+                detailsApi.getDetails(
+                    characterId,
+                    apikey,
+                    hash,
+                    ts
+                ).data.items.first()
+            )
         }
     }
 
     override suspend fun getDetailsComics(
+        characterId: Long,
         apikey: String,
         hash: String,
         ts: Long
-    ): ResultWrapper<List<Character>> {
+    ): ResultWrapper<List<DetailInfo>> {
         return Network.request() {
-            detailsApi.getDetailsComics(apikey, hash, ts).items
-                .map { detailsDtoMapper.map(it) }
+            detailsApi.getDetailsComics(characterId, apikey, hash, ts).data.items
+                .map { detailInfoDtoMapper.map(it) }
         }
     }
 
     override suspend fun getDetailsSeries(
+        characterId: Long,
         apikey: String,
         hash: String,
         ts: Long
-    ): ResultWrapper<List<Character>> {
+    ): ResultWrapper<List<DetailInfo>> {
         return Network.request() {
-            detailsApi.getDetailsSeries(apikey, hash, ts).items
-                .map { detailsDtoMapper.map(it) }
+            detailsApi.getDetailsSeries(characterId, apikey, hash, ts).data.items
+                .map { detailInfoDtoMapper.map(it) }
         }
     }
 }

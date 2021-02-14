@@ -24,4 +24,8 @@ open class BaseFragment : Fragment() {
     fun showBackArrow() {
         main.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
+    fun setTitle(title: String) {
+        main.supportActionBar?.title = title
+    }
 }

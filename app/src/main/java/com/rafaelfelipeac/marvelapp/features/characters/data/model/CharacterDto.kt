@@ -18,7 +18,7 @@ class CharacterDtoMapper @Inject constructor() : TwoWayMapper<CharacterDto, Char
 
     override fun map(param: CharacterDto): Character = with(param) {
         Character(
-            id = id!!, // CORINTHIANS
+            id = id ?: 0L,
             name = name.orEmpty(),
             thumbnail = thumbnail.let(ThumbnailDtoMapper()::map)
         )

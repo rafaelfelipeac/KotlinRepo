@@ -4,14 +4,19 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
+import com.rafaelfelipeac.marvelapp.core.plataform.Config
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentDetailsBinding
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Thumbnail
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
+import java.util.*
 
 class DetailsFragment : BaseFragment() {
 
@@ -22,7 +27,15 @@ class DetailsFragment : BaseFragment() {
     private var comicsAdapter = DetailsInfoAdapter()
     private var seriesAdapter = DetailsInfoAdapter()
 
+    private var characterId: Long = 0L
+
     private var listAsGrid = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        characterId = arguments?.let { DetailsFragmentArgs.fromBundle(it).characterId } ?: 0L
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,35 +68,18 @@ class DetailsFragment : BaseFragment() {
 
         showList()
 
-        setComics(
-            listOf(
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", ""))
-            )
-        )
+        val ts = Date().time
+        val hash = md5(ts.toString() + Config.PRIVATE_KEY + API_KEY).toHex()
 
-        setSeries(
-            listOf(
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", ""))
-            )
-        )
-
-        viewModel?.getDetails(API_KEY, "", 1L)
-        viewModel?.getDetailsComics(API_KEY, "", 1L)
-        viewModel?.getDetailsSeries(API_KEY, "", 1L)
+        viewModel?.getDetails(characterId, API_KEY, hash, ts)
+        viewModel?.getDetailsComics(characterId, API_KEY, hash, ts)
+        viewModel?.getDetailsSeries(characterId, API_KEY, hash, ts)
 
         observeViewModel()
     }
 
-    private fun setComics(characters: List<Character>?) {
-        comicsAdapter.setItems(characters)
+    private fun setComics(comics: List<DetailInfo>?) {
+        comicsAdapter.setItems(comics)
         comicsAdapter.clickListener = { character ->
             val action = MainFragmentDirections.mainToDetail()
             action.characterId = character.id
@@ -93,7 +89,7 @@ class DetailsFragment : BaseFragment() {
         if (true) {
 //            isFirstPage = false
 
-            binding.comicsList.apply {
+            binding.detailsCharacterComicsList.apply {
                 setHasFixedSize(true)
 
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -103,8 +99,8 @@ class DetailsFragment : BaseFragment() {
         }
     }
 
-    private fun setSeries(characters: List<Character>?) {
-        seriesAdapter.setItems(characters)
+    private fun setSeries(series: List<DetailInfo>?) {
+        seriesAdapter.setItems(series)
         seriesAdapter.clickListener = { character ->
             val action = MainFragmentDirections.mainToDetail()
             action.characterId = character.id
@@ -114,7 +110,7 @@ class DetailsFragment : BaseFragment() {
         if (true) {
 //            isFirstPage = false
 
-            binding.seriesList.apply {
+            binding.detailsCharacterSeriesList.apply {
                 setHasFixedSize(true)
 
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -135,31 +131,13 @@ class DetailsFragment : BaseFragment() {
             R.id.menuRefresh -> {
                 listAsGrid = !listAsGrid
 
-                refreshList()
+//                refreshList()
 
                 return true
             }
         }
 
         return false
-    }
-
-    private fun refreshList() {
-        setComics(
-            listOf(
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", ""))
-            )
-        )
-
-        setSeries(
-            listOf(
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", "")),
-                Character(1, "", Thumbnail("", ""))
-            )
-        )
     }
 
     private fun showList() {
@@ -184,15 +162,17 @@ class DetailsFragment : BaseFragment() {
 
     private fun observeViewModel() {
         viewModel?.details?.observe(viewLifecycleOwner) {
-
+            setTitle(it?.name!!)
+            binding.detailsCharacterDescription.text = it.description
+            binding.detailsCharacterImage.load(getUrl(it))
         }
 
         viewModel?.comics?.observe(viewLifecycleOwner) {
-
+            setComics(it)
         }
 
         viewModel?.series?.observe(viewLifecycleOwner) {
-
+            setSeries(it)
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
@@ -207,4 +187,13 @@ class DetailsFragment : BaseFragment() {
 
         }
     }
+
+    private fun md5(str: String): ByteArray = MessageDigest.getInstance("MD5").digest(str.toByteArray(
+        StandardCharsets.UTF_8
+    ))
+
+    private fun ByteArray.toHex() = joinToString("") { "%02x".format(it) }
+
+    private fun getUrl(item: CharacterDetail?) =
+        item?.thumbnail?.path + "/" + "landscape_xlarge" + "." + item?.thumbnail?.extension
 }

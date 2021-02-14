@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.marvelapp.core.network.ResultWrapper
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsComicsUseCase
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsSeriesUseCase
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsUseCase
@@ -18,12 +19,12 @@ open class DetailsViewModel @Inject constructor(
     private val getDetailsSeriesUseCase: GetDetailsSeriesUseCase
 ) : ViewModel() {
 
-    open val details: LiveData<List<Character>?> get() = _details
-    private val _details = MutableLiveData<List<Character>?>()
-    open val comics: LiveData<List<Character>?> get() = _comics
-    private val _comics = MutableLiveData<List<Character>?>()
-    open val series: LiveData<List<Character>?> get() = _series
-    private val _series = MutableLiveData<List<Character>?>()
+    open val details: LiveData<CharacterDetail?> get() = _details
+    private val _details = MutableLiveData<CharacterDetail?>()
+    open val comics: LiveData<List<DetailInfo>?> get() = _comics
+    private val _comics = MutableLiveData<List<DetailInfo>?>()
+    open val series: LiveData<List<DetailInfo>?> get() = _series
+    private val _series = MutableLiveData<List<DetailInfo>?>()
     open val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
     open val errorComics: LiveData<Throwable> get() = _errorComics
@@ -31,9 +32,9 @@ open class DetailsViewModel @Inject constructor(
     open val errorSeries: LiveData<Throwable> get() = _errorSeries
     private val _errorSeries = MutableLiveData<Throwable>()
 
-    open fun getDetails(apikey: String, hash: String, ts: Long) {
+    open fun getDetails(characterId: Long, apikey: String, hash: String, ts: Long) {
         viewModelScope.launch {
-            when (val response = getDetailsUseCase(apikey, hash, ts)) {
+            when (val response = getDetailsUseCase(characterId, apikey, hash, ts)) {
                 is ResultWrapper.Success -> {
                     _details.value = response.value
                 }
@@ -47,9 +48,9 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsComics(apikey: String, hash: String, ts: Long) {
+    open fun getDetailsComics(characterId: Long, apikey: String, hash: String, ts: Long) {
         viewModelScope.launch {
-            when (val response = getDetailsComicsUseCase(apikey, hash, ts)) {
+            when (val response = getDetailsComicsUseCase(characterId, apikey, hash, ts)) {
                 is ResultWrapper.Success -> {
                     _comics.value = response.value
                 }
@@ -63,9 +64,9 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsSeries(apikey: String, hash: String, ts: Long) {
+    open fun getDetailsSeries(characterId: Long, apikey: String, hash: String, ts: Long) {
         viewModelScope.launch {
-            when (val response = getDetailsSeriesUseCase(apikey, hash, ts)) {
+            when (val response = getDetailsSeriesUseCase(characterId, apikey, hash, ts)) {
                 is ResultWrapper.Success -> {
                     _series.value = response.value
                 }
