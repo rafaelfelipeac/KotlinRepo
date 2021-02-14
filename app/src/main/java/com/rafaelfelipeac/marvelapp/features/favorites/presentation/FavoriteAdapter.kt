@@ -9,7 +9,8 @@ import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 
 class FavoriteAdapter : BaseAdapter<Favorite>() {
 
-    var clickListener: (repo: Long) -> Unit = { }
+    var clickListener: (favoriteId: Long) -> Unit = { }
+    var clickListenerFavorite: (favorite: Favorite) -> Unit = { }
 
     override fun getLayoutRes(): Int = R.layout.list_item_favorite
 
@@ -18,6 +19,9 @@ class FavoriteAdapter : BaseAdapter<Favorite>() {
 
         binding.favoriteName.text = item.favoriteName
         binding.favoriteImage.load(item.favoriteUrl)
+        binding.favoriteFavorite.setOnClickListener {
+            clickListenerFavorite(item)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

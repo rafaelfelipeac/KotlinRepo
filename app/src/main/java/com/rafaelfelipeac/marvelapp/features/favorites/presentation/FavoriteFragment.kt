@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
@@ -100,6 +101,12 @@ class FavoriteFragment : BaseFragment() {
         viewModel?.error?.observe(viewLifecycleOwner) {
             showPlaceholder()
         }
+
+        viewModel?.deleted?.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), "Deleted!", Snackbar.LENGTH_SHORT).show()
+
+            viewModel?.getFavorites()
+        }
     }
 
     private fun showList() {
@@ -125,6 +132,9 @@ class FavoriteFragment : BaseFragment() {
             val action = MainFragmentDirections.mainToDetail()
             action.characterId = characterId
             navController?.navigate(action)
+        }
+        favoriteAdapter.clickListenerFavorite = { favorite ->
+            viewModel?.deleteFavorite(favorite)
         }
 
         binding.favoriteList.apply {
