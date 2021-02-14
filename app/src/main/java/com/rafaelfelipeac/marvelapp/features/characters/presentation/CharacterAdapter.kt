@@ -18,8 +18,8 @@ class CharacterAdapter : BaseAdapter<Character>() {
 
         setOnClickListener { clickListener(item.id) }
 
-        binding.detailInfoName.text = item.name
-        binding.detailInfoImage.load(item.thumbnail.getUrl())
+        binding.characterName.text = item.name
+        binding.characterImage.load(item.thumbnail.getUrl())
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -19,7 +19,7 @@ class DetailsInfoAdapter : BaseAdapter<DetailInfo>() {
         setOnClickListener { clickListener(item) }
 
         binding.detailInfoName.text = item.title
-        binding.detailInfoImage.load(item.thumbnail.getUrl())
+        binding.detailInfoImage.load(item.thumbnail.getUrl(isPortrait = true))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

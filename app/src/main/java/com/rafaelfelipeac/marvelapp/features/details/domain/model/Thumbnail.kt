@@ -4,5 +4,9 @@ data class Thumbnail(
     val path: String,
     val extension: String
 ) {
-    fun getUrl() = "$path/landscape_xlarge.$extension"
+    fun getUrl(isPortrait: Boolean = false) = if (isPortrait) {
+        "$path/portrait_xlarge.$extension"
+    } else {
+        "$path/landscape_xlarge.$extension"
+    }
 }

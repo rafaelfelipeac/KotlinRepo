@@ -68,9 +68,6 @@ class DetailsFragment : BaseFragment() {
 
         showList()
 
-        val ts = Date().time
-        val hash = (ts.toString() + Config.PRIVATE_KEY + API_KEY).md5()
-
         viewModel?.getDetails(characterId)
         viewModel?.getDetailsComics(characterId)
         viewModel?.getDetailsSeries(characterId)
