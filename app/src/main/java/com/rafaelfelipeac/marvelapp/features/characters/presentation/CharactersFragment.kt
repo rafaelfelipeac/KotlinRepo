@@ -148,7 +148,7 @@ class CharactersFragment : BaseFragment() {
             navController?.navigate(action)
         }
         characterAdapter.favoriteListener = {
-            viewModel?.saveFavorite(it.id, it.name, it.thumbnail.getUrl())
+            viewModel?.favoriteCharacter(it.id, it.name, it.thumbnail.getUrl())
         }
 
         if (true) {

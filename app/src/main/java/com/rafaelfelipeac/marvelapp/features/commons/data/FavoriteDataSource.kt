@@ -1,6 +1,5 @@
-package com.rafaelfelipeac.marvelapp.features.characters.data
+package com.rafaelfelipeac.marvelapp.features.commons.data
 
-import com.rafaelfelipeac.marvelapp.features.commons.data.FavoriteDao
 import com.rafaelfelipeac.marvelapp.features.commons.data.model.FavoriteDtoMapper
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.commons.domain.repository.FavoriteRepository

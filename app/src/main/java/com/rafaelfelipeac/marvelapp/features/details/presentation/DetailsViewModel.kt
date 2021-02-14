@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.marvelapp.core.extension.md5
 import com.rafaelfelipeac.marvelapp.core.network.ResultWrapper
-import com.rafaelfelipeac.marvelapp.core.plataform.Config
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
@@ -14,6 +13,7 @@ import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsComicsUseCase
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsSeriesUseCase
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsUseCase
+import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.SaveFavoriteUseCase
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -21,7 +21,8 @@ import javax.inject.Inject
 open class DetailsViewModel @Inject constructor(
     private val getDetailsUseCase: GetDetailsUseCase,
     private val getDetailsComicsUseCase: GetDetailsComicsUseCase,
-    private val getDetailsSeriesUseCase: GetDetailsSeriesUseCase
+    private val getDetailsSeriesUseCase: GetDetailsSeriesUseCase,
+    private val saveFavoriteUseCase: SaveFavoriteUseCase
 ) : ViewModel() {
 
     open val details: LiveData<CharacterDetail?> get() = _details
@@ -36,6 +37,8 @@ open class DetailsViewModel @Inject constructor(
     private val _errorComics = MutableLiveData<Throwable>()
     open val errorSeries: LiveData<Throwable> get() = _errorSeries
     private val _errorSeries = MutableLiveData<Throwable>()
+    val savedFavorite: LiveData<Long?> get() = _savedFavorite
+    private val _savedFavorite = MutableLiveData<Long?>()
 
     open fun getDetails(characterId: Long) {
         val timestamp = Date().time
@@ -91,6 +94,12 @@ open class DetailsViewModel @Inject constructor(
                     _errorSeries.value = response.throwable
                 }
             }
+        }
+    }
+
+    open fun favoriteCharacter(characterId: Long, characterName: String, characterUrl: String) {
+        viewModelScope.launch {
+            _savedFavorite.value = saveFavoriteUseCase(characterId, characterName, characterUrl)
         }
     }
 }

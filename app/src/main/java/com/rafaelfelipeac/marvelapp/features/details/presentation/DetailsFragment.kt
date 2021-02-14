@@ -5,15 +5,15 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentDetailsBinding
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
-import java.nio.charset.StandardCharsets
-import java.security.MessageDigest
 
 class DetailsFragment : BaseFragment() {
 
@@ -27,6 +27,8 @@ class DetailsFragment : BaseFragment() {
     private var characterId: Long = 0L
 
     private var listAsGrid = false
+
+    var characterDetail: CharacterDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,11 +153,19 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun setLayout() {
-
+        binding.detailsFavorite.setOnClickListener {
+            viewModel?.favoriteCharacter(
+                characterDetail?.id!!,
+                characterDetail?.name!!,
+                characterDetail?.thumbnail?.getUrl()!!
+            )
+        }
     }
 
     private fun observeViewModel() {
         viewModel?.details?.observe(viewLifecycleOwner) {
+            characterDetail = it
+
             setTitle(it?.name!!)
             binding.detailsCharacterDescription.text = if (it.description.isNotEmpty()) {
                 it.description
@@ -179,6 +189,10 @@ class DetailsFragment : BaseFragment() {
             }
         }
 
+        viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), "Favoritado!", Snackbar.LENGTH_SHORT).show()
+        }
+
         viewModel?.error?.observe(viewLifecycleOwner) {
 
         }
@@ -191,10 +205,4 @@ class DetailsFragment : BaseFragment() {
 
         }
     }
-
-    private fun md5(str: String): ByteArray = MessageDigest.getInstance("MD5").digest(str.toByteArray(
-        StandardCharsets.UTF_8
-    ))
-
-    private fun ByteArray.toHex() = joinToString("") { "%02x".format(it) }
 }
