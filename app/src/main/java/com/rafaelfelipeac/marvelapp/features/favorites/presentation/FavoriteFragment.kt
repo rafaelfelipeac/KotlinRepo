@@ -128,7 +128,7 @@ class FavoriteFragment : BaseFragment() {
         }
 
         viewModel?.deleted?.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), "Deleted!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), getString(R.string.favorite_deleted), Snackbar.LENGTH_SHORT).show()
 
             viewModel?.getFavorites()
         }
@@ -151,6 +151,7 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun setList(favorites: List<Favorite>?) {
+        favoriteAdapter.clearItems()
         favoriteAdapter.setItems(favorites)
         favoriteAdapter.clickListener = { characterId ->
             val action = MainFragmentDirections.mainToDetail()

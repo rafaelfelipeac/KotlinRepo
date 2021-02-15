@@ -213,7 +213,7 @@ class DetailsFragment : BaseFragment() {
             binding.detailsCharacterDescription.text = if (it.description.isNotEmpty()) {
                 it.description
             } else {
-                "Sem descrição."
+                getString(R.string.details_no_description)
             }
             binding.detailsCharacterImage.load(it.thumbnail.getUrl())
         }
@@ -243,7 +243,7 @@ class DetailsFragment : BaseFragment() {
         }
 
         viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), "Favoritado!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), getString(R.string.details_added_favorites), Snackbar.LENGTH_SHORT).show()
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {

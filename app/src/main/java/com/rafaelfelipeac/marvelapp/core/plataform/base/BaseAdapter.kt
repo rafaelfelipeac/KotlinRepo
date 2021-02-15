@@ -30,8 +30,10 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>(
     }
 
     fun setItems(items: List<T>?) {
-        if (items != null) {
-            this.items.addAll(items)
+        items?.forEach {
+            if (!this.items.contains(it)) {
+                this.items.add(it)
+            }
         }
         notifyDataSetChanged()
     }

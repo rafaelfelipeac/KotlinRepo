@@ -75,6 +75,8 @@ class CharactersFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
+        isFirstPage = true
+
         viewModel?.getCharacters(offset)
     }
 
@@ -152,7 +154,7 @@ class CharactersFragment : BaseFragment() {
         }
 
         viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), "Favorited!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), getString(R.string.characters_added_favorite), Snackbar.LENGTH_SHORT).show()
         }
     }
 
