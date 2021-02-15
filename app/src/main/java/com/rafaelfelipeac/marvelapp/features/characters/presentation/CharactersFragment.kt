@@ -164,8 +164,9 @@ class CharactersFragment : BaseFragment() {
         characterAdapter.favoriteListener = {
             viewModel?.favoriteCharacter(it.id, it.name, it.thumbnail.getUrl())
         }
+        characterAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
-        if (isFirstPage) {
+        if (isFirstPage && binding.charactersList.layoutManager == null) {
             isFirstPage = false
 
             binding.charactersList.apply {
@@ -183,16 +184,18 @@ class CharactersFragment : BaseFragment() {
     }
 
     private fun refreshList() {
-        binding.charactersList.apply {
-            setHasFixedSize(true)
+        if (binding.charactersList.layoutManager == null) {
+            binding.charactersList.apply {
+                setHasFixedSize(true)
 
-            layoutManager = if (contentAsList == true) {
-                GridLayoutManager(context, 2)
-            } else {
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                layoutManager = if (contentAsList == true) {
+                    GridLayoutManager(context, 2)
+                } else {
+                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                }
+
+                adapter = characterAdapter
             }
-
-            adapter = characterAdapter
         }
     }
 

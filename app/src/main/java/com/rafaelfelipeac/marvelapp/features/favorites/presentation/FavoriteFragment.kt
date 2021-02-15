@@ -74,16 +74,18 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun refreshList() {
-        binding.favoriteList.apply {
-            setHasFixedSize(true)
+        if (binding.favoriteList.layoutManager == null) {
+            binding.favoriteList.apply {
+                setHasFixedSize(true)
 
-            layoutManager = if (contentAsList == true) {
-                GridLayoutManager(context, 2)
-            } else {
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                layoutManager = if (contentAsList == true) {
+                    GridLayoutManager(context, 2)
+                } else {
+                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                }
+
+                adapter = favoriteAdapter
             }
-
-            adapter = favoriteAdapter
         }
     }
 
@@ -163,17 +165,20 @@ class FavoriteFragment : BaseFragment() {
         favoriteAdapter.clickListenerFavorite = { favorite ->
             viewModel?.deleteFavorite(favorite)
         }
+        favoriteAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
-        binding.favoriteList.apply {
-            setHasFixedSize(true)
+        if (binding.favoriteList.layoutManager == null) {
+            binding.favoriteList.apply {
+                setHasFixedSize(true)
 
-            layoutManager = if (contentAsList == true) {
-                GridLayoutManager(context, 2)
-            } else {
-                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                layoutManager = if (contentAsList == true) {
+                    GridLayoutManager(context, 2)
+                } else {
+                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                }
+
+                adapter = favoriteAdapter
             }
-
-            adapter = favoriteAdapter
         }
     }
 }
