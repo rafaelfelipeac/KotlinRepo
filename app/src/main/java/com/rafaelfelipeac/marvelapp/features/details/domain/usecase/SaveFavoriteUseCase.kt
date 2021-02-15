@@ -8,10 +8,16 @@ class SaveFavoriteUseCase @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ) {
     suspend operator fun invoke(
-        characterId: Long,
-        characterName: String,
-        characterUrl: String
+        characterId: Long?,
+        characterName: String?,
+        characterUrl: String?
     ): Long {
-        return favoriteRepository.save(Favorite(characterId, characterName, characterUrl))
+        return favoriteRepository.save(
+            Favorite(
+                characterId ?: 0,
+                characterName ?: "",
+                characterUrl ?: ""
+            )
+        )
     }
 }

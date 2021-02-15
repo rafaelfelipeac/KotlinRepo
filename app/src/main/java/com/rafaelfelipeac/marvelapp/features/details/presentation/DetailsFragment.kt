@@ -1,7 +1,9 @@
 package com.rafaelfelipeac.marvelapp.features.details.presentation
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -78,13 +80,14 @@ class DetailsFragment : BaseFragment() {
     private fun setLayout() {
         binding.detailsFavorite.setOnClickListener {
             viewModel?.favoriteCharacter(
-                characterDetail?.id!!,
-                characterDetail?.name!!,
-                characterDetail?.thumbnail?.getUrl(Thumbnail.ImageType.LANDSCAPE)!!
+                characterDetail?.id,
+                characterDetail?.name,
+                characterDetail?.thumbnail?.getUrl(Thumbnail.ImageType.LANDSCAPE)
             )
         }
 
-        binding.detailsCharacterComicsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.detailsCharacterComicsList.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
@@ -99,7 +102,8 @@ class DetailsFragment : BaseFragment() {
             }
         })
 
-        binding.detailsCharacterSeriesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.detailsCharacterSeriesList.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
@@ -119,18 +123,18 @@ class DetailsFragment : BaseFragment() {
         viewModel?.details?.observe(viewLifecycleOwner) {
             characterDetail = it
 
-            setTitle(it?.name!!)
+            setTitle(it?.name)
             binding.detailsFavorite.visible()
-            binding.detailsCharacterDescription.text = if (it.description.isNotEmpty()) {
+            binding.detailsCharacterDescription.text = if (it?.description?.isNotEmpty() == true) {
                 it.description
             } else {
                 getString(R.string.details_no_description)
             }
-            binding.detailsCharacterImage.load(it.thumbnail.getUrl(Thumbnail.ImageType.LANDSCAPE))
+            binding.detailsCharacterImage.load(it?.thumbnail?.getUrl(Thumbnail.ImageType.LANDSCAPE))
         }
 
         viewModel?.comics?.observe(viewLifecycleOwner) {
-            if (it?.size!! > 0) {
+            if (it?.size ?: 0 > 0) {
                 binding.detailsCharacterComicsListLoader.gone()
                 isLoadingComics = false
 
@@ -144,7 +148,7 @@ class DetailsFragment : BaseFragment() {
         }
 
         viewModel?.series?.observe(viewLifecycleOwner) {
-            if (it?.size!! > 0) {
+            if (it?.size ?: 0 > 0) {
                 binding.detailsCharacterSeriesListLoader.gone()
                 isLoadingSeries = false
 
@@ -158,7 +162,11 @@ class DetailsFragment : BaseFragment() {
         }
 
         viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), getString(R.string.details_added_favorites), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                requireView(),
+                getString(R.string.details_added_favorites),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {

@@ -25,7 +25,7 @@ open class BaseFragment : Fragment() {
         main.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun setTitle(title: String) {
-        main.supportActionBar?.title = title
+    fun setTitle(title: String?) {
+        main.supportActionBar?.title = title ?: ""
     }
 }

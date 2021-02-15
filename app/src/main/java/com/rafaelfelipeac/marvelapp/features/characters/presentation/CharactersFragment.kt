@@ -73,7 +73,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (contentAsList != null) {
-            if (!contentAsList!!) {
+            if (contentAsList != true) {
                 inflater.inflate(R.menu.menu_grid, menu)
             } else {
                 inflater.inflate(R.menu.menu_list, menu)
@@ -89,7 +89,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
                 refreshCharacter = true
                 refreshFavorite = true
 
-                viewModel?.saveListMode(!contentAsList!!)
+                viewModel?.saveListMode(contentAsList != true)
 
                 return true
             }

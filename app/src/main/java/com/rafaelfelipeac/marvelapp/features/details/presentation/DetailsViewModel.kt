@@ -97,7 +97,7 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun favoriteCharacter(characterId: Long, characterName: String, characterUrl: String) {
+    open fun favoriteCharacter(characterId: Long?, characterName: String?, characterUrl: String?) {
         viewModelScope.launch {
             _savedFavorite.value = saveFavoriteUseCase(characterId, characterName, characterUrl)
         }
