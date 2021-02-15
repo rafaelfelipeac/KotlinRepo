@@ -2,6 +2,7 @@ package com.rafaelfelipeac.marvelapp.features.favorites.presentation
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -102,13 +103,11 @@ class FavoriteFragment : BaseFragment() {
 
         setLayout()
 
-        showList()
-
         observeViewModel()
     }
 
     private fun setLayout() {
-        binding.favoriteListLoader.visible()
+
     }
 
     private fun observeViewModel() {
@@ -153,9 +152,13 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun showPlaceholder() {
-        binding.favoritePlaceholder.visible()
-        binding.favoriteListLoader.gone()
-        binding.favoriteProgressBar.gone()
+        if (!binding.favoriteList.isVisible) {
+            binding.favoritePlaceholder.visible()
+            binding.favoriteListLoader.gone()
+            binding.favoriteProgressBar.gone()
+        } else {
+            binding.favoriteListLoader.gone()
+        }
     }
 
     private fun setList(favorites: List<Favorite>?) {

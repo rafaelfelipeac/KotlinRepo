@@ -2,6 +2,7 @@ package com.rafaelfelipeac.marvelapp.features.characters.presentation
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,8 +60,6 @@ class CharactersFragment : BaseFragment() {
         }
 
         setLayout()
-
-        showList()
 
         observeViewModel()
     }
@@ -211,8 +210,12 @@ class CharactersFragment : BaseFragment() {
     }
 
     private fun showPlaceholder() {
-        binding.charactersPlaceholder.visible()
-        binding.charactersListLoader.gone()
-        binding.charactersProgressBar.gone()
+        if (!binding.charactersList.isVisible) {
+            binding.charactersPlaceholder.visible()
+            binding.charactersListLoader.gone()
+            binding.charactersProgressBar.gone()
+        } else {
+            binding.charactersListLoader.gone()
+        }
     }
 }
