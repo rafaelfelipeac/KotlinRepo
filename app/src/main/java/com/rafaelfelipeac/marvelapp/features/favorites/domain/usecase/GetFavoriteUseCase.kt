@@ -8,6 +8,6 @@ class GetFavoriteUseCase @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ) {
     suspend operator fun invoke(): List<Favorite> {
-        return favoriteRepository.getFavorites()
+        return favoriteRepository.getFavorites().sortedBy { it.favoriteName }
     }
 }

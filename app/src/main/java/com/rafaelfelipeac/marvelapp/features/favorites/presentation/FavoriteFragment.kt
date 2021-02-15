@@ -27,8 +27,8 @@ class FavoriteFragment : BaseFragment() {
     private var contentAsList = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         setScreen()
 
@@ -113,7 +113,7 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun setLayout() {
-
+        binding.favoriteListLoader.visible()
     }
 
     private fun observeViewModel() {
@@ -121,6 +121,10 @@ class FavoriteFragment : BaseFragment() {
             showList()
 
             setList(it)
+
+            if (it?.size == 0) {
+                showPlaceholder()
+            }
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
@@ -142,10 +146,7 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun showPlaceholder() {
-        if ((!binding.favoriteList.isVisible || binding.favoriteProgressBar.isVisible)) {
-            binding.favoritePlaceholder.visible()
-        }
-
+        binding.favoritePlaceholder.visible()
         binding.favoriteListLoader.gone()
         binding.favoriteProgressBar.gone()
     }
