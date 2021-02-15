@@ -20,18 +20,16 @@ import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 @Suppress("TooManyFunctions")
 class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    private var offset = 0
+    var viewModel: CharactersViewModel? = null
 
     private var binding by viewBinding<FragmentCharactersBinding>()
-
-    var viewModel: CharactersViewModel? = null
 
     private var characterAdapter = CharacterAdapter()
 
     private var isFirstPage = true
     private var isLoading = false
     private var refresh: Boolean = false
-
+    private var offset = 0
     private var contentAsList: Boolean? = null
 
     override fun onCreateView(
@@ -46,11 +44,6 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
             binding = this
             binding.root
         }
-    }
-
-    private fun setScreen() {
-        hideBackArrow()
-        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,6 +93,18 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
         }
 
         return false
+    }
+
+    override fun onRefresh() {
+        offset = 0
+        characterAdapter.clearItems()
+
+        viewModel?.getCharacters(offset)
+    }
+
+    private fun setScreen() {
+        hideBackArrow()
+        setHasOptionsMenu(true)
     }
 
     private fun setLayout() {
@@ -226,12 +231,5 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
         } else {
             binding.charactersListLoader.gone()
         }
-    }
-
-    override fun onRefresh() {
-        offset = 0
-        characterAdapter.clearItems()
-
-        viewModel?.getCharacters(offset)
     }
 }

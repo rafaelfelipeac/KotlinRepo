@@ -18,9 +18,9 @@ import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 class FavoriteFragment : BaseFragment() {
 
-    private var binding by viewBinding<FragmentFavoriteBinding>()
-
     var viewModel: FavoriteViewModel? = null
+
+    private var binding by viewBinding<FragmentFavoriteBinding>()
 
     private var favoriteAdapter = FavoriteAdapter()
 
@@ -31,6 +31,7 @@ class FavoriteFragment : BaseFragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+
         setScreen()
 
         return FragmentFavoriteBinding.inflate(inflater, container, false).run {
@@ -39,16 +40,23 @@ class FavoriteFragment : BaseFragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (viewModel == null) {
+            viewModel = viewModelProvider.favoriteViewModel()
+        }
+
+        setLayout()
+
+        observeViewModel()
+    }
+
     override fun onResume() {
         super.onResume()
 
         viewModel?.getListMode()
         viewModel?.getFavorites()
-    }
-
-    private fun setScreen() {
-        hideBackArrow()
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -77,33 +85,9 @@ class FavoriteFragment : BaseFragment() {
         return false
     }
 
-    private fun refreshList() {
-        if (binding.favoriteList.layoutManager == null || refresh) {
-            refresh = false
-            binding.favoriteList.apply {
-                setHasFixedSize(true)
-
-                layoutManager = if (contentAsList == true) {
-                    GridLayoutManager(context, 2)
-                } else {
-                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                }
-
-                adapter = favoriteAdapter
-            }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (viewModel == null) {
-            viewModel = viewModelProvider.favoriteViewModel()
-        }
-
-        setLayout()
-
-        observeViewModel()
+    private fun setScreen() {
+        hideBackArrow()
+        setHasOptionsMenu(true)
     }
 
     private fun setLayout() {
@@ -175,6 +159,23 @@ class FavoriteFragment : BaseFragment() {
         favoriteAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         if (binding.favoriteList.layoutManager == null) {
+            binding.favoriteList.apply {
+                setHasFixedSize(true)
+
+                layoutManager = if (contentAsList == true) {
+                    GridLayoutManager(context, 2)
+                } else {
+                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                }
+
+                adapter = favoriteAdapter
+            }
+        }
+    }
+
+    private fun refreshList() {
+        if (binding.favoriteList.layoutManager == null || refresh) {
+            refresh = false
             binding.favoriteList.apply {
                 setHasFixedSize(true)
 

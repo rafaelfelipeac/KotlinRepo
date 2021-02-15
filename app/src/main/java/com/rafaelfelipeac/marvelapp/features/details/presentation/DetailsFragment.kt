@@ -19,25 +19,21 @@ import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 class DetailsFragment : BaseFragment() {
 
-    private var isFirstPageComics = true
-    private var isFirstPageSeries = true
-
-    private var offsetComics = 0
-    private var offsetSeries = 0
-
-    private var isLoadingComics = false
-    private var isLoadingSeries = false
+    var viewModel: DetailsViewModel? = null
 
     private var binding by viewBinding<FragmentDetailsBinding>()
 
-    var viewModel: DetailsViewModel? = null
-
+    private var isFirstPageComics = true
+    private var isFirstPageSeries = true
+    private var offsetComics = 0
+    private var offsetSeries = 0
+    private var isLoadingComics = false
+    private var isLoadingSeries = false
     private var comicsAdapter = DetailsInfoAdapter()
     private var seriesAdapter = DetailsInfoAdapter()
 
     private var characterId: Long = 0L
-
-    var characterDetail: CharacterDetail? = null
+    private var characterDetail: CharacterDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,17 +48,10 @@ class DetailsFragment : BaseFragment() {
 
         setScreen()
 
-        setHasOptionsMenu(false)
-
         return FragmentDetailsBinding.inflate(inflater, container, false).run {
             binding = this
             binding.root
         }
-    }
-
-    private fun setScreen() {
-        showBackArrow()
-        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,60 +70,9 @@ class DetailsFragment : BaseFragment() {
         observeViewModel()
     }
 
-    private fun setComics(comics: List<DetailInfo>?) {
-        comicsAdapter.setItems(comics)
-        comicsAdapter.clickListener = { character ->
-            val action = MainFragmentDirections.mainToDetail()
-            action.characterId = character.id
-            navController?.navigate(action)
-        }
-
-        if (isFirstPageComics) {
-            isFirstPageComics = false
-
-            binding.detailsCharacterComicsList.apply {
-                setHasFixedSize(true)
-
-                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-
-                adapter = comicsAdapter
-            }
-        }
-    }
-
-    private fun setSeries(series: List<DetailInfo>?) {
-        seriesAdapter.setItems(series)
-        seriesAdapter.clickListener = { character ->
-            val action = MainFragmentDirections.mainToDetail()
-            action.characterId = character.id
-            navController?.navigate(action)
-        }
-
-        if (isFirstPageSeries) {
-            isFirstPageSeries = false
-
-            binding.detailsCharacterSeriesList.apply {
-                setHasFixedSize(true)
-
-                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-
-                adapter = seriesAdapter
-            }
-        }
-    }
-
-    private fun showPlaceholder() {
-        binding.detailsPlaceholder.visible()
-    }
-
-    private fun showComicsPlaceholder() {
-        binding.detailsCharacterComics.visible()
-        binding.detailsComicsPlaceholder.visible()
-    }
-
-    private fun showSeriesPlaceholder() {
-        binding.detailsCharacterSeries.visible()
-        binding.detailsSeriesPlaceholder.visible()
+    private fun setScreen() {
+        showBackArrow()
+        setHasOptionsMenu(false)
     }
 
     private fun setLayout() {
@@ -234,5 +172,61 @@ class DetailsFragment : BaseFragment() {
         viewModel?.errorSeries?.observe(viewLifecycleOwner) {
             showSeriesPlaceholder()
         }
+    }
+
+    private fun setComics(comics: List<DetailInfo>?) {
+        comicsAdapter.setItems(comics)
+        comicsAdapter.clickListener = { character ->
+            val action = MainFragmentDirections.mainToDetail()
+            action.characterId = character.id
+            navController?.navigate(action)
+        }
+
+        if (isFirstPageComics) {
+            isFirstPageComics = false
+
+            binding.detailsCharacterComicsList.apply {
+                setHasFixedSize(true)
+
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+                adapter = comicsAdapter
+            }
+        }
+    }
+
+    private fun setSeries(series: List<DetailInfo>?) {
+        seriesAdapter.setItems(series)
+        seriesAdapter.clickListener = { character ->
+            val action = MainFragmentDirections.mainToDetail()
+            action.characterId = character.id
+            navController?.navigate(action)
+        }
+
+        if (isFirstPageSeries) {
+            isFirstPageSeries = false
+
+            binding.detailsCharacterSeriesList.apply {
+                setHasFixedSize(true)
+
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+
+                adapter = seriesAdapter
+            }
+        }
+    }
+
+    private fun showPlaceholder() {
+        binding.detailsPlaceholder.visible()
+    }
+
+    private fun showComicsPlaceholder() {
+        binding.detailsCharacterComics.visible()
+        binding.detailsComicsPlaceholder.visible()
+    }
+
+    private fun showSeriesPlaceholder() {
+        binding.detailsCharacterSeries.visible()
+        binding.detailsSeriesPlaceholder.visible()
     }
 }
