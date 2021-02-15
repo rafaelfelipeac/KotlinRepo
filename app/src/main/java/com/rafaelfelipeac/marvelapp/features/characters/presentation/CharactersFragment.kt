@@ -29,7 +29,7 @@ class CharactersFragment : BaseFragment() {
     private var isFirstPage = true
     private var isLoading = false
 
-    private var contentAsList = false
+    private var contentAsList: Boolean? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -69,14 +69,17 @@ class CharactersFragment : BaseFragment() {
 
         isFirstPage = true
 
+        viewModel?.getListMode()
         viewModel?.getCharacters(offset)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (!contentAsList) {
-            inflater.inflate(R.menu.menu_grid, menu)
-        } else {
-            inflater.inflate(R.menu.menu_list, menu)
+        if (contentAsList != null) {
+            if (!contentAsList!!) {
+                inflater.inflate(R.menu.menu_grid, menu)
+            } else {
+                inflater.inflate(R.menu.menu_list, menu)
+            }
         }
 
         super.onCreateOptionsMenu(menu, inflater)
@@ -84,21 +87,8 @@ class CharactersFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuGrid -> {
-                contentAsList = !contentAsList
-
-                refreshList()
-
-                activity?.invalidateOptionsMenu()
-
-                return true
-            }
-            R.id.menuList -> {
-                contentAsList = !contentAsList
-
-                refreshList()
-
-                activity?.invalidateOptionsMenu()
+            R.id.menuGrid, R.id.menuList -> {
+                viewModel?.saveListMode(!contentAsList!!)
 
                 return true
             }
@@ -150,6 +140,18 @@ class CharactersFragment : BaseFragment() {
         viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
             Snackbar.make(requireView(), getString(R.string.characters_added_favorite), Snackbar.LENGTH_SHORT).show()
         }
+
+        viewModel?.listMode?.observe(viewLifecycleOwner) {
+            contentAsList = it ?: false
+
+            refreshList()
+
+            activity?.invalidateOptionsMenu()
+        }
+
+        viewModel?.savedListMode?.observe(viewLifecycleOwner) {
+            viewModel?.getListMode()
+        }
     }
 
     private fun setList(characters: List<Character>?) {
@@ -169,7 +171,7 @@ class CharactersFragment : BaseFragment() {
             binding.charactersList.apply {
                 setHasFixedSize(true)
 
-                layoutManager = if (contentAsList) {
+                layoutManager = if (contentAsList == true) {
                     GridLayoutManager(context, 2)
                 } else {
                     LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -184,7 +186,7 @@ class CharactersFragment : BaseFragment() {
         binding.charactersList.apply {
             setHasFixedSize(true)
 
-            layoutManager = if (contentAsList) {
+            layoutManager = if (contentAsList == true) {
                 GridLayoutManager(context, 2)
             } else {
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)

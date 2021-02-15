@@ -8,15 +8,16 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Component(
-    modules = [
-        CharactersModule::class,
-        DetailsModule::class,
-        FavoriteModule::class,
-        NetworkModule::class,
-        CommonsModule::class,
-        CoreModule::class,
-        PersistenceModule::class
-    ]
+        modules = [
+            CharactersModule::class,
+            DetailsModule::class,
+            FavoriteModule::class,
+            NetworkModule::class,
+            CommonsModule::class,
+            CoreModule::class,
+            PersistenceModule::class,
+            PreferencesModule::class
+        ]
 )
 @Singleton
 interface AppComponent : ViewModelProvider {
@@ -25,7 +26,7 @@ interface AppComponent : ViewModelProvider {
     interface Factory {
 
         fun create(
-            @BindsInstance application: Application
+                @BindsInstance application: Application
         ): AppComponent
     }
 }

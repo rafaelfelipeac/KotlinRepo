@@ -7,12 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.DeleteFavoriteUseCase
 import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.GetFavoriteUseCase
+import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.GetListModeUseCase
+import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.SaveListModeUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class FavoriteViewModel @Inject constructor(
-    private val getFavoritesUseCase: GetFavoriteUseCase,
-    private val deleteFavoriteUseCase: DeleteFavoriteUseCase
+        private val getFavoritesUseCase: GetFavoriteUseCase,
+        private val deleteFavoriteUseCase: DeleteFavoriteUseCase,
+        private val saveListModeUseCase: SaveListModeUseCase,
+        private val getListModeUseCase: GetListModeUseCase
 ) : ViewModel() {
 
     open val favorites: LiveData<List<Favorite>?> get() = _favorites
@@ -21,6 +25,10 @@ open class FavoriteViewModel @Inject constructor(
     private val _deleted = MutableLiveData<Unit?>()
     open val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
+    val listMode: LiveData<Boolean?> get() = _listMode
+    private val _listMode = MutableLiveData<Boolean?>()
+    val savedListMode: LiveData<Unit?> get() = _savedListMode
+    private val _savedListMode = MutableLiveData<Unit?>()
 
     open fun getFavorites() {
         viewModelScope.launch {
@@ -31,6 +39,18 @@ open class FavoriteViewModel @Inject constructor(
     open fun deleteFavorite(favorite: Favorite) {
         viewModelScope.launch {
             _deleted.value = deleteFavoriteUseCase(favorite)
+        }
+    }
+
+    open fun saveListMode(listMode: Boolean) {
+        viewModelScope.launch {
+            _savedListMode.value = saveListModeUseCase(listMode)
+        }
+    }
+
+    open fun getListMode() {
+        viewModelScope.launch {
+            _listMode.value = getListModeUseCase()
         }
     }
 }

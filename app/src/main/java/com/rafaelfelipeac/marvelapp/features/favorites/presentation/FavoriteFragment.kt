@@ -2,7 +2,6 @@ package com.rafaelfelipeac.marvelapp.features.favorites.presentation
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,7 @@ class FavoriteFragment : BaseFragment() {
 
     private var favoriteAdapter = FavoriteAdapter()
 
-    private var contentAsList = false
+    private var contentAsList: Boolean? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +40,7 @@ class FavoriteFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
+        viewModel?.getListMode()
         viewModel?.getFavorites()
     }
 
@@ -50,10 +50,12 @@ class FavoriteFragment : BaseFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (!contentAsList) {
-            inflater.inflate(R.menu.menu_grid, menu)
-        } else {
-            inflater.inflate(R.menu.menu_list, menu)
+        if (contentAsList != null) {
+            if (!contentAsList!!) {
+                inflater.inflate(R.menu.menu_grid, menu)
+            } else {
+                inflater.inflate(R.menu.menu_list, menu)
+            }
         }
 
         super.onCreateOptionsMenu(menu, inflater)
@@ -61,21 +63,8 @@ class FavoriteFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuGrid -> {
-                contentAsList = !contentAsList
-
-                refreshList()
-
-                activity?.invalidateOptionsMenu()
-
-                return true
-            }
-            R.id.menuList -> {
-                contentAsList = !contentAsList
-
-                refreshList()
-
-                activity?.invalidateOptionsMenu()
+            R.id.menuGrid, R.id.menuList -> {
+                viewModel?.saveListMode(!contentAsList!!)
 
                 return true
             }
@@ -88,7 +77,7 @@ class FavoriteFragment : BaseFragment() {
         binding.favoriteList.apply {
             setHasFixedSize(true)
 
-            layoutManager = if (contentAsList) {
+            layoutManager = if (contentAsList == true) {
                 GridLayoutManager(context, 2)
             } else {
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -136,6 +125,18 @@ class FavoriteFragment : BaseFragment() {
 
             viewModel?.getFavorites()
         }
+
+        viewModel?.listMode?.observe(viewLifecycleOwner) {
+            contentAsList = it ?: false
+
+            refreshList()
+
+            activity?.invalidateOptionsMenu()
+        }
+
+        viewModel?.savedListMode?.observe(viewLifecycleOwner) {
+            viewModel?.getListMode()
+        }
     }
 
     private fun showList() {
@@ -166,7 +167,7 @@ class FavoriteFragment : BaseFragment() {
         binding.favoriteList.apply {
             setHasFixedSize(true)
 
-            layoutManager = if (contentAsList) {
+            layoutManager = if (contentAsList == true) {
                 GridLayoutManager(context, 2)
             } else {
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -175,5 +176,4 @@ class FavoriteFragment : BaseFragment() {
             adapter = favoriteAdapter
         }
     }
-
 }
