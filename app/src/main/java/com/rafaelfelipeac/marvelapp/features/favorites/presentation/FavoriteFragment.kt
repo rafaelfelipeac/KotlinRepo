@@ -24,6 +24,7 @@ class FavoriteFragment : BaseFragment() {
     private var favoriteAdapter = FavoriteAdapter()
 
     private var contentAsList: Boolean? = null
+    private var refresh: Boolean = false
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -64,6 +65,8 @@ class FavoriteFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuGrid, R.id.menuList -> {
+                refresh = true
+
                 viewModel?.saveListMode(!contentAsList!!)
 
                 return true
@@ -74,7 +77,8 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun refreshList() {
-        if (binding.favoriteList.layoutManager == null) {
+        if (binding.favoriteList.layoutManager == null || refresh) {
+            refresh = false
             binding.favoriteList.apply {
                 setHasFixedSize(true)
 

@@ -28,6 +28,7 @@ class CharactersFragment : BaseFragment() {
 
     private var isFirstPage = true
     private var isLoading = false
+    private var refresh: Boolean = false
 
     private var contentAsList: Boolean? = null
 
@@ -88,6 +89,8 @@ class CharactersFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuGrid, R.id.menuList -> {
+                refresh = true
+
                 viewModel?.saveListMode(!contentAsList!!)
 
                 return true
@@ -184,7 +187,8 @@ class CharactersFragment : BaseFragment() {
     }
 
     private fun refreshList() {
-        if (binding.charactersList.layoutManager == null) {
+        if (binding.charactersList.layoutManager == null || refresh) {
+            refresh = false
             binding.charactersList.apply {
                 setHasFixedSize(true)
 
