@@ -12,6 +12,8 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.refreshCharacter
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.refreshFavorite
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentCharactersBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
@@ -28,9 +30,9 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
 
     private var isFirstPage = true
     private var isLoading = false
-    private var refresh: Boolean = false
     private var offset = 0
     private var contentAsList: Boolean? = null
+    private var favoriteListener = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -84,7 +86,8 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuGrid, R.id.menuList -> {
-                refresh = true
+                refreshCharacter = true
+                refreshFavorite = true
 
                 viewModel?.saveListMode(!contentAsList!!)
 
@@ -154,7 +157,14 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
         }
 
         viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), getString(R.string.characters_added_favorite), Snackbar.LENGTH_SHORT).show()
+            if (favoriteListener) {
+                favoriteListener = false
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.characters_added_favorite),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
 
         viewModel?.listMode?.observe(viewLifecycleOwner) {
@@ -179,6 +189,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
         }
         characterAdapter.favoriteListener = {
             viewModel?.favoriteCharacter(it.id, it.name, it.thumbnail.getUrl())
+            favoriteListener = true
         }
         characterAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
@@ -200,8 +211,8 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
     }
 
     private fun refreshList() {
-        if (binding.charactersList.layoutManager == null || refresh) {
-            refresh = false
+        if (binding.charactersList.layoutManager == null || refreshCharacter) {
+            refreshCharacter = false
             binding.charactersList.apply {
                 setHasFixedSize(true)
 

@@ -2,7 +2,6 @@ package com.rafaelfelipeac.marvelapp.features.favorites.presentation
 
 import android.os.Bundle
 import android.view.*
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +10,8 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.refreshCharacter
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.refreshFavorite
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentFavoriteBinding
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
@@ -25,7 +26,7 @@ class FavoriteFragment : BaseFragment() {
     private var favoriteAdapter = FavoriteAdapter()
 
     private var contentAsList: Boolean? = null
-    private var refresh: Boolean = false
+    private var deleteListener = false
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +75,8 @@ class FavoriteFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuGrid, R.id.menuList -> {
-                refresh = true
+                refreshFavorite = true
+                refreshCharacter = true
 
                 viewModel?.saveListMode(!contentAsList!!)
 
@@ -96,13 +98,13 @@ class FavoriteFragment : BaseFragment() {
 
     private fun observeViewModel() {
         viewModel?.favorites?.observe(viewLifecycleOwner) {
-            showList()
-
-            setList(it)
-
             if (it?.size == 0) {
                 showPlaceholder()
+            } else {
+                showList()
             }
+
+            setList(it)
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
@@ -110,9 +112,16 @@ class FavoriteFragment : BaseFragment() {
         }
 
         viewModel?.deleted?.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), getString(R.string.favorite_deleted), Snackbar.LENGTH_SHORT).show()
+            if (deleteListener) {
+                deleteListener = false
+                Snackbar.make(
+                    requireView(),
+                    getString(R.string.favorite_deleted),
+                    Snackbar.LENGTH_SHORT
+                ).show()
 
-            viewModel?.getFavorites()
+                viewModel?.getFavorites()
+            }
         }
 
         viewModel?.listMode?.observe(viewLifecycleOwner) {
@@ -136,13 +145,9 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun showPlaceholder() {
-        if (!binding.favoriteList.isVisible) {
-            binding.favoritePlaceholder.visible()
-            binding.favoriteListLoader.gone()
-            binding.favoriteProgressBar.gone()
-        } else {
-            binding.favoriteListLoader.gone()
-        }
+        binding.favoritePlaceholder.visible()
+        binding.favoriteListLoader.gone()
+        binding.favoriteProgressBar.gone()
     }
 
     private fun setList(favorites: List<Favorite>?) {
@@ -155,6 +160,7 @@ class FavoriteFragment : BaseFragment() {
         }
         favoriteAdapter.clickListenerFavorite = { favorite ->
             viewModel?.deleteFavorite(favorite)
+            deleteListener = true
         }
         favoriteAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
@@ -174,8 +180,8 @@ class FavoriteFragment : BaseFragment() {
     }
 
     private fun refreshList() {
-        if (binding.favoriteList.layoutManager == null || refresh) {
-            refresh = false
+        if (binding.favoriteList.layoutManager == null || refreshFavorite) {
+            refreshFavorite = false
             binding.favoriteList.apply {
                 setHasFixedSize(true)
 

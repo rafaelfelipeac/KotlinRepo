@@ -16,4 +16,7 @@ object Config {
     var isNetworkConnected: Boolean by Delegates.observable(false) { _, _, newValue ->
         Log.i("NetworkConnectivity", "Status = $newValue")
     }
+
+    var refreshCharacter: Boolean = false
+    var refreshFavorite: Boolean = false
 }
