@@ -14,6 +14,7 @@ import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentDetailsBinding
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.Thumbnail
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 class DetailsFragment : BaseFragment() {
@@ -141,7 +142,7 @@ class DetailsFragment : BaseFragment() {
             viewModel?.favoriteCharacter(
                 characterDetail?.id!!,
                 characterDetail?.name!!,
-                characterDetail?.thumbnail?.getUrl()!!
+                characterDetail?.thumbnail?.getUrl(Thumbnail.ImageType.LANDSCAPE)!!
             )
         }
 
@@ -187,7 +188,7 @@ class DetailsFragment : BaseFragment() {
             } else {
                 getString(R.string.details_no_description)
             }
-            binding.detailsCharacterImage.load(it.thumbnail.getUrl())
+            binding.detailsCharacterImage.load(it.thumbnail.getUrl(Thumbnail.ImageType.LANDSCAPE))
         }
 
         viewModel?.comics?.observe(viewLifecycleOwner) {

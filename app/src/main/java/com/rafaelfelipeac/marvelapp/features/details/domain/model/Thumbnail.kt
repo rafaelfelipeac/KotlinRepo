@@ -4,9 +4,13 @@ data class Thumbnail(
     val path: String,
     val extension: String
 ) {
-    fun getUrl(isPortrait: Boolean = false) = if (isPortrait) {
-        "$path/portrait_xlarge.$extension"
-    } else {
-        "$path/landscape_xlarge.$extension"
+    fun getUrl(imageType: ImageType) = when (imageType) {
+        ImageType.STANDARD -> "$path/standard_amazing.$extension"
+        ImageType.LANDSCAPE -> "$path/landscape_incredible.$extension"
+        ImageType.PORTRAIT -> "$path/portrait_incredible.$extension"
+    }
+
+    enum class ImageType {
+        STANDARD, LANDSCAPE, PORTRAIT
     }
 }

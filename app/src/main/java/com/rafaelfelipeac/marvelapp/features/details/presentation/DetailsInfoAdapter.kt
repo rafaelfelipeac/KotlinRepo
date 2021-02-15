@@ -6,6 +6,7 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseAdapter
 import com.rafaelfelipeac.marvelapp.databinding.ListItemDetailsInfoBinding
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.Thumbnail
 
 class DetailsInfoAdapter : BaseAdapter<DetailInfo>() {
 
@@ -19,7 +20,7 @@ class DetailsInfoAdapter : BaseAdapter<DetailInfo>() {
         setOnClickListener { clickListener(item) }
 
         binding.detailInfoName.text = item.title
-        binding.detailInfoImage.load(item.thumbnail.getUrl(isPortrait = true))
+        binding.detailInfoImage.load(item.thumbnail.getUrl(Thumbnail.ImageType.PORTRAIT))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
