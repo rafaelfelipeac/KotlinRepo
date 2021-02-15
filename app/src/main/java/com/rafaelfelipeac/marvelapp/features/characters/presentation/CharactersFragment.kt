@@ -1,13 +1,7 @@
 package com.rafaelfelipeac.marvelapp.features.characters.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
-import android.view.MenuInflater
-import android.view.MenuItem
-import androidx.core.view.isVisible
+import android.view.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +14,6 @@ import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentCharactersBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
-
-var CURRENT_PAGE = 1
 
 @Suppress("TooManyFunctions")
 class CharactersFragment : BaseFragment() {
@@ -40,9 +32,9 @@ class CharactersFragment : BaseFragment() {
     private var contentAsList = false
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
 
         setScreen()
@@ -123,8 +115,7 @@ class CharactersFragment : BaseFragment() {
                 if (!recyclerView.canScrollVertically(1) && !isLoading) {
                     isLoading = true
 
-                    // load the next page
-                     viewModel?.getCharacters(offset)
+                    viewModel?.getCharacters(offset)
 
                     binding.charactersListLoader.visible()
                     binding.charactersList.scrollToPosition(characterAdapter.itemCount - 1)
@@ -135,19 +126,22 @@ class CharactersFragment : BaseFragment() {
 
     private fun observeViewModel() {
         viewModel?.characters?.observe(viewLifecycleOwner) {
-            offset += 20
+            if (it?.isNotEmpty() == true) {
+                offset += 20
 
-            isLoading = false
+                isLoading = false
 
-            showList()
+                showList()
 
-            setList(it)
+                setList(it)
+            } else {
+                showPlaceholder()
+            }
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
             if (isLoading) {
                 isLoading = false
-                CURRENT_PAGE--
             }
 
             showPlaceholder()
@@ -208,19 +202,8 @@ class CharactersFragment : BaseFragment() {
     }
 
     private fun showPlaceholder() {
-        if ((!binding.charactersList.isVisible || binding.charactersProgressBar.isVisible)) {
-            binding.charactersPlaceholder.visible()
-        }
-
+        binding.charactersPlaceholder.visible()
         binding.charactersListLoader.gone()
         binding.charactersProgressBar.gone()
-    }
-
-    private fun showProgressBar() {
-        binding.charactersList.gone()
-        binding.charactersPlaceholder.gone()
-        binding.charactersListLoader.gone()
-        binding.charactersProgressBar.visible()
-        binding.charactersList.scrollToPosition(0)
     }
 }

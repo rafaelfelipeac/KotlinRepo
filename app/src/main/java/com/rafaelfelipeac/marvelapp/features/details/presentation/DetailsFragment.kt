@@ -36,8 +36,6 @@ class DetailsFragment : BaseFragment() {
 
     private var characterId: Long = 0L
 
-    private var listAsGrid = false
-
     var characterDetail: CharacterDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,8 +72,6 @@ class DetailsFragment : BaseFragment() {
         }
 
         setLayout()
-
-        showList()
 
         viewModel?.getDetails(characterId)
         viewModel?.getDetailsComics(characterId, offsetComics)
@@ -126,40 +122,18 @@ class DetailsFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_grid, menu)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menuGrid -> {
-                listAsGrid = !listAsGrid
-
-//                refreshList()
-
-                return true
-            }
-        }
-
-        return false
-    }
-
-    private fun showList() {
-//        binding.charactersList.visible()
-//        binding.charactersPlaceholder.gone()
-//        binding.charactersListLoader.gone()
-//        binding.charactersProgressBar.gone()
-    }
-
     private fun showPlaceholder() {
-//        if ((!binding.charactersList.isVisible || binding.charactersProgressBar.isVisible)) {
-//            binding.charactersPlaceholder.visible()
-//        }
-//
-//        binding.charactersListLoader.gone()
-//        binding.charactersProgressBar.gone()
+        binding.detailsPlaceholder.visible()
+    }
+
+    private fun showComicsPlaceholder() {
+        binding.detailsCharacterComics.visible()
+        binding.detailsComicsPlaceholder.visible()
+    }
+
+    private fun showSeriesPlaceholder() {
+        binding.detailsCharacterSeries.visible()
+        binding.detailsSeriesPlaceholder.visible()
     }
 
     private fun setLayout() {
@@ -178,7 +152,6 @@ class DetailsFragment : BaseFragment() {
                 if (!recyclerView.canScrollHorizontally(1) && !isLoadingComics) {
                     isLoadingComics = true
 
-                    // load the next page
                     viewModel?.getDetailsComics(characterId, offsetComics)
 
                     binding.detailsCharacterComicsListLoader.visible()
@@ -194,7 +167,6 @@ class DetailsFragment : BaseFragment() {
                 if (!recyclerView.canScrollHorizontally(1) && !isLoadingSeries) {
                     isLoadingSeries = true
 
-                    // load the next page
                     viewModel?.getDetailsSeries(characterId, offsetSeries)
 
                     binding.detailsCharacterSeriesListLoader.visible()
@@ -247,15 +219,15 @@ class DetailsFragment : BaseFragment() {
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
-
+            showPlaceholder()
         }
 
         viewModel?.errorComics?.observe(viewLifecycleOwner) {
-
+            showComicsPlaceholder()
         }
 
         viewModel?.errorSeries?.observe(viewLifecycleOwner) {
-
+            showSeriesPlaceholder()
         }
     }
 }
