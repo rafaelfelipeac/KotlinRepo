@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
@@ -17,7 +18,7 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 @Suppress("TooManyFunctions")
-class CharactersFragment : BaseFragment() {
+class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var offset = 0
 
@@ -67,6 +68,8 @@ class CharactersFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
+        binding.charactersRefresh.setOnRefreshListener(this)
+
         isFirstPage = true
 
         viewModel?.getListMode()
@@ -100,6 +103,8 @@ class CharactersFragment : BaseFragment() {
     }
 
     private fun setLayout() {
+        binding.charactersRefresh.setOnRefreshListener(this)
+
         binding.charactersList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -119,6 +124,8 @@ class CharactersFragment : BaseFragment() {
     private fun observeViewModel() {
         viewModel?.characters?.observe(viewLifecycleOwner) {
             if (it?.isNotEmpty() == true) {
+                binding.charactersRefresh.isRefreshing = false
+
                 offset += 20
 
                 isLoading = false
@@ -132,6 +139,8 @@ class CharactersFragment : BaseFragment() {
         }
 
         viewModel?.error?.observe(viewLifecycleOwner) {
+            binding.charactersRefresh.isRefreshing = false
+
             if (isLoading) {
                 isLoading = false
             }
@@ -217,5 +226,12 @@ class CharactersFragment : BaseFragment() {
         } else {
             binding.charactersListLoader.gone()
         }
+    }
+
+    override fun onRefresh() {
+        offset = 0
+        characterAdapter.clearItems()
+
+        viewModel?.getCharacters(offset)
     }
 }
