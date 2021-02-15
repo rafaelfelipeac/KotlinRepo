@@ -17,6 +17,8 @@ class FavoriteAdapter : BaseAdapter<Favorite>() {
     override fun View.bindView(item: Favorite, viewHolder: ViewHolder) {
         val binding = ListItemFavoriteBinding.bind(this)
 
+        setOnClickListener { clickListener(item.favoriteId) }
+
         binding.favoriteName.text = item.favoriteName
         binding.favoriteImage.load(item.favoriteUrl)
         binding.favoriteFavorite.setOnClickListener {
