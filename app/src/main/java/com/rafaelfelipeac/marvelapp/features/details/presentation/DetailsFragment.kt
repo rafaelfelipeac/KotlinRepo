@@ -199,6 +199,8 @@ class DetailsFragment : BaseFragment() {
 
                 binding.detailsCharacterComics.visible()
                 setComics(it)
+            } else {
+                binding.detailsCharacterComicsListLoader.gone()
             }
         }
 
@@ -211,6 +213,8 @@ class DetailsFragment : BaseFragment() {
 
                 binding.detailsCharacterSeries.visible()
                 setSeries(it)
+            } else {
+                binding.detailsCharacterSeriesListLoader.gone()
             }
         }
 
