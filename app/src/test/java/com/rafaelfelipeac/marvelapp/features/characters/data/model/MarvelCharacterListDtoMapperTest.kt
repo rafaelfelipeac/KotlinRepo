@@ -5,7 +5,7 @@ import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createMarvelCharacterL
 import com.rafaelfelipeac.marvelapp.base.equalTo
 import org.junit.Test
 
-class MarvelCharacterListCharacterListDtoMapperTest {
+class MarvelCharacterListDtoMapperTest {
 
     private val marvelCharacterListDtoMapper = MarvelCharacterListDtoMapper()
 

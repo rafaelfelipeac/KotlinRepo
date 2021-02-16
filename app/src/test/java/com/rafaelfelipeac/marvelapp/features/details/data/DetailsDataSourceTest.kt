@@ -67,7 +67,7 @@ class DetailsDataSourceTest {
     }
 
     @Test
-    fun `GIVEN Success return from api WHEN getDetailsComics is called THEN Success is returned2`() {
+    fun `GIVEN Success return from api WHEN getDetailsComics is called THEN Success is returned`() {
         runBlocking {
             // given
             val marvelCharacterDetailDto = createMarvelDetailInfoDto()
@@ -99,7 +99,7 @@ class DetailsDataSourceTest {
     }
 
     @Test
-    fun `GIVEN Success return from api WHEN getDetailsSeries is called THEN Success is returned3`() {
+    fun `GIVEN Success return from api WHEN getDetailsSeries is called THEN Success is returned`() {
         runBlocking {
             runBlocking {
                 // given

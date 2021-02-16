@@ -56,7 +56,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a Success result WHEN getCharacters is called THEN a list with characters should be returned`() {
+    fun `GIVEN a Success result WHEN getDetails is called THEN a characterDetail should be returned`() {
         // given
         val characterDetail = createCharacterDetail()
         val success = ResultWrapper.Success(characterDetail)
@@ -83,7 +83,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a GenericError result WHEN getCharacters is called THEN a throwable should be returned`() {
+    fun `GIVEN a GenericError result WHEN getDetails is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val genericError = ResultWrapper.GenericError(null, null, throwable)
@@ -112,7 +112,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a NetworkError result WHEN getCharacters is called THEN a throwable should be returned`() {
+    fun `GIVEN a NetworkError result WHEN getDetails is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val networkError = ResultWrapper.NetworkError(throwable)
@@ -141,7 +141,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a Success result WHEN getCharacters is called THEN a list with characters should be returned2`() {
+    fun `GIVEN a Success result WHEN getDetailsComics is called THEN a list with characterDetail should be returned`() {
         // given
         val characterDetail = listOf(createDetailInfo(), createDetailInfo(), createDetailInfo())
         val success = ResultWrapper.Success(characterDetail)
@@ -170,7 +170,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a GenericError result WHEN getCharacters is called THEN a throwable should be returned2`() {
+    fun `GIVEN a GenericError result WHEN getDetailsComics is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val genericError = ResultWrapper.GenericError(null, null, throwable)
@@ -201,7 +201,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a NetworkError result WHEN getCharacters is called THEN a throwable should be returned2`() {
+    fun `GIVEN a NetworkError result WHEN getDetailsComics is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val networkError = ResultWrapper.NetworkError(throwable)
@@ -232,7 +232,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a Success result WHEN getCharacters is called THEN a list with characters should be returned3`() {
+    fun `GIVEN a Success result WHEN getDetailsSeries is called THEN a list with characterDetail should be returned`() {
         // given
         val characterDetail = listOf(createDetailInfo(), createDetailInfo(), createDetailInfo())
         val success = ResultWrapper.Success(characterDetail)
@@ -261,7 +261,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a GenericError result WHEN getCharacters is called THEN a throwable should be returned3`() {
+    fun `GIVEN a GenericError result WHEN getDetailsSeries is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val genericError = ResultWrapper.GenericError(null, null, throwable)
@@ -292,7 +292,7 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `GIVEN a NetworkError result WHEN getCharacters is called THEN a throwable should be returned3`() {
+    fun `GIVEN a NetworkError result WHEN getDetailsSeries is called THEN a throwable should be returned`() {
         // given
         val throwable = Exception()
         val networkError = ResultWrapper.NetworkError(throwable)

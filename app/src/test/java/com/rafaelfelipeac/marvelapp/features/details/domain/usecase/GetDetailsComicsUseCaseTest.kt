@@ -31,11 +31,11 @@ class GetDetailsComicsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN Success result WHEN getCharactersUseCase is called THEN return a list of characters'`() {
+    fun `GIVEN Success result WHEN getDetailsComicsUseCase is called THEN return a list of detailInfo'`() {
         runBlocking {
             // given
-            val characters = listOf(createDetailInfo(), createDetailInfo(), createDetailInfo())
-            val success = ResultWrapper.Success(characters)
+            val detailInfoList = listOf(createDetailInfo(), createDetailInfo(), createDetailInfo())
+            val success = ResultWrapper.Success(detailInfoList)
 
             given(
                 detailsRepository.getDetailsComics(
@@ -62,7 +62,7 @@ class GetDetailsComicsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN GenericError result WHEN getCharactersUseCase is called THEN return a throwable`() {
+    fun `GIVEN GenericError result WHEN getDetailsComicsUseCase is called THEN return a throwable`() {
         runBlocking {
             // given
             val throwable = Exception()
@@ -93,7 +93,7 @@ class GetDetailsComicsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN a NetworkError result WHEN getCharactersUseCase is called THEN return a throwable`() {
+    fun `GIVEN a NetworkError result WHEN getDetailsComicsUseCase is called THEN return a throwable`() {
         runBlocking {
             // given
             val throwable = Exception()

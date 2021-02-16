@@ -1,6 +1,7 @@
 package com.rafaelfelipeac.marvelapp.features.details.domain.usecase
 
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest
+import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createCharacterDetail
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockApiKey
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockCharacterId
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockHash
@@ -30,11 +31,11 @@ class GetDetailsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN Success result WHEN getCharactersUseCase is called THEN return a list of characters'`() {
+    fun `GIVEN Success result WHEN getDetailsUseCase is called THEN return a characterDetail'`() {
         runBlocking {
             // given
-            val characters = DataProviderTest.createCharacterDetail()
-            val success = ResultWrapper.Success(characters)
+            val characterDetail = createCharacterDetail()
+            val success = ResultWrapper.Success(characterDetail)
 
             given(
                 detailsRepository.getDetails(
@@ -59,7 +60,7 @@ class GetDetailsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN GenericError result WHEN getCharactersUseCase is called THEN return a throwable`() {
+    fun `GIVEN GenericError result WHEN getDetailsUseCase is called THEN return a throwable`() {
         runBlocking {
             // given
             val throwable = Exception()
@@ -88,7 +89,7 @@ class GetDetailsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN a NetworkError result WHEN getCharactersUseCase is called THEN return a throwable`() {
+    fun `GIVEN a NetworkError result WHEN getDetailsUseCase is called THEN return a throwable`() {
         runBlocking {
             // given
             val throwable = Exception()
