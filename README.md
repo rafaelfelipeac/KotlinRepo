@@ -1,8 +1,8 @@
-KotlinRepo
+MarvelApp
 ---------
-KotlinRepo is a simple app that shows you a list with the repositories that use the Kotlin language. Ordered by the number of stars!
+MarvelApp is a simple app that shows you a list of the Marvel characters.
 
-Created with ❤️ to study topics related to Android such as Kotlin, MVVM, Coroutines, Jetpack (ViewModel, LiveData) , Retrofit and Dagger2.
+Created with ❤ to study topics related to Android such as Kotlin, MVVM, Coroutines, Jetpack (ViewModel, LiveData) , Retrofit and Dagger2.
 
 Developed with:
 -------
@@ -17,6 +17,10 @@ Developed with:
 - Detekt;
 - Ktlint;
 
+API
+-------
+This project use the Marvel Comics API.
+https://developer.marvel.com/docs
 
 License
 --------
