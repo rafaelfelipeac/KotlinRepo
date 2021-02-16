@@ -12,32 +12,32 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class DeleteFavoriteUseCaseTest {
+class GetFavoritesUseCaseTest {
 
     @Mock
     internal lateinit var favoriteRepository: FavoriteRepository
 
-    private lateinit var deleteFavoriteUseCase: DeleteFavoriteUseCase
+    private lateinit var getFavoritesUseCase: GetFavoritesUseCase
 
     @Before
     fun setup() {
-        deleteFavoriteUseCase = DeleteFavoriteUseCase(favoriteRepository)
+        getFavoritesUseCase = GetFavoritesUseCase(favoriteRepository)
     }
 
     @Test
-    fun `GIVEN a successfully result WHEN deleteFavoriteUseCase is called THEN return a Unit'`() {
+    fun `GIVEN a successfully result WHEN getFavoritesUseCase is called THEN return a list of favorites'`() {
         runBlocking {
             // given
-            val favorite = createFavorite()
+            val favorites = listOf(createFavorite(), createFavorite(), createFavorite())
 
-            given(favoriteRepository.delete(favorite))
-                .willReturn(Unit)
+            given(favoriteRepository.getFavorites())
+                .willReturn(favorites)
 
             // when
-            val result = deleteFavoriteUseCase(favorite)
+            val result = getFavoritesUseCase()
 
             // then
-            result equalTo Unit
+            result equalTo favorites
         }
     }
 }

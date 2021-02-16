@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.rafaelfelipeac.marvelapp.core.di.key.FragmentKey
 import com.rafaelfelipeac.marvelapp.core.di.key.ViewModelKey
 import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteFragment
-import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteViewModel
+import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoritesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -20,6 +20,6 @@ abstract class FavoriteModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(FavoriteViewModel::class)
-    abstract fun bindFavoriteViewModel(favoriteViewModel: FavoriteViewModel): ViewModel
+    @ViewModelKey(FavoritesViewModel::class)
+    abstract fun bindFavoriteViewModel(favoritesViewModel: FavoritesViewModel): ViewModel
 }

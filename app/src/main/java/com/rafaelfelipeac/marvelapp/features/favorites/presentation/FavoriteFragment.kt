@@ -19,7 +19,7 @@ import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 class FavoriteFragment : BaseFragment() {
 
-    var viewModel: FavoriteViewModel? = null
+    var viewModel: FavoritesViewModel? = null
 
     private var binding by viewBinding<FragmentFavoriteBinding>()
 

@@ -7,7 +7,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.BDDMockito
+import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -30,7 +30,7 @@ class GetListModeUseCaseTest {
             // given
             val listMode = false
 
-            BDDMockito.given(mockListModeRepository.getListMode())
+            given(mockListModeRepository.getListMode())
                 .willReturn(listMode)
 
             // when
@@ -47,7 +47,7 @@ class GetListModeUseCaseTest {
             // given
             val listMode = true
 
-            BDDMockito.given(mockListModeRepository.getListMode())
+            given(mockListModeRepository.getListMode())
                 .willReturn(listMode)
 
             // when
