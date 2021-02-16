@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -92,6 +93,7 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun setScreen() {
+        setTitle(getString(R.string.details_empty_title))
         showBackArrow()
         setHasOptionsMenu(false)
     }
@@ -262,12 +264,20 @@ class DetailsFragment : BaseFragment() {
     }
 
     private fun showComicsPlaceholder() {
-        binding.detailsCharacterComics.visible()
-        binding.detailsComicsPlaceholder.visible()
+        if (!binding.detailsCharacterComicsList.isVisible) {
+            binding.detailsCharacterComics.visible()
+            binding.detailsComicsPlaceholder.visible()
+        } else {
+            binding.detailsCharacterComicsListLoader.gone()
+        }
     }
 
     private fun showSeriesPlaceholder() {
-        binding.detailsCharacterSeries.visible()
-        binding.detailsSeriesPlaceholder.visible()
+        if (!binding.detailsCharacterSeriesList.isVisible) {
+            binding.detailsCharacterSeries.visible()
+            binding.detailsSeriesPlaceholder.visible()
+        } else {
+            binding.detailsCharacterSeriesListLoader.gone()
+        }
     }
 }

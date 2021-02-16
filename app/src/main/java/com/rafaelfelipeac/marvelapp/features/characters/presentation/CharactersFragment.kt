@@ -237,10 +237,11 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
     }
 
     private fun showPlaceholder() {
-        if (!binding.charactersList.isVisible) {
+        if (!binding.charactersList.isVisible || isFirstPage) {
             binding.charactersPlaceholder.visible()
             binding.charactersListLoader.gone()
             binding.charactersProgressBar.gone()
+            binding.charactersList.gone()
         } else {
             binding.charactersListLoader.gone()
         }
