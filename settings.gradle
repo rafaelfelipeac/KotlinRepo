@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "KotlinRepo"
+rootProject.name = "MarvelApp"

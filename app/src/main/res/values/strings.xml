@@ -1,15 +1,25 @@
 <resources>
-    <string name="app_name">KotlinRepo</string>
-
-    <!-- repositories -->
-    <string name="repositories_title">Top Kotlin Repositories</string>
-    <string name="repositories_placeholder_message">Something is wrong. \n\nCheck your internet connection.</string>
-
-    <!-- repositories adapter -->
-    <string name="repo_stars_message">%s stars</string>
-    <string name="repo_forks_message">%s forks</string>
+    <string name="app_name">MarvelApp</string>
 
     <!-- menu -->
     <string name="menu_refresh">Refresh</string>
+
+    <!-- characters -->
+    <string name="characters_title">Marvel Characters</string>
+    <string name="characters_placeholder_message">Something is wrong. \n\nCheck your internet connection.</string>
+    <string name="characters_added_favorite">Added to favorites!</string>
+
+    <!-- favorite -->
+    <string name="favorite_deleted">Deleted!</string>
+    <string name="favorite_title">Favorite Characters</string>
+    <string name="favorite_placeholder_message">You haven\'t favored any characters yet.</string>
+
+    <!-- details -->
+    <string name="details_empty_title" />
+    <string name="details_no_description">No description.</string>
+    <string name="details_placeholder_message">Something is wrong. \n\nCheck your internet connection.</string>
+    <string name="details_added_favorites">Added to favorites!</string>
+    <string name="details_comics_title">Comics</string>
+    <string name="details_series_title">Series</string>
 
 </resources>
