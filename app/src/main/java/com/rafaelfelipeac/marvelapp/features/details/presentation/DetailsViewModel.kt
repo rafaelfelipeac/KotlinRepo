@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rafaelfelipeac.marvelapp.core.extension.md5
 import com.rafaelfelipeac.marvelapp.core.network.ResultWrapper
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsComicsUseCase
@@ -15,7 +13,6 @@ import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsSe
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsUseCase
 import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.SaveFavoriteUseCase
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 open class DetailsViewModel @Inject constructor(
@@ -40,12 +37,9 @@ open class DetailsViewModel @Inject constructor(
     val savedFavorite: LiveData<Long?> get() = _savedFavorite
     private val _savedFavorite = MutableLiveData<Long?>()
 
-    open fun getDetails(characterId: Long) {
-        val timestamp = Date().time
-        val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
-
+    open fun getDetails(characterId: Long, apikey: String, timestamp: Long, hash: String) {
         viewModelScope.launch {
-            when (val response = getDetailsUseCase(characterId, API_KEY, hash, timestamp)) {
+            when (val response = getDetailsUseCase(characterId, apikey, timestamp, hash)) {
                 is ResultWrapper.Success -> {
                     _details.value = response.value
                 }
@@ -59,12 +53,9 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsComics(characterId: Long, offset: Int) {
-        val timestamp = Date().time
-        val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
-
+    open fun getDetailsComics(characterId: Long, apikey: String, timestamp: Long, hash: String, offset: Int) {
         viewModelScope.launch {
-            when (val response = getDetailsComicsUseCase.invoke(characterId, API_KEY, hash, timestamp, offset)) {
+            when (val response = getDetailsComicsUseCase.invoke(characterId, apikey, timestamp, hash, offset)) {
                 is ResultWrapper.Success -> {
                     _comics.value = response.value
                 }
@@ -78,12 +69,9 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun getDetailsSeries(characterId: Long, offset: Int) {
-        val timestamp = Date().time
-        val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
-
+    open fun getDetailsSeries(characterId: Long, apikey: String, timestamp: Long, hash: String, offset: Int) {
         viewModelScope.launch {
-            when (val response = getDetailsSeriesUseCase.invoke(characterId, API_KEY, hash, timestamp, offset)) {
+            when (val response = getDetailsSeriesUseCase.invoke(characterId, apikey, timestamp, hash, offset)) {
                 is ResultWrapper.Success -> {
                     _series.value = response.value
                 }
@@ -97,9 +85,9 @@ open class DetailsViewModel @Inject constructor(
         }
     }
 
-    open fun favoriteCharacter(characterId: Long?, characterName: String?, characterUrl: String?) {
+    open fun favoriteCharacter(favorite: Favorite) {
         viewModelScope.launch {
-            _savedFavorite.value = saveFavoriteUseCase(characterId, characterName, characterUrl)
+            _savedFavorite.value = saveFavoriteUseCase(favorite)
         }
     }
 }

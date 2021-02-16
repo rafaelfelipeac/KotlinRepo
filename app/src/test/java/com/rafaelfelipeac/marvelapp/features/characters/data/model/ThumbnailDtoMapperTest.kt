@@ -1,7 +1,7 @@
 package com.rafaelfelipeac.marvelapp.features.characters.data.model
 
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createThumbnail
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createThumbnailDto
+import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createThumbnailCharacter
+import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createThumbnailDtoCharacter
 import com.rafaelfelipeac.marvelapp.base.equalTo
 import org.junit.Test
 
@@ -12,25 +12,25 @@ class ThumbnailDtoMapperTest {
     @Test
     fun `GIVEN ThumbnailDto WHEN map is called THEN Thumbnail is returned`() {
         // given
-        val thumbnailDto = createThumbnailDto()
+        val thumbnailDto = createThumbnailDtoCharacter()
 
         // when
         val result = thumbnailDtoMapper.map(thumbnailDto)
 
         // then
-        result equalTo createThumbnail()
+        result equalTo createThumbnailCharacter()
     }
 
     @Test
     fun `GIVEN Thumbnail WHEN mapReverse is called THEN ThumbnailDto is returned`() {
         // given
-        val thumbnail = createThumbnail()
+        val thumbnail = createThumbnailCharacter()
 
         // when
         val result = thumbnailDtoMapper.mapReverse(thumbnail)
 
         // then
-        result equalTo createThumbnailDto()
+        result equalTo createThumbnailDtoCharacter()
     }
 
     @Test
@@ -40,7 +40,7 @@ class ThumbnailDtoMapperTest {
 
         // when
         val result = thumbnailDtoMapper.map(
-            createThumbnailDto(
+            createThumbnailDtoCharacter(
                 path = pathParameter
             )
         )
@@ -56,7 +56,7 @@ class ThumbnailDtoMapperTest {
 
         // when
         val result = thumbnailDtoMapper.map(
-            createThumbnailDto(
+            createThumbnailDtoCharacter(
                 extension = extensionParameter
             )
         )

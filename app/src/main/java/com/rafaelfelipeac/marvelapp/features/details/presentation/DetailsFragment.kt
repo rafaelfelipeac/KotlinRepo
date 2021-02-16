@@ -12,8 +12,10 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentDetailsBinding
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.Thumbnail
@@ -65,9 +67,26 @@ class DetailsFragment : BaseFragment() {
 
         setLayout()
 
-        viewModel?.getDetails(characterId)
-        viewModel?.getDetailsComics(characterId, offsetComics)
-        viewModel?.getDetailsSeries(characterId, offsetSeries)
+        viewModel?.getDetails(
+            characterId,
+            API_KEY,
+            createTimestamp(),
+            createHash(createTimestamp())
+        )
+        viewModel?.getDetailsComics(
+            characterId,
+            API_KEY,
+            createTimestamp(),
+            createHash(createTimestamp()),
+            offsetComics
+        )
+        viewModel?.getDetailsSeries(
+            characterId,
+            API_KEY,
+            createTimestamp(),
+            createHash(createTimestamp()),
+            offsetSeries
+        )
 
         observeViewModel()
     }
@@ -80,9 +99,11 @@ class DetailsFragment : BaseFragment() {
     private fun setLayout() {
         binding.detailsFavorite.setOnClickListener {
             viewModel?.favoriteCharacter(
-                characterDetail?.id,
-                characterDetail?.name,
-                characterDetail?.thumbnail?.getUrl(Thumbnail.ImageType.LANDSCAPE)
+                Favorite(
+                    characterDetail?.id ?: 0L,
+                    characterDetail?.name ?: "",
+                    characterDetail?.thumbnail?.getUrl(Thumbnail.ImageType.LANDSCAPE) ?: ""
+                )
             )
         }
 
@@ -94,7 +115,13 @@ class DetailsFragment : BaseFragment() {
                 if (!recyclerView.canScrollHorizontally(1) && !isLoadingComics) {
                     isLoadingComics = true
 
-                    viewModel?.getDetailsComics(characterId, offsetComics)
+                    viewModel?.getDetailsComics(
+                        characterId,
+                        API_KEY,
+                        createTimestamp(),
+                        createHash(createTimestamp()),
+                        offsetComics
+                    )
 
                     binding.detailsCharacterComicsListLoader.visible()
                     binding.detailsCharacterComicsList.scrollToPosition(comicsAdapter.itemCount - 1)
@@ -110,7 +137,13 @@ class DetailsFragment : BaseFragment() {
                 if (!recyclerView.canScrollHorizontally(1) && !isLoadingSeries) {
                     isLoadingSeries = true
 
-                    viewModel?.getDetailsSeries(characterId, offsetSeries)
+                    viewModel?.getDetailsSeries(
+                        characterId,
+                        API_KEY,
+                        createTimestamp(),
+                        createHash(createTimestamp()),
+                        offsetSeries
+                    )
 
                     binding.detailsCharacterSeriesListLoader.visible()
                     binding.detailsCharacterSeriesList.scrollToPosition(seriesAdapter.itemCount - 1)

@@ -1,16 +1,14 @@
-package com.rafaelfelipeac.marvelapp.features.characters.domain.usecase
+package com.rafaelfelipeac.marvelapp.features.details.domain.usecase
 
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createFavorite
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockFavoriteId
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockFavoriteName
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockFavoriteUrl
+import com.rafaelfelipeac.marvelapp.base.DataProviderTest
 import com.rafaelfelipeac.marvelapp.base.equalTo
+import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.SaveFavoriteUseCase
 import com.rafaelfelipeac.marvelapp.features.commons.domain.repository.FavoriteRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -31,16 +29,16 @@ class SaveFavoriteUseCaseTest {
     fun `GIVEN a successfully result WHEN saveFavoriteUseCase is called THEN return a favoriteId'`() {
         runBlocking {
             // given
-            val favorite = createFavorite(mockFavoriteId, mockFavoriteName, mockFavoriteUrl)
+            val favorite = DataProviderTest.createFavorite(DataProviderTest.mockFavoriteId, DataProviderTest.mockFavoriteName, DataProviderTest.mockFavoriteUrl)
 
-            given(mockFavoriteRepository.save(favorite))
-                .willReturn(mockFavoriteId)
+            BDDMockito.given(mockFavoriteRepository.save(favorite))
+                .willReturn(DataProviderTest.mockFavoriteId)
 
             // when
             val result = saveFavoriteUseCase(favorite)
 
             // then
-            result equalTo mockFavoriteId
+            result equalTo DataProviderTest.mockFavoriteId
         }
     }
 }

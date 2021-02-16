@@ -10,6 +10,8 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.MarvelChara
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Thumbnail
 import com.rafaelfelipeac.marvelapp.features.commons.data.model.FavoriteDto
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
+import com.rafaelfelipeac.marvelapp.features.details.data.model.*
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.*
 
 object DataProviderTest {
 
@@ -33,6 +35,14 @@ object DataProviderTest {
     const val mockFavoriteName = ""
     const val mockFavoriteUrl = ""
 
+    const val mockCharacterDetailId = 1L
+    const val mockCharacterDetailName = ""
+    const val mockCharacterDetailDescription = ""
+    const val mockCharacterDetailUrl = 1L
+
+    const val mockDetailInfoId = 1L
+    const val mockDetailInfoTitle = ""
+
     // region Data
     fun createCharacterListDto(): CharacterListDto {
         return CharacterListDto(mockOffset, mockLimit, mockTotal, mockCount, createCharactersDto())
@@ -55,15 +65,25 @@ object DataProviderTest {
         return CharacterDto(
             id,
             name,
-            createThumbnailDto(path, extension)
+            createThumbnailDtoCharacter(path, extension)
         )
     }
 
-    fun createThumbnailDto(
+    fun createThumbnailDtoCharacter(
         path: String? = mockPath,
         extension: String? = mockExtension
     ): ThumbnailDto {
         return ThumbnailDto(path, extension)
+    }
+
+    fun createThumbnailDtoDetails(
+        path: String? = mockPath,
+        extension: String? = mockExtension
+    ): com.rafaelfelipeac.marvelapp.features.details.data.model.ThumbnailDto {
+        return com.rafaelfelipeac.marvelapp.features.details.data.model.ThumbnailDto(
+            path,
+            extension
+        )
     }
 
     fun createMarvelCharacterListDto(): MarvelCharacterListDto {
@@ -77,6 +97,56 @@ object DataProviderTest {
     ): FavoriteDto {
         return FavoriteDto(favoriteId, favoriteName, favoriteUrl)
     }
+
+    fun createCharacterDetailDto(): CharacterDetailDto {
+        return CharacterDetailDto(
+            mockCharacterDetailId,
+            mockCharacterDetailName,
+            mockCharacterDetailDescription,
+            createThumbnailDtoDetails()
+        )
+    }
+
+    fun createCharacterDetailListDto(): CharacterDetailListDto {
+        return CharacterDetailListDto(
+            mockOffset,
+            mockLimit,
+            mockTotal,
+            mockCount,
+            listOf(createCharacterDetailDto(), createCharacterDetailDto(), createCharacterDetailDto())
+        )
+    }
+
+    fun createDetailInfoDto(): DetailInfoDto {
+        return DetailInfoDto(
+            mockDetailInfoId,
+            mockDetailInfoTitle,
+            createThumbnailDtoDetails()
+        )
+    }
+
+    fun createDetailInfoListDto(): DetailInfoListDto {
+        return DetailInfoListDto(
+            mockOffset,
+            mockLimit,
+            mockTotal,
+            mockCount,
+            listOf(createDetailInfoDto(), createDetailInfoDto(), createDetailInfoDto())
+        )
+    }
+
+    fun createMarvelCharacterDetailDto(): MarvelCharacterDetailDto {
+        return MarvelCharacterDetailDto(
+            createCharacterDetailListDto()
+        )
+    }
+
+    fun createMarvelDetailInfoDto(): MarvelDetailInfoDto {
+        return MarvelDetailInfoDto(
+            createDetailInfoListDto()
+        )
+    }
+
     // endregion
 
     // region Domain
@@ -101,15 +171,22 @@ object DataProviderTest {
         return Character(
             id,
             name,
-            createThumbnail(path, extension)
+            createThumbnailCharacter(path, extension)
         )
     }
 
-    fun createThumbnail(
+    fun createThumbnailCharacter(
         path: String = mockPath,
         extension: String = mockExtension
     ): Thumbnail {
         return Thumbnail(path, extension)
+    }
+
+    fun createThumbnailDetails(
+        path: String = mockPath,
+        extension: String = mockExtension
+    ): com.rafaelfelipeac.marvelapp.features.details.domain.model.Thumbnail {
+        return com.rafaelfelipeac.marvelapp.features.details.domain.model.Thumbnail(path, extension)
     }
 
     fun createMarvelCharacterList(): MarvelCharacterList {
@@ -122,6 +199,55 @@ object DataProviderTest {
         favoriteUrl: String = mockFavoriteUrl
     ): Favorite {
         return Favorite(favoriteId, favoriteName, favoriteUrl)
+    }
+
+    fun createCharacterDetail(): CharacterDetail {
+        return CharacterDetail(
+            mockCharacterDetailId,
+            mockCharacterDetailName,
+            mockCharacterDetailDescription,
+            createThumbnailDetails()
+        )
+    }
+
+    fun createCharacterDetailList(): CharacterDetailList {
+        return CharacterDetailList(
+            mockOffset,
+            mockLimit,
+            mockTotal,
+            mockCount,
+            listOf(createCharacterDetail(), createCharacterDetail(), createCharacterDetail())
+        )
+    }
+
+    fun createDetailInfo(): DetailInfo {
+        return DetailInfo(
+            mockDetailInfoId,
+            mockDetailInfoTitle,
+            createThumbnailDetails()
+        )
+    }
+
+    fun createDetailInfoList(): DetailInfoList {
+        return DetailInfoList(
+            mockOffset,
+            mockLimit,
+            mockTotal,
+            mockCount,
+            listOf(createDetailInfo(), createDetailInfo(), createDetailInfo())
+        )
+    }
+
+    fun createMarvelCharacterDetail(): MarvelCharacterDetail {
+        return MarvelCharacterDetail(
+            createCharacterDetailList()
+        )
+    }
+
+    fun createMarvelDetailInfo(): MarvelDetailInfo {
+        return MarvelDetailInfo(
+            createDetailInfoList()
+        )
     }
     // endregion
 }

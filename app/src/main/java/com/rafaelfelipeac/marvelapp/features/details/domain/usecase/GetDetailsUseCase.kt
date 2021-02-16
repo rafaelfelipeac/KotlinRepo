@@ -11,8 +11,8 @@ class GetDetailsUseCase @Inject constructor(
     suspend operator fun invoke(
         characterId: Long,
         apikey: String,
-        hash: String,
-        ts: Long
+        ts: Long,
+        hash: String
     ): ResultWrapper<CharacterDetail> {
         return detailsRepository.getDetails(characterId, apikey, hash, ts)
     }
