@@ -1,47 +1,47 @@
 package com.rafaelfelipeac.marvelapp.features.characters.data.model
 
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createOwner
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createOwnerDto
+import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createThumbnail
+import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createThumbnailDto
 import com.rafaelfelipeac.marvelapp.base.equalTo
 import org.junit.Test
 
 class ThumbnailDtoMapperTest {
 
-    private val ownerDtoMapper = ThumbnailDtoMapper()
+    private val thumbnailDtoMapper = ThumbnailDtoMapper()
 
     @Test
-    fun `GIVEN OwnerDto WHEN map is called THEN Owner is returned`() {
+    fun `GIVEN ThumbnailDto WHEN map is called THEN Thumbnail is returned`() {
         // given
-        val ownerDto = createOwnerDto()
+        val thumbnailDto = createThumbnailDto()
 
         // when
-        val result = ownerDtoMapper.map(ownerDto)
+        val result = thumbnailDtoMapper.map(thumbnailDto)
 
         // then
-        result equalTo createOwner()
+        result equalTo createThumbnail()
     }
 
     @Test
-    fun `GIVEN Owner WHEN mapReverse is called THEN OwnerDto is returned`() {
+    fun `GIVEN Thumbnail WHEN mapReverse is called THEN ThumbnailDto is returned`() {
         // given
-        val owner = createOwner()
+        val thumbnail = createThumbnail()
 
         // when
-        val result = ownerDtoMapper.mapReverse(owner)
+        val result = thumbnailDtoMapper.mapReverse(thumbnail)
 
         // then
-        result equalTo createOwnerDto()
+        result equalTo createThumbnailDto()
     }
 
     @Test
-    fun `GIVEN a null login parameter WHEN map is called THEN mapped name is empty`() {
+    fun `GIVEN a null path parameter WHEN map is called THEN mapped path is empty`() {
         // given 
-        val loginParameter = null
+        val pathParameter = null
 
         // when
-        val result = ownerDtoMapper.map(
-            createOwnerDto(
-                login = loginParameter
+        val result = thumbnailDtoMapper.map(
+            createThumbnailDto(
+                path = pathParameter
             )
         )
 
@@ -50,14 +50,14 @@ class ThumbnailDtoMapperTest {
     }
 
     @Test
-    fun `GIVEN a null avatar_url parameter WHEN map is called THEN mapped avatarUrl is empty`() {
+    fun `GIVEN a null extension parameter WHEN map is called THEN mapped extension is empty`() {
         // given
-        val avatarUrlParameter = null
+        val extensionParameter = null
 
         // when
-        val result = ownerDtoMapper.map(
-            createOwnerDto(
-                avatar_url = avatarUrlParameter
+        val result = thumbnailDtoMapper.map(
+            createThumbnailDto(
+                extension = extensionParameter
             )
         )
 

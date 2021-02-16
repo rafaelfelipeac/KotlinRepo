@@ -4,17 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rafaelfelipeac.marvelapp.core.extension.md5
 import com.rafaelfelipeac.marvelapp.core.network.ResultWrapper
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
-import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.GetCharactersUseCase
 import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.GetListModeUseCase
 import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.SaveFavoriteUseCase
 import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.SaveListModeUseCase
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 open class CharactersViewModel @Inject constructor(
@@ -36,12 +33,9 @@ open class CharactersViewModel @Inject constructor(
     val savedListMode: LiveData<Unit?> get() = _savedListMode
     private val _savedListMode = MutableLiveData<Unit?>()
 
-    open fun getCharacters(offset: Int) {
-        val timestamp = Date().time
-        val hash = (timestamp.toString() + PRIVATE_KEY + API_KEY).md5()
-
+    open fun getCharacters(apikey: String, timestamp: Long, hash: String, offset: Int) {
         viewModelScope.launch {
-            when (val response = getCharactersUseCase.invoke(API_KEY, hash, timestamp, offset)) {
+            when (val response = getCharactersUseCase.invoke(apikey, hash, timestamp, offset)) {
                 is ResultWrapper.Success -> {
                     _characters.value = response.value
                 }
@@ -55,9 +49,9 @@ open class CharactersViewModel @Inject constructor(
         }
     }
 
-    open fun favoriteCharacter(characterId: Long, characterName: String, characterUrl: String) {
+    open fun favoriteCharacter(favorite: Favorite) {
         viewModelScope.launch {
-            _savedFavorite.value = saveFavoriteUseCase(characterId, characterName, characterUrl)
+            _savedFavorite.value = saveFavoriteUseCase(favorite)
         }
     }
 

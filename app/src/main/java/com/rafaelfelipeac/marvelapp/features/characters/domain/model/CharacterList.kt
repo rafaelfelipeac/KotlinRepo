@@ -5,5 +5,5 @@ data class CharacterList(
     val limit: Int,
     val total: Int,
     val count: Int,
-    val results: List<Character>
+    val items: List<Character>
 )

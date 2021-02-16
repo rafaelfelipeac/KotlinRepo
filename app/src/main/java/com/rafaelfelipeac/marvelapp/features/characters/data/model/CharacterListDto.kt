@@ -26,7 +26,7 @@ class CharacterListDtoMapper @Inject constructor() : TwoWayMapper<CharacterListD
             limit = limit ?: 0,
             total = total ?: 0,
             count = count ?: 0,
-            results = CharacterDtoMapper().mapList(items)
+            items = CharacterDtoMapper().mapList(items)
         )
     }
 
@@ -36,7 +36,7 @@ class CharacterListDtoMapper @Inject constructor() : TwoWayMapper<CharacterListD
             limit = limit,
             total = total,
             count = count,
-            items = CharacterDtoMapper().mapListReverse(results)
+            items = CharacterDtoMapper().mapListReverse(items)
         )
     }
 }

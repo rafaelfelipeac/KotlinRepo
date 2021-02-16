@@ -34,6 +34,22 @@ class CharacterDtoMapperTest {
     }
 
     @Test
+    fun `GIVEN a null id parameter WHEN map is called THEN mapped id is 0`() {
+        // given
+        val idParameter = null
+
+        // when
+        val result = characterDtoMapper.map(
+            createCharacterDto(
+                id = idParameter
+            )
+        )
+
+        // then
+        result.id equalTo 0
+    }
+
+    @Test
     fun `GIVEN a null name parameter WHEN map is called THEN mapped name is empty`() {
         // given
         val nameParameter = null
@@ -50,46 +66,14 @@ class CharacterDtoMapperTest {
     }
 
     @Test
-    fun `GIVEN a null stars parameter WHEN map is called THEN mapped stars is empty`() {
+    fun `GIVEN a null path parameter WHEN map is called THEN mapped path is empty`() {
         // given
-        val starsParameter = null
+        val pathParameter = null
 
         // when
         val result = characterDtoMapper.map(
             createCharacterDto(
-                stars = starsParameter
-            )
-        )
-
-        // then
-        result.stars equalTo 0
-    }
-
-    @Test
-    fun `GIVEN a null forks parameter WHEN map is called THEN mapped forks is empty`() {
-        // given
-        val forksParameter = null
-
-        // when
-        val result = characterDtoMapper.map(
-            createCharacterDto(
-                forks = forksParameter
-            )
-        )
-
-        // then
-        result.forks equalTo 0
-    }
-
-    @Test
-    fun `GIVEN a null login parameter WHEN map is called THEN mapped ownerName is empty`() {
-        // given
-        val loginParameter = null
-
-        // when
-        val result = characterDtoMapper.map(
-            createCharacterDto(
-                login = loginParameter
+                path = pathParameter
             )
         )
 
@@ -98,14 +82,14 @@ class CharacterDtoMapperTest {
     }
 
     @Test
-    fun `GIVEN a null avatarUrl parameter WHEN map is called THEN mapped ownerAvatarUrl is empty`() {
+    fun `GIVEN a null extension parameter WHEN map is called THEN mapped extension is empty`() {
         // given
-        val avatarUrlParameter = null
+        val extensionParameter = null
 
         // when
         val result = characterDtoMapper.map(
             createCharacterDto(
-                avatar_url = avatarUrlParameter
+                extension = extensionParameter
             )
         )
 

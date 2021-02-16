@@ -1,5 +1,5 @@
 package com.rafaelfelipeac.marvelapp.features.characters.domain.model
 
-class Marvel(
+class MarvelCharacterList(
     val data: CharacterList
 )

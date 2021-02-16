@@ -12,11 +12,13 @@ import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.extension.visible
+import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.refreshCharacter
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.refreshFavorite
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentCharactersBinding
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
 @Suppress("TooManyFunctions")
@@ -68,7 +70,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
         isFirstPage = true
 
         viewModel?.getListMode()
-        viewModel?.getCharacters(offset)
+        viewModel?.getCharacters(API_KEY, createTimestamp(), createHash(createTimestamp()), offset)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -102,7 +104,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
         offset = 0
         characterAdapter.clearItems()
 
-        viewModel?.getCharacters(offset)
+        viewModel?.getCharacters(API_KEY, createTimestamp(), createHash(createTimestamp()), offset)
     }
 
     private fun setScreen() {
@@ -120,7 +122,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
                 if (!recyclerView.canScrollVertically(1) && !isLoading) {
                     isLoading = true
 
-                    viewModel?.getCharacters(offset)
+                    viewModel?.getCharacters(API_KEY, createTimestamp(), createHash(createTimestamp()), offset)
 
                     binding.charactersListLoader.visible()
                     binding.charactersList.scrollToPosition(characterAdapter.itemCount - 1)
@@ -188,7 +190,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
             navController?.navigate(action)
         }
         characterAdapter.favoriteListener = {
-            viewModel?.favoriteCharacter(it.id, it.name, it.thumbnail.getUrl())
+            viewModel?.favoriteCharacter(Favorite(it.id, it.name, it.thumbnail.getUrl()))
             favoriteListener = true
         }
         characterAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY

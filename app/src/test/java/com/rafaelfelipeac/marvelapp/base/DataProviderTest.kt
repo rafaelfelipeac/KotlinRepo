@@ -1,29 +1,40 @@
 package com.rafaelfelipeac.marvelapp.base
 
-import com.rafaelfelipeac.marvelapp.features.characters.data.model.ThumbnailDto
 import com.rafaelfelipeac.marvelapp.features.characters.data.model.CharacterDto
 import com.rafaelfelipeac.marvelapp.features.characters.data.model.CharacterListDto
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Thumbnail
+import com.rafaelfelipeac.marvelapp.features.characters.data.model.MarvelCharacterListDto
+import com.rafaelfelipeac.marvelapp.features.characters.data.model.ThumbnailDto
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.CharacterList
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.MarvelCharacterList
+import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Thumbnail
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 
 object DataProviderTest {
 
-    const val mockLanguage = "language:kotlin"
-    const val mockSort = "star"
-    const val mockPage = 1
+    const val mockApiKey = ""
+    const val mockHash = ""
+    const val mockTimestamp = 0L
 
-    const val mockOwnerName = "Owner name"
-    const val mockOwnerAvatarUrl =
-        "https://180dc.org/wp-content/uploads/2017/11/profile-placeholder.png"
+    const val mockPath = "http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge"
+    const val mockExtension = ".jpg"
 
+    const val mockCharacterId = 1L
     const val mockCharacterName = "Character Name"
-    const val mockCharacterStars = 200
-    const val mockCharacterForks = 100
+    const val mockCharacterUrl = "Character Url"
+
+    const val mockOffset = 0
+    const val mockLimit = 20
+    const val mockTotal = 100
+    const val mockCount = 20
+
+    const val mockFavoriteId = 1L
+    const val mockFavoriteName = ""
+    const val mockFavoriteUrl = ""
 
     // region Data
     fun createCharacterListDto(): CharacterListDto {
-        return CharacterListDto(createCharactersDto())
+        return CharacterListDto(mockOffset, mockLimit, mockTotal, mockCount, createCharactersDto())
     }
 
     fun createCharactersDto(): List<CharacterDto> {
@@ -35,31 +46,33 @@ object DataProviderTest {
     }
 
     fun createCharacterDto(
+        id: Long? = mockCharacterId,
         name: String? = mockCharacterName,
-        stars: Int? = mockCharacterStars,
-        forks: Int? = mockCharacterForks,
-        login: String? = mockOwnerName,
-        avatar_url: String? = mockOwnerAvatarUrl
+        path: String? = mockPath,
+        extension: String? = mockExtension
     ): CharacterDto {
         return CharacterDto(
+            id,
             name,
-            stars,
-            forks,
-            createOwnerDto(login, avatar_url)
+            createThumbnailDto(path, extension)
         )
     }
 
-    fun createOwnerDto(
-        login: String? = mockOwnerName,
-        avatar_url: String? = mockOwnerAvatarUrl
+    fun createThumbnailDto(
+        path: String? = mockPath,
+        extension: String? = mockExtension
     ): ThumbnailDto {
-        return ThumbnailDto(login, avatar_url)
+        return ThumbnailDto(path, extension)
+    }
+
+    fun createMarvelCharacterListDto(): MarvelCharacterListDto {
+        return MarvelCharacterListDto(createCharacterListDto())
     }
     // endregion
 
     // region Domain
     fun createCharacterList(): CharacterList {
-        return CharacterList(createCharacters())
+        return CharacterList(mockOffset, mockLimit, mockTotal, mockCount, createCharacters())
     }
 
     fun createCharacters(): List<Character> {
@@ -71,25 +84,35 @@ object DataProviderTest {
     }
 
     fun createCharacter(
+        id: Long = mockCharacterId,
         name: String = mockCharacterName,
-        stars: Int = mockCharacterStars,
-        forks: Int = mockCharacterForks,
-        ownerName: String = mockOwnerName,
-        ownerAvatarUrl: String = mockOwnerAvatarUrl
+        path: String = mockPath,
+        extension: String = mockExtension
     ): Character {
         return Character(
+            id,
             name,
-            stars,
-            forks,
-            createOwner(ownerName, ownerAvatarUrl)
+            createThumbnail(path, extension)
         )
     }
 
-    fun createOwner(
-        name: String = mockOwnerName,
-        avatarUrl: String = mockOwnerAvatarUrl
+    fun createThumbnail(
+        path: String = mockPath,
+        extension: String = mockExtension
     ): Thumbnail {
-        return Thumbnail(name, avatarUrl)
+        return Thumbnail(path, extension)
+    }
+
+    fun createMarvelCharacterList(): MarvelCharacterList {
+        return MarvelCharacterList(createCharacterList())
+    }
+
+    fun createFavorite(
+        favoriteId: Long = mockFavoriteId,
+        favoriteName: String = mockFavoriteName,
+        favoriteUrl: String = mockFavoriteUrl
+    ): Favorite {
+        return Favorite(favoriteId, favoriteName, favoriteUrl)
     }
     // endregion
 }
