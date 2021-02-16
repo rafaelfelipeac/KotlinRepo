@@ -8,6 +8,7 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.CharacterList
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.MarvelCharacterList
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Thumbnail
+import com.rafaelfelipeac.marvelapp.features.commons.data.model.FavoriteDto
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 
 object DataProviderTest {
@@ -67,6 +68,14 @@ object DataProviderTest {
 
     fun createMarvelCharacterListDto(): MarvelCharacterListDto {
         return MarvelCharacterListDto(createCharacterListDto())
+    }
+
+    fun createFavoriteDto(
+        favoriteId: Long = mockFavoriteId,
+        favoriteName: String = mockFavoriteName,
+        favoriteUrl: String = mockFavoriteUrl
+    ): FavoriteDto {
+        return FavoriteDto(favoriteId, favoriteName, favoriteUrl)
     }
     // endregion
 
