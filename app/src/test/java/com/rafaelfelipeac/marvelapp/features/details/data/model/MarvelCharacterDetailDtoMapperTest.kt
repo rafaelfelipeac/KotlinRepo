@@ -6,19 +6,8 @@ import com.rafaelfelipeac.marvelapp.base.equalTo
 import org.junit.Test
 
 class MarvelCharacterDetailDtoMapperTest {
-    private val marvelCharacterDetailDtoMapper = MarvelCharacterDetailDtoMapper()
 
-//    @Test
-//    fun `GIVEN MarvelCharacterDetailDto WHEN map is called THEN MarvelCharacterDetail is returned`() {
-//        // given
-//        val marvelCharacterDetailDto = createMarvelCharacterDetailDto()
-//
-//        // when
-//        val result = marvelCharacterDetailDtoMapper.map(marvelCharacterDetailDto)
-//
-//        // then
-//        result equalTo createMarvelCharacterDetail()
-//    }
+    private val marvelCharacterDetailDtoMapper = MarvelCharacterDetailDtoMapper()
 
     @Test
     fun `GIVEN MarvelCharacterDetail WHEN mapReverse is called THEN MarvelCharacterDetailDto is returned`() {

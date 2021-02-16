@@ -6,6 +6,7 @@ import com.rafaelfelipeac.marvelapp.base.equalTo
 import org.junit.Test
 
 class CharacterDetailListDtoMapperTest {
+
     private val characterDetailListDtoMapper = CharacterDetailListDtoMapper()
 
     @Test

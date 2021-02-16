@@ -9,18 +9,6 @@ class MarvelCharacterListDtoMapperTest {
 
     private val marvelCharacterListDtoMapper = MarvelCharacterListDtoMapper()
 
-//    @Test
-//    fun `GIVEN MarvelCharacterListDto WHEN map is called THEN MarvelCharacterList is returned`() {
-//        // given
-//        val marvelCharacterListDto = createMarvelCharacterListDto()
-//
-//        // when
-//        val result = marvelCharacterListDtoMapper.map(marvelCharacterListDto)
-//
-//        // then
-//        result equalTo createMarvelCharacterList()
-//    }
-
     @Test
     fun `GIVEN MarvelCharacterList WHEN mapReverse is called THEN MarvelCharacterListDto is returned`() {
         // given

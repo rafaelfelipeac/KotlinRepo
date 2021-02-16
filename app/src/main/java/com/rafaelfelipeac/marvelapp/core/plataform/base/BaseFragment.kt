@@ -22,15 +22,21 @@ open class BaseFragment : Fragment() {
         get() = appComponent
 
     fun hideBackArrow() {
-        main.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        if (activity is MainActivity) {
+            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        }
     }
 
     fun showBackArrow() {
-        main.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        if (activity is MainActivity) {
+            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     fun setTitle(title: String?) {
-        main.supportActionBar?.title = title ?: ""
+        if (activity is MainActivity) {
+            (activity as MainActivity).supportActionBar?.title = title ?: ""
+        }
     }
 
     fun createTimestamp() = Date().time

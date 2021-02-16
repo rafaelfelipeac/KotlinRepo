@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
@@ -198,10 +198,10 @@ class DetailsFragment : BaseFragment() {
         }
 
         viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
-            Snackbar.make(
-                requireView(),
+            Toast.makeText(
+                requireContext(),
                 getString(R.string.details_added_favorites),
-                Snackbar.LENGTH_SHORT
+                Toast.LENGTH_SHORT
             ).show()
         }
 

@@ -9,18 +9,6 @@ class FavoriteDtoMapperTest {
 
     private val favoriteDtoMapper = FavoriteDtoMapper()
 
-//    @Test
-//    fun `GIVEN FavoriteDto WHEN map is called THEN Favorite is returned`() {
-//        // given
-//        val favoriteDto = createFavoriteDto()
-//
-//        // when
-//        val result = favoriteDtoMapper.map(favoriteDto)
-//
-//        // then
-//        result equalTo createFavorite()
-//    }
-
     @Test
     fun `GIVEN Favorite WHEN mapReverse is called THEN FavoriteDto is returned`() {
         // given

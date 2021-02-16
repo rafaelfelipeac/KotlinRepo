@@ -1,19 +1,18 @@
 package com.rafaelfelipeac.marvelapp.features.characters.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuInflater
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
@@ -172,10 +171,10 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
         viewModel?.savedFavorite?.observe(viewLifecycleOwner) {
             if (favoriteListener) {
                 favoriteListener = false
-                Snackbar.make(
-                    requireView(),
+                Toast.makeText(
+                    requireContext(),
                     getString(R.string.characters_added_favorite),
-                    Snackbar.LENGTH_SHORT
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }

@@ -3,7 +3,7 @@ package com.rafaelfelipeac.marvelapp.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.createFavorites
+import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.createFavorite
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.DeleteFavoriteUseCase
 import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.GetFavoritesUseCase
@@ -16,7 +16,8 @@ open class FakeFavoriteViewModel(
     getFavoritesUseCase: GetFavoritesUseCase,
     deleteFavoriteUseCase: DeleteFavoriteUseCase,
     saveListModeUseCase: SaveListModeUseCase,
-    getListModeUseCase: GetListModeUseCase
+    getListModeUseCase: GetListModeUseCase,
+    private val result: Result
 ) : FavoritesViewModel(
     getFavoritesUseCase,
     deleteFavoriteUseCase,
@@ -37,7 +38,7 @@ open class FakeFavoriteViewModel(
 
     override fun getFavorites() {
         viewModelScope.launch {
-            _favorites.value = createFavorites()
+            _favorites.value = if (result == Result.SUCCESS) listOf(createFavorite()) else listOf()
         }
     }
 
@@ -57,5 +58,10 @@ open class FakeFavoriteViewModel(
         viewModelScope.launch {
             _listMode.value = true
         }
+    }
+
+    enum class Result {
+        SUCCESS,
+        ERROR
     }
 }

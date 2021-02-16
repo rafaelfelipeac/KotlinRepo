@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.gone
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
@@ -115,10 +115,10 @@ class FavoriteFragment : BaseFragment() {
         viewModel?.deleted?.observe(viewLifecycleOwner) {
             if (deleteListener) {
                 deleteListener = false
-                Snackbar.make(
-                    requireView(),
+                Toast.makeText(
+                    requireContext(),
                     getString(R.string.favorite_deleted),
-                    Snackbar.LENGTH_SHORT
+                    Toast.LENGTH_SHORT
                 ).show()
 
                 viewModel?.getFavorites()
