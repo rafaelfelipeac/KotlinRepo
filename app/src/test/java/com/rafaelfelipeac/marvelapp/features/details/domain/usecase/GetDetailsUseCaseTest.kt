@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.marvelapp.features.details.domain.usecase
 
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createCharacterDetail
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockApiKey
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockCharacterId
@@ -42,7 +41,7 @@ class GetDetailsUseCaseTest {
                     mockCharacterId,
                     mockApiKey,
                     mockHash,
-                    mockTimestamp,
+                    mockTimestamp
                 )
             ).willReturn(success)
 
@@ -51,7 +50,7 @@ class GetDetailsUseCaseTest {
                 mockCharacterId,
                 mockApiKey,
                 mockTimestamp,
-                mockHash,
+                mockHash
             )
 
             // then
@@ -71,7 +70,7 @@ class GetDetailsUseCaseTest {
                     mockCharacterId,
                     mockApiKey,
                     mockHash,
-                    mockTimestamp,
+                    mockTimestamp
                 )
             ).willReturn(genericError)
 
@@ -80,7 +79,7 @@ class GetDetailsUseCaseTest {
                 mockCharacterId,
                 mockApiKey,
                 mockTimestamp,
-                mockHash,
+                mockHash
             )
 
             // then
@@ -100,7 +99,7 @@ class GetDetailsUseCaseTest {
                     mockCharacterId,
                     mockApiKey,
                     mockHash,
-                    mockTimestamp,
+                    mockTimestamp
                 )
             ).willReturn(networkError)
 
@@ -109,12 +108,11 @@ class GetDetailsUseCaseTest {
                 mockCharacterId,
                 mockApiKey,
                 mockTimestamp,
-                mockHash,
+                mockHash
             )
 
             // then
             result equalTo networkError
         }
     }
-
 }

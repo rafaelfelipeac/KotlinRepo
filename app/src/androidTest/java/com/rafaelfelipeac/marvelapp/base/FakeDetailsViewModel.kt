@@ -2,25 +2,52 @@ package com.rafaelfelipeac.marvelapp.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.createCharacters
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
-import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.GetCharactersUseCase
-import com.rafaelfelipeac.marvelapp.features.characters.presentation.CharactersViewModel
+import androidx.lifecycle.viewModelScope
+import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.createCharacterDetail
+import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.createDetailInfoAsList
+import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.mockFavoriteId
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
+import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsComicsUseCase
+import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsSeriesUseCase
+import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.GetDetailsUseCase
+import com.rafaelfelipeac.marvelapp.features.details.domain.usecase.SaveFavoriteUseCase
+import com.rafaelfelipeac.marvelapp.features.details.presentation.DetailsViewModel
+import kotlinx.coroutines.launch
 
-class FakeDetailsViewModel(
-    charactersUseCase: GetCharactersUseCase,
+open class FakeDetailsViewModel(
+    getDetailsUseCase: GetDetailsUseCase,
+    getDetailsComicsUseCase: GetDetailsComicsUseCase,
+    getDetailsSeriesUseCase: GetDetailsSeriesUseCase,
+    saveFavoriteUseCase: SaveFavoriteUseCase,
     private val result: Result
-) : CharactersViewModel(charactersUseCase) {
+) : DetailsViewModel(
+    getDetailsUseCase,
+    getDetailsComicsUseCase,
+    getDetailsSeriesUseCase,
+    saveFavoriteUseCase
+) {
 
-    override val characters: LiveData<List<Character>?> get() = _characters
-    private val _characters = MutableLiveData<List<Character>?>()
+    override val details: LiveData<CharacterDetail?> get() = _details
+    private val _details = MutableLiveData<CharacterDetail?>()
+    override val comics: LiveData<List<DetailInfo>?> get() = _comics
+    private val _comics = MutableLiveData<List<DetailInfo>?>()
+    override val series: LiveData<List<DetailInfo>?> get() = _series
+    private val _series = MutableLiveData<List<DetailInfo>?>()
     override val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
+    override val errorComics: LiveData<Throwable> get() = _errorComics
+    private val _errorComics = MutableLiveData<Throwable>()
+    override val errorSeries: LiveData<Throwable> get() = _errorSeries
+    private val _errorSeries = MutableLiveData<Throwable>()
+    override val savedFavorite: LiveData<Long?> get() = _savedFavorite
+    private val _savedFavorite = MutableLiveData<Long?>()
 
-    override fun getCharacters(apiKey: String, hash: String, ts: Int) {
+    override fun getDetails(characterId: Long, apikey: String, timestamp: Long, hash: String) {
         when (result) {
             Result.SUCCESS -> {
-                _characters.value = createCharacters()
+                _details.value = createCharacterDetail()
             }
             Result.NETWORK_ERROR -> {
                 _error.value = Exception()
@@ -28,6 +55,40 @@ class FakeDetailsViewModel(
             Result.GENERIC_ERROR -> {
                 _error.value = Exception()
             }
+        }
+    }
+
+    override fun getDetailsComics(characterId: Long, apikey: String, timestamp: Long, hash: String, offset: Int) {
+        when (result) {
+            Result.SUCCESS -> {
+                _comics.value = createDetailInfoAsList()
+            }
+            Result.NETWORK_ERROR -> {
+                _errorComics.value = Exception()
+            }
+            Result.GENERIC_ERROR -> {
+                _errorComics.value = Exception()
+            }
+        }
+    }
+
+    override fun getDetailsSeries(characterId: Long, apikey: String, timestamp: Long, hash: String, offset: Int) {
+        when (result) {
+            Result.SUCCESS -> {
+                _series.value = createDetailInfoAsList()
+            }
+            Result.NETWORK_ERROR -> {
+                _errorSeries.value = Exception()
+            }
+            Result.GENERIC_ERROR -> {
+                _errorSeries.value = Exception()
+            }
+        }
+    }
+
+    override fun favoriteCharacter(favorite: Favorite) {
+        viewModelScope.launch {
+            _savedFavorite.value = mockFavoriteId
         }
     }
 

@@ -25,9 +25,9 @@ open class FavoritesViewModel @Inject constructor(
     private val _deleted = MutableLiveData<Unit?>()
     open val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
-    val listMode: LiveData<Boolean?> get() = _listMode
+    open val listMode: LiveData<Boolean?> get() = _listMode
     private val _listMode = MutableLiveData<Boolean?>()
-    val savedListMode: LiveData<Unit?> get() = _savedListMode
+    open val savedListMode: LiveData<Unit?> get() = _savedListMode
     private val _savedListMode = MutableLiveData<Unit?>()
 
     open fun getFavorites() {

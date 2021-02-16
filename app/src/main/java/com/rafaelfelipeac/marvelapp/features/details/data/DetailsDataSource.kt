@@ -10,52 +10,52 @@ import com.rafaelfelipeac.marvelapp.features.details.domain.repository.DetailsRe
 import javax.inject.Inject
 
 class DetailsDataSource @Inject constructor(
-        private val detailsApi: DetailsApi,
-        private val characterDetailDtoMapper: CharacterDetailDtoMapper,
-        private val detailInfoDtoMapper: DetailInfoDtoMapper
+    private val detailsApi: DetailsApi,
+    private val characterDetailDtoMapper: CharacterDetailDtoMapper,
+    private val detailInfoDtoMapper: DetailInfoDtoMapper
 ) : DetailsRepository {
 
     override suspend fun getDetails(
-            characterId: Long,
-            apikey: String,
-            hash: String,
-            ts: Long
+        characterId: Long,
+        apikey: String,
+        hash: String,
+        ts: Long
     ): ResultWrapper<CharacterDetail> {
         return Network.request() {
             characterDetailDtoMapper.map(
-                    detailsApi.getDetails(
-                            characterId,
-                            apikey,
-                            hash,
-                            ts
-                    ).data.items.first()
+                detailsApi.getDetails(
+                    characterId,
+                    apikey,
+                    hash,
+                    ts
+                ).data.items.first()
             )
         }
     }
 
     override suspend fun getDetailsComics(
-            characterId: Long,
-            apikey: String,
-            hash: String,
-            ts: Long,
-            offset: Int
+        characterId: Long,
+        apikey: String,
+        hash: String,
+        ts: Long,
+        offset: Int
     ): ResultWrapper<List<DetailInfo>> {
         return Network.request() {
             detailsApi.getDetailsComics(characterId, apikey, hash, ts, offset).data.items
-                    .map { detailInfoDtoMapper.map(it) }
+                .map { detailInfoDtoMapper.map(it) }
         }
     }
 
     override suspend fun getDetailsSeries(
-            characterId: Long,
-            apikey: String,
-            hash: String,
-            ts: Long,
-            offset: Int
+        characterId: Long,
+        apikey: String,
+        hash: String,
+        ts: Long,
+        offset: Int
     ): ResultWrapper<List<DetailInfo>> {
         return Network.request() {
             detailsApi.getDetailsSeries(characterId, apikey, hash, ts, offset).data.items
-                    .map { detailInfoDtoMapper.map(it) }
+                .map { detailInfoDtoMapper.map(it) }
         }
     }
 }

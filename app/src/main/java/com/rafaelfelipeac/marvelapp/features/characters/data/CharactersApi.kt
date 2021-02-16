@@ -8,9 +8,9 @@ interface CharactersApi {
 
     @GET("characters")
     suspend fun getAllCharacters(
-            @Query("apikey") apiKey: String,
-            @Query("hash") hash: String,
-            @Query("ts") ts: Long,
-            @Query("offset") offset: Int
+        @Query("apikey") apiKey: String,
+        @Query("hash") hash: String,
+        @Query("ts") ts: Long,
+        @Query("offset") offset: Int
     ): MarvelCharacterListDto
 }

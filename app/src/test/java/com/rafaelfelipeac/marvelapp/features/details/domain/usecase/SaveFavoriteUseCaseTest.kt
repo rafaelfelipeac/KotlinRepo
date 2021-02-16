@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.marvelapp.features.details.domain.usecase
 
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createFavorite
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockFavoriteId
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockFavoriteName

@@ -18,19 +18,19 @@ interface DetailsApi {
 
     @GET("characters/{characterId}/comics")
     suspend fun getDetailsComics(
-            @Path("characterId") characterId: Long,
-            @Query("apikey") apiKey: String,
-            @Query("hash") hash: String,
-            @Query("ts") ts: Long,
-            @Query("offset") offset: Int
+        @Path("characterId") characterId: Long,
+        @Query("apikey") apiKey: String,
+        @Query("hash") hash: String,
+        @Query("ts") ts: Long,
+        @Query("offset") offset: Int
     ): MarvelDetailInfoDto
 
     @GET("characters/{characterId}/series")
     suspend fun getDetailsSeries(
-            @Path("characterId") characterId: Long,
-            @Query("apikey") apiKey: String,
-            @Query("hash") hash: String,
-            @Query("ts") ts: Long,
-            @Query("offset") offset: Int
+        @Path("characterId") characterId: Long,
+        @Query("apikey") apiKey: String,
+        @Query("hash") hash: String,
+        @Query("ts") ts: Long,
+        @Query("offset") offset: Int
     ): MarvelDetailInfoDto
 }

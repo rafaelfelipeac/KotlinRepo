@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ListModeDataSource @Inject constructor(
-        private val preferences: Preferences
+    private val preferences: Preferences
 ) : ListModeRepository {
 
     override suspend fun saveListMode(listMode: Boolean) {

@@ -2,38 +2,60 @@ package com.rafaelfelipeac.marvelapp.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.createCharacters
-import com.rafaelfelipeac.marvelapp.features.characters.domain.model.Character
-import com.rafaelfelipeac.marvelapp.features.characters.domain.usecase.GetCharactersUseCase
-import com.rafaelfelipeac.marvelapp.features.characters.presentation.CharactersViewModel
+import androidx.lifecycle.viewModelScope
+import com.rafaelfelipeac.marvelapp.base.DataProviderAndroidTest.createFavorites
+import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
+import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.DeleteFavoriteUseCase
+import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.GetFavoritesUseCase
+import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.GetListModeUseCase
+import com.rafaelfelipeac.marvelapp.features.favorites.domain.usecase.SaveListModeUseCase
+import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoritesViewModel
+import kotlinx.coroutines.launch
 
-class FakeFavoriteViewModel(
-    charactersUseCase: GetCharactersUseCase,
-    private val result: Result
-) : CharactersViewModel(charactersUseCase) {
+open class FakeFavoriteViewModel(
+    getFavoritesUseCase: GetFavoritesUseCase,
+    deleteFavoriteUseCase: DeleteFavoriteUseCase,
+    saveListModeUseCase: SaveListModeUseCase,
+    getListModeUseCase: GetListModeUseCase
+) : FavoritesViewModel(
+    getFavoritesUseCase,
+    deleteFavoriteUseCase,
+    saveListModeUseCase,
+    getListModeUseCase
+) {
 
-    override val characters: LiveData<List<Character>?> get() = _characters
-    private val _characters = MutableLiveData<List<Character>?>()
+    override val favorites: LiveData<List<Favorite>?> get() = _favorites
+    private val _favorites = MutableLiveData<List<Favorite>?>()
+    override val deleted: LiveData<Unit?> get() = _deleted
+    private val _deleted = MutableLiveData<Unit?>()
     override val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
+    override val listMode: LiveData<Boolean?> get() = _listMode
+    private val _listMode = MutableLiveData<Boolean?>()
+    override val savedListMode: LiveData<Unit?> get() = _savedListMode
+    private val _savedListMode = MutableLiveData<Unit?>()
 
-    override fun getCharacters(apiKey: String, hash: String, ts: Int) {
-        when (result) {
-            Result.SUCCESS -> {
-                _characters.value = createCharacters()
-            }
-            Result.NETWORK_ERROR -> {
-                _error.value = Exception()
-            }
-            Result.GENERIC_ERROR -> {
-                _error.value = Exception()
-            }
+    override fun getFavorites() {
+        viewModelScope.launch {
+            _favorites.value = createFavorites()
         }
     }
 
-    enum class Result {
-        SUCCESS,
-        NETWORK_ERROR,
-        GENERIC_ERROR
+    override fun deleteFavorite(favorite: Favorite) {
+        viewModelScope.launch {
+            _deleted.value = Unit
+        }
+    }
+
+    override fun saveListMode(listMode: Boolean) {
+        viewModelScope.launch {
+            _savedListMode.value = Unit
+        }
+    }
+
+    override fun getListMode() {
+        viewModelScope.launch {
+            _listMode.value = true
+        }
     }
 }

@@ -10,8 +10,18 @@ import com.rafaelfelipeac.marvelapp.features.characters.domain.model.CharacterLi
 import com.rafaelfelipeac.marvelapp.features.characters.domain.model.MarvelCharacterList
 import com.rafaelfelipeac.marvelapp.features.commons.data.model.FavoriteDto
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
-import com.rafaelfelipeac.marvelapp.features.details.data.model.*
-import com.rafaelfelipeac.marvelapp.features.details.domain.model.*
+import com.rafaelfelipeac.marvelapp.features.details.data.model.MarvelCharacterDetailDto
+import com.rafaelfelipeac.marvelapp.features.details.data.model.MarvelDetailInfoDto
+import com.rafaelfelipeac.marvelapp.features.details.data.model.CharacterDetailDto
+import com.rafaelfelipeac.marvelapp.features.details.data.model.CharacterDetailListDto
+import com.rafaelfelipeac.marvelapp.features.details.data.model.DetailInfoDto
+import com.rafaelfelipeac.marvelapp.features.details.data.model.DetailInfoListDto
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetailList
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.MarvelCharacterDetail
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.MarvelDetailInfo
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfoList
+import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 
 object DataProviderAndroidTest {
 
@@ -201,6 +211,10 @@ object DataProviderAndroidTest {
         return Favorite(favoriteId, favoriteName, favoriteUrl)
     }
 
+    fun createFavorites(): List<Favorite> {
+        return listOf(createFavorite(), createFavorite(), createFavorite())
+    }
+
     fun createCharacterDetail(): CharacterDetail {
         return CharacterDetail(
             mockCharacterDetailId,
@@ -226,6 +240,10 @@ object DataProviderAndroidTest {
             mockDetailInfoTitle,
             createThumbnailDetails()
         )
+    }
+
+    fun createDetailInfoAsList(): List<DetailInfo> {
+        return listOf(createDetailInfo(), createDetailInfo(), createDetailInfo())
     }
 
     fun createDetailInfoList(): DetailInfoList {

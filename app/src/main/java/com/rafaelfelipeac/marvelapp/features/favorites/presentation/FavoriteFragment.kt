@@ -1,7 +1,12 @@
 package com.rafaelfelipeac.marvelapp.features.favorites.presentation
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +22,7 @@ import com.rafaelfelipeac.marvelapp.databinding.FragmentFavoriteBinding
 import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
+@Suppress("TooManyFunctions")
 class FavoriteFragment : BaseFragment() {
 
     var viewModel: FavoritesViewModel? = null
@@ -29,8 +35,9 @@ class FavoriteFragment : BaseFragment() {
     private var deleteListener = false
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
         setScreen()
@@ -47,8 +54,6 @@ class FavoriteFragment : BaseFragment() {
         if (viewModel == null) {
             viewModel = viewModelProvider.favoriteViewModel()
         }
-
-        setLayout()
 
         observeViewModel()
     }
@@ -90,10 +95,6 @@ class FavoriteFragment : BaseFragment() {
     private fun setScreen() {
         hideBackArrow()
         setHasOptionsMenu(true)
-    }
-
-    private fun setLayout() {
-
     }
 
     private fun observeViewModel() {
@@ -162,7 +163,8 @@ class FavoriteFragment : BaseFragment() {
             viewModel?.deleteFavorite(favorite)
             deleteListener = true
         }
-        favoriteAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        favoriteAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         if (binding.favoriteList.layoutManager == null) {
             binding.favoriteList.apply {

@@ -9,7 +9,7 @@ import com.rafaelfelipeac.marvelapp.core.extension.md5
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.API_KEY
 import com.rafaelfelipeac.marvelapp.core.plataform.Config.PRIVATE_KEY
 import com.rafaelfelipeac.marvelapp.features.main.MainActivity
-import java.util.*
+import java.util.Date
 
 open class BaseFragment : Fragment() {
 

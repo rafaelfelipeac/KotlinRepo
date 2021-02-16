@@ -49,7 +49,7 @@ class DetailsDataSourceTest {
                     mockCharacterId,
                     DataProviderTest.mockApiKey,
                     DataProviderTest.mockHash,
-                    DataProviderTest.mockTimestamp,
+                    DataProviderTest.mockTimestamp
                 )
             ).willReturn(marvelCharacterDetailDto)
 
@@ -58,7 +58,7 @@ class DetailsDataSourceTest {
                 mockCharacterId,
                 DataProviderTest.mockApiKey,
                 DataProviderTest.mockHash,
-                DataProviderTest.mockTimestamp,
+                DataProviderTest.mockTimestamp
             )
 
             // then
@@ -71,7 +71,7 @@ class DetailsDataSourceTest {
         runBlocking {
             // given
             val marvelCharacterDetailDto = createMarvelDetailInfoDto()
-            val characterDetail = marvelCharacterDetailDto.data.items.map { detailInfoDtoMapper.map(it)}
+            val characterDetail = marvelCharacterDetailDto.data.items.map { detailInfoDtoMapper.map(it) }
             val success = ResultWrapper.Success(characterDetail)
 
             given(
@@ -104,7 +104,7 @@ class DetailsDataSourceTest {
             runBlocking {
                 // given
                 val marvelCharacterDetailDto = createMarvelDetailInfoDto()
-                val characterDetail = marvelCharacterDetailDto.data.items.map { detailInfoDtoMapper.map(it)}
+                val characterDetail = marvelCharacterDetailDto.data.items.map { detailInfoDtoMapper.map(it) }
                 val success = ResultWrapper.Success(characterDetail)
 
                 given(

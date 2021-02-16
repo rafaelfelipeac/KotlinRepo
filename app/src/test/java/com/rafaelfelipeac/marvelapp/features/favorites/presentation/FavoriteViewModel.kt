@@ -19,7 +19,7 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class DetailsViewModelTest {
+class FavoriteViewModel {
 
     @ExperimentalCoroutinesApi
     @get:Rule

@@ -1,8 +1,5 @@
 package com.rafaelfelipeac.marvelapp.features.commons.data.model
 
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createCharacter
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createCharacterDto
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createFavorite
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createFavoriteDto
 import com.rafaelfelipeac.marvelapp.base.equalTo

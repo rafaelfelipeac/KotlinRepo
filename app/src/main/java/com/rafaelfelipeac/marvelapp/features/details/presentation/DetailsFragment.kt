@@ -20,8 +20,8 @@ import com.rafaelfelipeac.marvelapp.features.commons.domain.model.Favorite
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.CharacterDetail
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.DetailInfo
 import com.rafaelfelipeac.marvelapp.features.details.domain.model.Thumbnail
-import com.rafaelfelipeac.marvelapp.features.main.MainFragmentDirections
 
+@Suppress("TooManyFunctions")
 class DetailsFragment : BaseFragment() {
 
     var viewModel: DetailsViewModel? = null
@@ -47,7 +47,8 @@ class DetailsFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
@@ -173,7 +174,7 @@ class DetailsFragment : BaseFragment() {
                 binding.detailsCharacterComicsListLoader.gone()
                 isLoadingComics = false
 
-                offsetComics += 20
+                offsetComics += it?.size ?: 0
 
                 binding.detailsCharacterComics.visible()
                 setComics(it)
@@ -187,7 +188,7 @@ class DetailsFragment : BaseFragment() {
                 binding.detailsCharacterSeriesListLoader.gone()
                 isLoadingSeries = false
 
-                offsetSeries += 20
+                offsetSeries += it?.size ?: 0
 
                 binding.detailsCharacterSeries.visible()
                 setSeries(it)
@@ -219,11 +220,6 @@ class DetailsFragment : BaseFragment() {
 
     private fun setComics(comics: List<DetailInfo>?) {
         comicsAdapter.setItems(comics)
-        comicsAdapter.clickListener = { character ->
-            val action = MainFragmentDirections.mainToDetail()
-            action.characterId = character.id
-            navController?.navigate(action)
-        }
 
         if (isFirstPageComics) {
             isFirstPageComics = false
@@ -240,11 +236,6 @@ class DetailsFragment : BaseFragment() {
 
     private fun setSeries(series: List<DetailInfo>?) {
         seriesAdapter.setItems(series)
-        seriesAdapter.clickListener = { character ->
-            val action = MainFragmentDirections.mainToDetail()
-            action.characterId = character.id
-            navController?.navigate(action)
-        }
 
         if (isFirstPageSeries) {
             isFirstPageSeries = false

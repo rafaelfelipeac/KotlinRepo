@@ -1,25 +1,26 @@
 package com.rafaelfelipeac.marvelapp.features.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.rafaelfelipeac.marvelapp.R
 import com.rafaelfelipeac.marvelapp.core.extension.viewBinding
 import com.rafaelfelipeac.marvelapp.core.plataform.base.BaseFragment
 import com.rafaelfelipeac.marvelapp.databinding.FragmentMainBinding
-import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteFragment
 import com.rafaelfelipeac.marvelapp.features.characters.presentation.CharactersFragment
+import com.rafaelfelipeac.marvelapp.features.favorites.presentation.FavoriteFragment
 
 class MainFragment : BaseFragment() {
 
     private var binding by viewBinding<FragmentMainBinding>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         setScreen()
@@ -57,7 +58,7 @@ class MainAdapter(fm: FragmentManager) :
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return when(position) {
+        return when (position) {
             0 -> "Characters"
             1 -> "Favorites"
             else -> ""

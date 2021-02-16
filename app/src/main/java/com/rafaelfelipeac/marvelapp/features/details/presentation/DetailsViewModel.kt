@@ -34,7 +34,7 @@ open class DetailsViewModel @Inject constructor(
     private val _errorComics = MutableLiveData<Throwable>()
     open val errorSeries: LiveData<Throwable> get() = _errorSeries
     private val _errorSeries = MutableLiveData<Throwable>()
-    val savedFavorite: LiveData<Long?> get() = _savedFavorite
+    open val savedFavorite: LiveData<Long?> get() = _savedFavorite
     private val _savedFavorite = MutableLiveData<Long?>()
 
     open fun getDetails(characterId: Long, apikey: String, timestamp: Long, hash: String) {

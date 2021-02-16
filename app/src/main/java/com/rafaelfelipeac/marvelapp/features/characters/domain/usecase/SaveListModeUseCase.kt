@@ -4,7 +4,7 @@ import com.rafaelfelipeac.marvelapp.features.commons.domain.repository.ListModeR
 import javax.inject.Inject
 
 class SaveListModeUseCase @Inject constructor(
-        private val listModeRepository: ListModeRepository
+    private val listModeRepository: ListModeRepository
 ) {
     suspend operator fun invoke(listMode: Boolean) {
         return listModeRepository.saveListMode(listMode)

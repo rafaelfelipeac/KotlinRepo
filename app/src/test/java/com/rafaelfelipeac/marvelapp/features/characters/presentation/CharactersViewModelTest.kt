@@ -189,10 +189,8 @@ class CharactersViewModelTest {
         // given
         val listMode = true
 
-        given(runBlocking {
-            mockGetListModeUseCase(
-            )
-        }).willReturn(listMode)
+        given(runBlocking { mockGetListModeUseCase() })
+            .willReturn(listMode)
 
         // when
         charactersViewModel.getListMode()
@@ -208,10 +206,8 @@ class CharactersViewModelTest {
         // given
         val listMode = false
 
-        given(runBlocking {
-            mockGetListModeUseCase(
-            )
-        }).willReturn(listMode)
+        given(runBlocking { mockGetListModeUseCase() })
+            .willReturn(listMode)
 
         // when
         charactersViewModel.getListMode()

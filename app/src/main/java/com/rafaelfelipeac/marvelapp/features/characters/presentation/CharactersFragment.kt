@@ -1,7 +1,13 @@
 package com.rafaelfelipeac.marvelapp.features.characters.presentation
 
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.MenuInflater
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
+import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,9 +43,9 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
     private var favoriteListener = false
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
         setScreen()
@@ -122,7 +128,12 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
                 if (!recyclerView.canScrollVertically(1) && !isLoading) {
                     isLoading = true
 
-                    viewModel?.getCharacters(API_KEY, createTimestamp(), createHash(createTimestamp()), offset)
+                    viewModel?.getCharacters(
+                        API_KEY,
+                        createTimestamp(),
+                        createHash(createTimestamp()),
+                        offset
+                    )
 
                     binding.charactersListLoader.visible()
                     binding.charactersList.scrollToPosition(characterAdapter.itemCount - 1)
@@ -136,7 +147,7 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
             if (it?.isNotEmpty() == true) {
                 binding.charactersRefresh.isRefreshing = false
 
-                offset += 20
+                offset += it.size
 
                 isLoading = false
 
@@ -193,7 +204,8 @@ class CharactersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener 
             viewModel?.favoriteCharacter(Favorite(it.id, it.name, it.thumbnail.getUrl()))
             favoriteListener = true
         }
-        characterAdapter.stateRestorationPolicy =  RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        characterAdapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         if (isFirstPage && binding.charactersList.layoutManager == null) {
             isFirstPage = false

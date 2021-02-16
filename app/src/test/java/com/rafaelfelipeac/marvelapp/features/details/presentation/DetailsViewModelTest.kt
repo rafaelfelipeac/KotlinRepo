@@ -66,7 +66,7 @@ class DetailsViewModelTest {
                 mockCharacterId,
                 mockApiKey,
                 mockTimestamp,
-                mockHash,
+                mockHash
             )
         }).willReturn(success)
 
@@ -122,7 +122,7 @@ class DetailsViewModelTest {
                 mockCharacterId,
                 mockApiKey,
                 mockTimestamp,
-                mockHash,
+                mockHash
             )
         }).willReturn(networkError)
 

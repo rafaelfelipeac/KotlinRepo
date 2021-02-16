@@ -1,6 +1,5 @@
 package com.rafaelfelipeac.marvelapp.features.details.domain.usecase
 
-import com.rafaelfelipeac.marvelapp.base.DataProviderTest
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.createDetailInfo
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockApiKey
 import com.rafaelfelipeac.marvelapp.base.DataProviderTest.mockCharacterId
@@ -14,7 +13,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.BDDMockito
 import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -125,4 +123,3 @@ class GetDetailsSeriesUseCaseTest {
         }
     }
 }
-

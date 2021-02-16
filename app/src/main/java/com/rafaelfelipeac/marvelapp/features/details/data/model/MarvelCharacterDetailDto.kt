@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 data class MarvelCharacterDetailDto(
     @SerializedName("data")
-    val data: CharacterDetailListDto,
+    val data: CharacterDetailListDto
 )
 
 class MarvelCharacterDetailDtoMapper @Inject constructor() :

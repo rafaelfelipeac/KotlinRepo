@@ -17,11 +17,11 @@ class GetListModeUseCaseTest {
     @Mock
     internal lateinit var mockListModeRepository: ListModeRepository
 
-    private lateinit var getListModeUseCaseTest: GetListModeUseCase
+    private lateinit var getListModeUseCase: GetListModeUseCase
 
     @Before
     fun setup() {
-        getListModeUseCaseTest = GetListModeUseCase(mockListModeRepository)
+        getListModeUseCase = GetListModeUseCase(mockListModeRepository)
     }
 
     @Test
@@ -34,7 +34,7 @@ class GetListModeUseCaseTest {
                 .willReturn(listMode)
 
             // when
-            val result = getListModeUseCaseTest()
+            val result = getListModeUseCase()
 
             // then
             result equalTo listMode
@@ -51,7 +51,7 @@ class GetListModeUseCaseTest {
                 .willReturn(listMode)
 
             // when
-            val result = getListModeUseCaseTest()
+            val result = getListModeUseCase()
 
             // then
             result equalTo listMode

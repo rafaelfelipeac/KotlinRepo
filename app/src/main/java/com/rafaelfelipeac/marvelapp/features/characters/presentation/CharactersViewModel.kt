@@ -26,11 +26,11 @@ open class CharactersViewModel @Inject constructor(
     private val _characters = MutableLiveData<List<Character>?>()
     open val error: LiveData<Throwable> get() = _error
     private val _error = MutableLiveData<Throwable>()
-    val savedFavorite: LiveData<Long?> get() = _savedFavorite
+    open val savedFavorite: LiveData<Long?> get() = _savedFavorite
     private val _savedFavorite = MutableLiveData<Long?>()
-    val listMode: LiveData<Boolean?> get() = _listMode
+    open val listMode: LiveData<Boolean?> get() = _listMode
     private val _listMode = MutableLiveData<Boolean?>()
-    val savedListMode: LiveData<Unit?> get() = _savedListMode
+    open val savedListMode: LiveData<Unit?> get() = _savedListMode
     private val _savedListMode = MutableLiveData<Unit?>()
 
     open fun getCharacters(apikey: String, timestamp: Long, hash: String, offset: Int) {

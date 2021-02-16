@@ -7,10 +7,11 @@ import javax.inject.Inject
 
 data class MarvelCharacterListDto(
     @SerializedName("data")
-    val data: CharacterListDto,
+    val data: CharacterListDto
 )
 
-class MarvelCharacterListDtoMapper @Inject constructor() : TwoWayMapper<MarvelCharacterListDto, MarvelCharacterList> {
+class MarvelCharacterListDtoMapper @Inject constructor() :
+    TwoWayMapper<MarvelCharacterListDto, MarvelCharacterList> {
 
     override fun map(param: MarvelCharacterListDto): MarvelCharacterList = with(param) {
         MarvelCharacterList(
