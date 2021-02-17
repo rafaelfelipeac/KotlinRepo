@@ -8,3 +8,7 @@ fun String.md5(): String = MessageDigest.getInstance("MD5").digest(
         StandardCharsets.UTF_8
     )
 ).toHex()
+
+fun String.convertToHttps(): String {
+    return this.replace("http", "https")
+}
