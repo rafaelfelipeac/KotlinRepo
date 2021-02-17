@@ -3,7 +3,6 @@ package com.rafaelfelipeac.marvelapp.core.di.modules
 import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
-import com.rafaelfelipeac.marvelapp.core.network.CacheInterceptor
 import com.rafaelfelipeac.marvelapp.core.network.NetworkMonitor
 import com.rafaelfelipeac.marvelapp.core.plataform.Config
 import dagger.Module
@@ -32,14 +31,11 @@ object NetworkModule {
     @Provides
     fun okHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        cacheInterceptor: CacheInterceptor,
         cache: Cache
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(cache)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(cacheInterceptor.offlineInterceptor)
-            .addNetworkInterceptor(cacheInterceptor.onlineInterceptor)
             .build()
     }
 
