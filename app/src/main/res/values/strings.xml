@@ -12,7 +12,7 @@
     <!-- favorite -->
     <string name="favorite_deleted">Deleted!</string>
     <string name="favorite_title">Favorite Characters</string>
-    <string name="favorite_placeholder_message">You haven\'t favored any characters yet.</string>
+    <string name="favorite_placeholder_message">You don\'t have any favorited characters yet.</string>
 
     <!-- details -->
     <string name="details_empty_title" />

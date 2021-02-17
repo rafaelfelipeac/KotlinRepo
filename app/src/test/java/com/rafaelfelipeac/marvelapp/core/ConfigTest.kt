@@ -8,6 +8,6 @@ class ConfigTest {
 
     @Test
     fun `URL_BASE_GITHUB configuration must be correct`() {
-        Config.URL_BASE_MARVEL equalTo "http://gateway.marvel.com/v1/public/"
+        Config.URL_BASE_MARVEL equalTo "https://gateway.marvel.com/v1/public/"
     }
 }
